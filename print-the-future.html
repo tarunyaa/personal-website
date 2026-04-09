@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print the Future | Stream of Taru</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fcfcfc;
+            --text: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #8a8a9a;
+            --text-dim: #b8b8c8;
+            --accent: #1e2a4a;
+            --accent-light: #2d3f6e;
+            --accent-wash: rgba(30, 42, 74, 0.05);
+            --border: #ebebf0;
+            --border-hover: #d8d8e2;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-light); }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .serif { font-family: 'Newsreader', Georgia, serif; }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 0 48px;
+            height: 54px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(252, 252, 252, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-family: 'Newsreader', Georgia, serif;
+            font-weight: 400;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--accent);
+            letter-spacing: -0.3px;
+        }
+
+        .nav-back {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+            transition: color 0.25s;
+        }
+
+        .nav-back:hover { color: var(--accent); }
+
+        main {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 108px 24px 80px;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .post-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-dim);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .post-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--accent-wash);
+            border: 1px solid var(--border);
+            padding: 2px 10px;
+            border-radius: 4px;
+        }
+
+        .post-read-time {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        h1 {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 34px;
+            font-weight: 400;
+            margin-bottom: 44px;
+            line-height: 1.3;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .post-content {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 17px;
+            line-height: 1.9;
+            color: var(--text);
+            font-weight: 300;
+        }
+
+        .post-content p {
+            margin-bottom: 24px;
+        }
+
+        .post-content em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .post-content blockquote {
+            border-left: 2px solid var(--border);
+            padding-left: 20px;
+            margin: 32px 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .post-content h2 {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 22px;
+            font-weight: 400;
+            margin: 40px 0 16px;
+            color: var(--text);
+        }
+
+        .post-content ol, .post-content ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .post-content li {
+            margin-bottom: 12px;
+        }
+
+        .post-content a {
+            color: var(--text-secondary);
+            text-decoration-line: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s, color 0.2s;
+        }
+
+        .post-content a:hover {
+            color: var(--accent);
+            text-decoration-color: var(--accent);
+        }
+
+        .post-note {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 56px 0;
+        }
+
+        .section-divider .line {
+            width: 48px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-divider .dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .post-footer-nav {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.25s;
+        }
+
+        .post-footer-nav:hover { color: var(--accent); }
+
+        footer {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 640px) {
+            nav { padding: 0 20px; }
+            main { padding: 90px 20px 60px; }
+            h1 { font-size: 28px; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-name">Stream of Taru</a>
+        <a href="index.html#thoughts" class="nav-back">&larr; back to thoughts</a>
+    </nav>
+
+    <main class="fade-in">
+        <div class="post-meta">
+            <span class="post-date mono">17.08.19</span>
+            <span class="post-tag">Technology</span>
+            <span class="post-read-time">7 min read</span>
+        </div>
+
+        <h1>Print the Future</h1>
+
+        <div class="post-content">
+            <p>
+                It is 2050. You're just back home, wet from the rain and sweating from a draining jog. At your doorstep, you realize that the soles of your well-worn black Nikes are thoroughly sullied by mud and are pathetically hanging off the back of your shoe, flapping sadly against the bolstering wind. What do you do?
+            </p>
+            <p>
+                You tug open your door and tell your artificially intelligent caretaker to get you a new pair of shoes. "Aria, I need another pair of Nikes. Blue with purple flowers please," you say in an offhanded manner. The next thing you know, Nike has sold you the design for the shoes you want and Aria is busy digitally adjusting the model to your size and preferences. Your 3D printer gets to work and voil&agrave;! Your fitness plan isn't in jeopardy and you go out for a run tomorrow, with your very own personalized Nikes.
+            </p>
+            <p>
+                Can you imagine such a world? In this world, there are no goods and services on the shelves. Rather, companies sell designs that can be used to manufacture whatever customized product with the 3D printer that almost everybody has. Of course, in the event of the widespread use of cheap and readily available 3D printers, the world could be faced with many new conundrums. Think copyright and licensing problems. Think anarchy (because if everyone had a 3D printer, one could even print guns, arms and even tanks! And you thought gun laws were bad now&hellip;). Keep in mind this is highly hypothetical and subject to many social and economic dilemmas.
+            </p>
+            <p>
+                However, before we fast forward into the future, let's view the present prospects. In the biomedical world, doctors are using the cells of patients to 3D print body parts and organs. In fact, 6 years ago, Doctor Anthony Atala took the world by fire in his Ted talk when he 3D printed an actual kidney for the audience to see. Since this kidney is made of the patient's cells, there is no risk of tissue rejection. Additionally, about 90% of patients on the transplant list are actually waiting for a kidney. With the advent of this kind bioprinting (although, it requires a lot more fine-tuning), I imagine, it will be easy to forget that such organs were once scarce.
+            </p>
+            <p>
+                Could 3D printing solve poverty and starvation? Perhaps, it would add more dimensions to the culinary arts and fine dining. 3D printing can even make food, allowing for some sleek and intricate designs and mouth-watering dishes. 3D printing can create customized prosthetics, rapidly manufacture prototypes or stand-alone products, run the production of obsolete products, and even pioneer some crazy fashion. Printing organs? Experts have already developed 3D printed skin for burn victims and airway splinters to prevent lung collapse.
+            </p>
+            <p>
+                How exactly does 3D printing work though? Nowadays, 3D printing has become synonymous with additive manufacturing, the laying down of successive layers of material until the object is created. Conventionally, subtractive methods were used (carving out the object from a big block). The negatives of the subtractive method include material wastage and the inability to create hollow objects.
+            </p>
+            <p>
+                So, what's the procedure? First, get the digital design or model. This can be designed by yourself through software (ex: Fusion 360), premade and bought online or obtained by scanning a 3D object. Second, put the digital design through a slicing software. This is known as computerized tomography. Since 3D printing makes things layer by layer, this software slices the design into the aforementioned layers. Third, send the design to the printer using a flashcard, and you can see your printer set down layers, agonizingly slow, making you want to pull your hair out. This can take hours, or days, depending on the size of your printing object.
+            </p>
+            <p>
+                There are many types of 3D printing like material extrusion, vat photopolymerisation, and selective laser sintering. Each method uses different technologies, is suited for different material and has its pros and cons. The first 3D printer was introduced to space with its installation at the International Space Station 5 years ago. The long-term implications of 3D printing on space travel are huge. With 3D printing, we could print replacement parts, greatly reducing load boarded on to a space capsule (this is important where every kilogram matters in escaping the earth's gravity). 3D printing in space could also reduce space waste by unprecedented amounts.
+            </p>
+            <p>
+                Despite the enormous amount of hype received by 3D printing, the industry's growth had been rebounding the past few years. 3D printers are not well suited for all materials and often, their abilities are restricted to printing objects of only 1 material. Furthermore, 3D printers can be inherently slow as they work by patiently laying down ultrathin layers on top of each other. Additionally, Computer Numerical Control (CNC) machines remain popular and preferable to industries due to their relatively lower cost and manufacturing time.
+            </p>
+            <p>
+                2019 has seen the development of 3D printers, despite the decreasing growth rate of the industry. Mixed-material printers are being introduced and their build volume is increasing. A more recent technology called binder jet metal printing, which could halve the time required to produce each part is poised to become widely available in 2019 and the list of possible 3D-printable materials has expanded to more than double what it was five years earlier.
+            </p>
+            <p>
+                Do you think that 3D printers can become household normality? This thought may seem kind of strange at the moment. In the future, one could just print their favourite meal, shirt, car or organ on a whim (albeit with the correct digital design and the right type of materials). Should we be excited with these fascinating developments in 3D printing? One will never know. No one expected a worldwide internet to thread invisibly through our daily lives while many expected flying cars to be around by 2014. The point is, the future of technology is unpredictable. Be it, clairvoyance or empirical observations, only time can tell.
+            </p>
+
+        </div>
+
+        <div class="section-divider">
+            <div class="line"></div>
+            <div class="dot"></div>
+            <div class="line"></div>
+        </div>
+
+        <a href="index.html#thoughts" class="post-footer-nav">&larr; back to all thoughts</a>
+    </main>
+
+    <footer>
+        &copy; 2026 Tarunyaa Sivakumar
+    </footer>
+</body>
+</html>

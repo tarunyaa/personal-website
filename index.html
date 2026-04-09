@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream of Taru</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fcfcfc;
+            --text: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #8a8a9a;
+            --text-dim: #b8b8c8;
+            --accent: #1e2a4a;
+            --accent-light: #2d3f6e;
+            --accent-wash: rgba(30, 42, 74, 0.05);
+            --border: #ebebf0;
+            --border-hover: #d8d8e2;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-light); }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .serif { font-family: 'Newsreader', Georgia, serif; }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 0 48px;
+            height: 54px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(252, 252, 252, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-family: 'Newsreader', Georgia, serif;
+            font-weight: 400;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--accent);
+            letter-spacing: -0.3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+            transition: color 0.25s;
+            position: relative;
+            padding-bottom: 2px;
+        }
+
+        .nav-links a:hover { color: var(--accent); }
+
+        .nav-links a.active {
+            color: var(--accent);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -16px;
+            left: 0; right: 0;
+            height: 1.5px;
+            background: var(--accent);
+        }
+
+        /* MAIN */
+        main {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 108px 24px 80px;
+        }
+
+        /* PAGE SECTIONS */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* HERO */
+        .hero {
+            margin-bottom: 56px;
+        }
+
+        .hero-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 48px;
+        }
+
+        .hero-text { flex: 1; }
+
+        .hero-name {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 28px;
+            font-weight: 400;
+            color: var(--text);
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .hero-intro {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 17px;
+            line-height: 1.9;
+            color: var(--text);
+            font-weight: 300;
+            margin-bottom: 36px;
+        }
+
+        .hero-intro em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .hero-photo {
+            width: 160px;
+            height: 190px;
+            border-radius: 6px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .hero-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(15%);
+        }
+
+        .about-items {
+            list-style: none;
+            margin-bottom: 28px;
+        }
+
+        .about-items li {
+            padding: 3px 0;
+            font-size: 13.5px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .about-items li::before {
+            content: '\2013';
+            color: var(--text-dim);
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .about-items a {
+            color: var(--text-secondary);
+            text-decoration-line: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s, color 0.2s;
+        }
+        .about-items a:hover {
+            color: var(--accent);
+            text-decoration-color: var(--accent);
+        }
+
+        /* SOCIAL */
+        .social-links {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .social-links a {
+            color: var(--text-dim);
+            display: flex;
+            align-items: center;
+            transition: color 0.25s;
+        }
+
+        .social-links a:hover { color: var(--accent); }
+
+        .social-links a svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* SECTION LABEL */
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* DIVIDER */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 48px 0;
+        }
+
+        /* PROJECTS */
+        .project-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .project-item {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 18px 20px;
+            background: var(--card-bg);
+            transition: background 0.2s;
+        }
+
+        .project-item:hover {
+            background: var(--accent-wash);
+        }
+
+        .project-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--accent-wash);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+            color: var(--accent);
+        }
+
+        .project-info { flex: 1; }
+
+        .project-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .project-name a::after {
+            content: ' \2197';
+            font-size: 11px;
+            color: var(--text-dim);
+            transition: color 0.2s;
+        }
+
+        .project-name a:hover::after { color: var(--accent); }
+
+        .project-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* WRITING LIST */
+        .writing-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .writing-item {
+            display: flex;
+            align-items: baseline;
+            padding: 11px 0;
+            border-bottom: 1px solid var(--border);
+            gap: 20px;
+        }
+
+        .writing-item:first-child { padding-top: 0; }
+        .writing-item:last-child { border-bottom: none; }
+
+        .writing-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-dim);
+            flex-shrink: 0;
+            font-variant-numeric: tabular-nums;
+            min-width: 64px;
+        }
+
+        .writing-title {
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .writing-title a {
+            color: var(--text);
+            transition: color 0.2s;
+        }
+        .writing-title a:hover { color: var(--accent); }
+
+        /* VALUES */
+        .value-list {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .value-item {
+            padding-left: 20px;
+            border-left: 2px solid var(--border);
+            transition: border-color 0.3s;
+        }
+
+        .value-item:hover {
+            border-left-color: var(--accent);
+        }
+
+        .value-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .value-title {
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .value-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        /* THOUGHTS */
+        .thoughts-intro {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.85;
+            margin-bottom: 36px;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        /* FOOTER */
+        footer {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            nav { padding: 0 20px; }
+            main { padding: 90px 20px 60px; }
+            .hero-row { flex-direction: column-reverse; gap: 24px; }
+            .hero-photo { width: 120px; height: 140px; }
+            .nav-links { gap: 18px; }
+            .nav-links a { font-size: 12px; }
+        }
+
+        /* FADE IN */
+        .fade-in {
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="#" class="nav-name" onclick="event.preventDefault(); setPage('home')">Stream of Taru</a>
+        <div class="nav-links">
+            <a href="#" data-page="home" class="active">home</a>
+            <a href="#thoughts" data-page="thoughts">thoughts</a>
+            <a href="#writing" data-page="writing">writing</a>
+            <a href="#projects" data-page="projects">projects</a>
+            <a href="#values" data-page="values">values</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- ========== HOME ========== -->
+        <div class="page active fade-in" id="page-home">
+            <div class="hero">
+                <div class="hero-row">
+                    <div class="hero-text">
+                        <h1 class="hero-name">Tarunyaa Sivakumar</h1>
+                        <p class="hero-intro">
+                            <em>Stream of consciousness</em> &mdash; that's what this is. I think too much, so I started writing some of it down.
+                        </p>
+
+                        <ul class="about-items">
+                            <li>GPU Chip Design Engineer at <a href="https://www.nvidia.com" target="_blank">NVIDIA</a></li>
+                            <li>UPenn EE '25</li>
+                            <li>Singapore &rarr; Philadelphia &rarr; Bay Area</li>
+                        </ul>
+
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/tarunyaa-sivakumar-4847501a6" target="_blank" title="LinkedIn">
+                                <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                            </a>
+                            <a href="https://github.com/tarunyaa" target="_blank" title="GitHub">
+                                <svg viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                            </a>
+                            <a href="mailto:trnykmr@gmail.com" title="Email">
+                                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hero-photo">
+                        <img src="profile-photo.jpg" alt="Taru Sivakumar" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;background:linear-gradient(135deg,#1e2a4a,#4a5a7a);display:flex;align-items:center;justify-content:center;font-size:42px;color:rgba(255,255,255,0.4);font-family:Newsreader,serif;font-style:italic&quot;>T</div>'">
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- PREVIEW: PROJECTS -->
+            <div class="section-label">Projects</div>
+            <div class="project-grid" style="margin-bottom: 48px;">
+                <div class="project-item">
+                    <div class="project-icon">&#9651;</div>
+                    <div class="project-info">
+                        <div class="project-name"><a href="https://cruxai.dev/" target="_blank">CruxAI</a></div>
+                        <div class="project-desc">Find where smart people disagree</div>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-icon">&#9670;</div>
+                    <div class="project-info">
+                        <div class="project-name"><a href="#">Quok.it</a></div>
+                        <div class="project-desc">Decentralized compute infrastructure for AI training</div>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-icon">&#9632;</div>
+                    <div class="project-info">
+                        <div class="project-name"><a href="#">Learning Chip Tapeout</a></div>
+                        <div class="project-desc">Designed and taped out a hardware learning chip at Penn</div>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-icon">&#9675;</div>
+                    <div class="project-info">
+                        <div class="project-name"><a href="https://arxiv.org/abs/2409.07293" target="_blank">Microscopic Robots</a></div>
+                        <div class="project-desc">Electrokinetic propulsion for autonomous micro-robots</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PREVIEW: LATEST WRITING -->
+            <div class="section-label">Latest</div>
+            <div class="writing-list">
+                <div class="writing-item">
+                    <span class="writing-date mono">27.03.26</span>
+                    <span class="writing-title"><a href="post.html">On Designing Silicon That Learns</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">15.02.26</span>
+                    <span class="writing-title"><a href="post.html">Why Decentralized Compute Matters</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">02.01.26</span>
+                    <span class="writing-title"><a href="post.html">The Smallest Robots in the World</a></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== THOUGHTS ========== -->
+        <div class="page" id="page-thoughts">
+            <div class="section-label">Thoughts</div>
+            <p class="thoughts-intro">
+                Just a few random thoughts, that could either brighten up your day or trigger an existential crisis :)
+            </p>
+
+            <div class="writing-list">
+                <div class="writing-item">
+                    <span class="writing-date mono">23.10.20</span>
+                    <span class="writing-title"><a href="milkomeda.html">Milkomeda</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">16.08.20</span>
+                    <span class="writing-title"><a href="what-is-real.html">What is Real?</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">04.06.20</span>
+                    <span class="writing-title"><a href="superposition.html">Superposition</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">04.06.20</span>
+                    <span class="writing-title"><a href="brave-the-future.html">Brave the Future</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">24.04.20</span>
+                    <span class="writing-title"><a href="change-as-a-constant.html">Change as a Constant</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">06.01.20</span>
+                    <span class="writing-title"><a href="our-summer.html">Our Summer: &#2958;&#2969;&#3021;&#2965;&#2995;&#3021; &#2965;&#3019;&#2975;&#3016;</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">17.08.19</span>
+                    <span class="writing-title"><a href="print-the-future.html">Print the Future</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">17.07.19</span>
+                    <span class="writing-title"><a href="are-we-alone.html">Are We Alone?</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">17.12.18</span>
+                    <span class="writing-title"><a href="perception.html">Perception</a></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== WRITING ========== -->
+        <div class="page" id="page-writing">
+            <div class="section-label">Writing</div>
+
+            <div class="writing-list">
+                <div class="writing-item">
+                    <span class="writing-date mono">27.03.26</span>
+                    <span class="writing-title"><a href="post.html">On Designing Silicon That Learns</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">15.02.26</span>
+                    <span class="writing-title"><a href="post.html">Why Decentralized Compute Matters</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">02.01.26</span>
+                    <span class="writing-title"><a href="post.html">The Smallest Robots in the World</a></span>
+                </div>
+                <div class="writing-item">
+                    <span class="writing-date mono">10.11.25</span>
+                    <span class="writing-title"><a href="post.html">Lessons from a Chip Tapeout</a></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PROJECTS ========== -->
+        <div class="page" id="page-projects">
+            <div class="section-label">Projects</div>
+
+            <div class="project-grid">
+                <div class="project-item">
+                    <div class="project-icon">&#9651;</div>
+                    <div class="project-info">
+                        <div class="project-name"><a href="https://cruxai.dev/" target="_blank">CruxAI</a></div>
+                        <div class="project-desc">Find where smart people disagree</div>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-icon">&#9670;</div>
+                    <div class="project-info">
+                        <div class="project-name"><a href="#">Quok.it</a></div>
+                        <div class="project-desc">Decentralized compute infrastructure for AI training</div>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-icon">&#9632;</div>
+                    <div class="project-info">
+                        <div class="project-name"><a href="#">Learning Chip Tapeout</a></div>
+                        <div class="project-desc">Designed and taped out a hardware learning chip at Penn</div>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-icon">&#9675;</div>
+                    <div class="project-info">
+                        <div class="project-name"><a href="https://arxiv.org/abs/2409.07293" target="_blank">Microscopic Robots</a></div>
+                        <div class="project-desc">Electrokinetic propulsion for autonomous micro-robots</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== VALUES ========== -->
+        <div class="page" id="page-values">
+            <div class="section-label">Values</div>
+
+            <div class="value-list">
+                <div class="value-item">
+                    <div class="value-num mono">01</div>
+                    <div class="value-title">Build what matters</div>
+                    <div class="value-desc">Technology is only meaningful when it serves real problems. Work on things that push the boundary.</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-num mono">02</div>
+                    <div class="value-title">Stay curious, stay humble</div>
+                    <div class="value-desc">The more you learn, the more you realize how much you don't know. Approach every problem with beginner's eyes.</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-num mono">03</div>
+                    <div class="value-title">Do the hard thing</div>
+                    <div class="value-desc">Growth lives on the other side of discomfort. Whether it's a tapeout, a startup pivot, or an honest conversation &mdash; lean in.</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-num mono">04</div>
+                    <div class="value-title">Think in systems</div>
+                    <div class="value-desc">Everything is connected. A great chip designer thinks about the software. Zoom out before you zoom in.</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-num mono">05</div>
+                    <div class="value-title">Write it down</div>
+                    <div class="value-desc">Writing is thinking made visible. If you can't explain it simply, you don't understand it well enough.</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-num mono">06</div>
+                    <div class="value-title">People over everything</div>
+                    <div class="value-desc">The best work happens with people you respect and trust. Nobody builds anything great alone.</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Taru Sivakumar
+    </footer>
+
+    <script>
+        function setPage(page) {
+            document.querySelectorAll('.page').forEach(p => {
+                p.classList.remove('active', 'fade-in');
+            });
+            document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
+                a.classList.remove('active');
+            });
+
+            const target = document.getElementById('page-' + page);
+            if (target) {
+                target.classList.add('active');
+                void target.offsetWidth;
+                target.classList.add('fade-in');
+            }
+
+            const navLink = document.querySelector('.nav-links a[data-page="' + page + '"]');
+            if (navLink) navLink.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            history.pushState(null, '', page === 'home' ? '/' : '#' + page);
+        }
+
+        document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                setPage(this.dataset.page);
+            });
+        });
+
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById('page-' + hash)) {
+                setPage(hash);
+            }
+        });
+
+        window.addEventListener('popstate', () => {
+            const hash = window.location.hash.replace('#', '') || 'home';
+            setPage(hash);
+        });
+    </script>
+</body>
+</html>

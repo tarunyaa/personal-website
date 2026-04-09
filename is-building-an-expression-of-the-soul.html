@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is Building an Expression of the Soul? | Stream of Taru</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fcfcfc;
+            --text: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #8a8a9a;
+            --text-dim: #b8b8c8;
+            --accent: #1e2a4a;
+            --accent-light: #2d3f6e;
+            --accent-wash: rgba(30, 42, 74, 0.05);
+            --border: #ebebf0;
+            --border-hover: #d8d8e2;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-light); }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .serif { font-family: 'Newsreader', Georgia, serif; }
+
+        /* NAV — identical to index.html */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 0 48px;
+            height: 54px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(252, 252, 252, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-family: 'Newsreader', Georgia, serif;
+            font-weight: 400;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--accent);
+            letter-spacing: -0.3px;
+        }
+
+        .nav-back {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+            transition: color 0.25s;
+        }
+
+        .nav-back:hover { color: var(--accent); }
+
+        /* MAIN */
+        main {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 108px 24px 80px;
+        }
+
+        /* POST HEADER */
+        .post-meta {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .post-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-dim);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .post-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--accent-wash);
+            border: 1px solid var(--border);
+            padding: 2px 10px;
+            border-radius: 4px;
+        }
+
+        .post-read-time {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        h1 {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 34px;
+            font-weight: 400;
+            margin-bottom: 44px;
+            line-height: 1.3;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        /* POST CONTENT */
+        .post-content {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 17px;
+            line-height: 1.9;
+            color: var(--text);
+            font-weight: 300;
+        }
+
+        .post-content p {
+            margin-bottom: 24px;
+        }
+
+        .post-content em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .post-content a {
+            color: var(--text-secondary);
+            text-decoration-line: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s, color 0.2s;
+        }
+
+        .post-content a:hover {
+            color: var(--accent);
+            text-decoration-color: var(--accent);
+        }
+
+        /* SECTION DIVIDER */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 56px 0;
+        }
+
+        .section-divider .line {
+            width: 48px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-divider .dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* BACK LINK AT BOTTOM */
+        .post-footer-nav {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.25s;
+        }
+
+        .post-footer-nav:hover { color: var(--accent); }
+
+        /* FOOTER */
+        footer {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            nav { padding: 0 20px; }
+            main { padding: 90px 20px 60px; }
+            h1 { font-size: 28px; }
+        }
+
+        /* FADE IN */
+        .fade-in {
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-name">Stream of Taru</a>
+        <a href="index.html#writing" class="nav-back">&larr; back to writing</a>
+    </nav>
+
+    <main class="fade-in">
+        <div class="post-meta">
+            <span class="post-date mono">06.04.26</span>
+            <span class="post-tag">PERSONAL</span>
+            <span class="post-read-time">1 min read</span>
+        </div>
+
+        <h1>Is Building an Expression of the Soul?</h1>
+
+        <div class="post-content">
+            <p>
+                Apparently Tesla received visions of his inventions, not sketches but fully formed machines, that he had to bring into physical existence. Mozart described music arriving to him, Newton poked sticks into his eyeballs because he wanted to know what colors were made out off. Kafka wrote through the night compulsively because he believed that writing was the only authentic expression of his inner life.
+            </p>
+
+            <p>
+                I think building is an expression of the soul when the idea is coming from your inner muse. The common thread amongst all these individuals is that they felt that these visions were theirs and it was theirs to put it out into the world.
+            </p>
+
+            <p>
+                This inside world exists within you and building externalizes it.
+            </p>
+
+            <p>
+                Cézanne spent his whole life trying to paint what he actually <em>saw</em> — not the conventional representation of a mountain, but the raw perceptual experience of looking at one. He failed, by his own account, constantly. But the failure was generative because the standard he was measuring against was his interior truth.
+            </p>
+
+            <p>
+                Dostoevsky said his novels came from trying to answer questions that tormented him personally. The books weren't entertainment — they were his inner arguments made visible. He needed readers not for validation but as <em>witnesses</em>.
+            </p>
+
+            <p>
+                I think this is what gives life meaning? In one way. Not sure.
+            </p>
+
+            <p>
+                Newton poking his eyeball is different. There is a difference between meaning and curiosity.
+            </p>
+        </div>
+
+        <div class="section-divider">
+            <div class="line"></div>
+            <div class="dot"></div>
+            <div class="line"></div>
+        </div>
+
+        <a href="index.html#writing" class="post-footer-nav">&larr; back to all writing</a>
+    </main>
+
+    <footer>
+        &copy; 2026 Taru Sivakumar
+    </footer>
+</body>
+</html>

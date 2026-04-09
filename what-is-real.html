@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What is Real? | Stream of Taru</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fcfcfc;
+            --text: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #8a8a9a;
+            --text-dim: #b8b8c8;
+            --accent: #1e2a4a;
+            --accent-light: #2d3f6e;
+            --accent-wash: rgba(30, 42, 74, 0.05);
+            --border: #ebebf0;
+            --border-hover: #d8d8e2;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-light); }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .serif { font-family: 'Newsreader', Georgia, serif; }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 0 48px;
+            height: 54px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(252, 252, 252, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-family: 'Newsreader', Georgia, serif;
+            font-weight: 400;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--accent);
+            letter-spacing: -0.3px;
+        }
+
+        .nav-back {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+            transition: color 0.25s;
+        }
+
+        .nav-back:hover { color: var(--accent); }
+
+        main {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 108px 24px 80px;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .post-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-dim);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .post-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--accent-wash);
+            border: 1px solid var(--border);
+            padding: 2px 10px;
+            border-radius: 4px;
+        }
+
+        .post-read-time {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        h1 {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 34px;
+            font-weight: 400;
+            margin-bottom: 44px;
+            line-height: 1.3;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .post-content {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 17px;
+            line-height: 1.9;
+            color: var(--text);
+            font-weight: 300;
+        }
+
+        .post-content p {
+            margin-bottom: 24px;
+        }
+
+        .post-content em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .post-content blockquote {
+            border-left: 2px solid var(--border);
+            padding-left: 20px;
+            margin: 32px 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .post-content h2 {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 22px;
+            font-weight: 400;
+            margin: 40px 0 16px;
+            color: var(--text);
+        }
+
+        .post-content ol, .post-content ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .post-content li {
+            margin-bottom: 12px;
+        }
+
+        .post-content a {
+            color: var(--text-secondary);
+            text-decoration-line: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s, color 0.2s;
+        }
+
+        .post-content a:hover {
+            color: var(--accent);
+            text-decoration-color: var(--accent);
+        }
+
+        .post-note {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 56px 0;
+        }
+
+        .section-divider .line {
+            width: 48px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-divider .dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .post-footer-nav {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.25s;
+        }
+
+        .post-footer-nav:hover { color: var(--accent); }
+
+        footer {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 640px) {
+            nav { padding: 0 20px; }
+            main { padding: 90px 20px 60px; }
+            h1 { font-size: 28px; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-name">Stream of Taru</a>
+        <a href="index.html#thoughts" class="nav-back">&larr; back to thoughts</a>
+    </nav>
+
+    <main class="fade-in">
+        <div class="post-meta">
+            <span class="post-date mono">16.08.20</span>
+            <span class="post-tag">Philosophy</span>
+            <span class="post-read-time">15 min read</span>
+        </div>
+
+        <h1>What is Real?</h1>
+
+        <div class="post-content">
+            <p>
+                What is reality? Am I real? Are the people next to me real or is my laptop, bed, the cup noodles I bought for a dollar and 10 cents at 7/11 real? If a tree falls in the woods and there is no one there to see it, does it make a sound?
+            </p>
+            <p>
+                I'm sure that these are questions that we all have at, at least, one point of our lives. We all have pondered the nature of reality, concluded that it is just the teenage angst talking, and moved on. The nature of reality is a question that has for long, evaded the greatest minds, even those of Plato and Aristotle, who argued over whether reality was a tangible artefact or a facet of the mind. Another prominent question that has been raised frequently over the years is that if there exists anything outside our own mind, a concept that has been termed solipsism. When I leave school, where does it and everyone in it go? Or does it simply cease to exist until I enter it again the next morning?
+            </p>
+            <p>
+                Let's go back to square one and examine the way our reality came to be. Surprisingly, a lot of the phenomena we observe in life is, in fact, created by ourselves: the individual and society, rather than existing independently of human thought. In simpler terms, many phenomena aren't real in and of itself, but are made real through social agreement. This is the definition of a social construct.
+            </p>
+            <p>
+                For example, money isn't real in and of itself, but is given value through its general acceptance. Hence, money is a social construct. Not only is its intrinsic value far lesser than its face value, but its value magically disappears when it is brought out of society. An alien would perceive the pieces of metal and paper as garbage. The same can be said for gold. In fact, when Herman Cortes and his conquistadors invaded Mexico, home to the Aztecs, the natives simply couldn't understand the Spanish obsession with gold, a yellow metal that was too soft to be used as tools and weapons, and couldn't be eaten, drunk or cuddled in for warmth.
+            </p>
+            <p>
+                The same train of thought is applicable to any precious metal. For a moment, think of what exactly a diamond is &mdash; a piece of carbon that has undergone so much pressure that it has lost all its colour to become a dirty kind of translucent, an image very much different from its societal connotations of wealth and affluence.
+            </p>
+            <p>
+                I used the example of shiny metals for the sole purpose of explanation. The theory of social constructionism is far more reaching and potent than that. Nations, sovereignty, books, language, justice, race, gender, why even yourself are a social construct (something I'll get back to later). What truly is Germany? The Deutschland? The collection of German people and their right to self-determination? The German parliament or its constitution? Well, it's simply just a mass of land in another mass of land (that we call Europe), floating in the ocean, on a bunch of tectonic plates.
+            </p>
+            <p>
+                What truly is justice when no one is looking? In Plato's "Republic", the allegory of the "Ring of Gyges" tells the tale of Gyges, a commoner, who used his power of invisibility to commit unjust acts. He seduced the Queen then worked with her to kill the king and take over the kingdom. This allegory is symbolic of how one would act without conscience if shielded from the consequences of one's actions and the moral condemnation of society.
+            </p>
+            <p>
+                There is no right and wrong in this world, there aren't even any human rights. Books are nothing but scribbles and Language is nothing but sounds. Gender is something we gave life to ourselves, apart from its origins in biology, and the same can be said for race. We give meaning to EVERYTHING, we create EVERYTHING, for the best or worst of mankind.
+            </p>
+            <p>
+                Theoretically, hasn't evolution trusted us with so much power? Our imaginative prowess and ability to wield fictive language like the metaphorical scythe of creation is what sets the homo sapiens apart from other species, from an evolutionary perspective. While our closest ancestors, the chimpanzees, use a language consisting of a few command terms like "Watch out for the lion" or "Look! A mango", homo sapiens are able to spawn myths that last ages and look at the expanse of the night sky and see starry shapes of damsels in distress and the Pegasus, in the place of pulsating balls of light.
+            </p>
+            <p>
+                Social constructs have truly exponentially increased humanity's potential, giving us an unparalleled ability to organise others effectively. While the chimpanzees live in recluse, in groups of 10 to 20, led by an alpha male, the homo sapiens have dominated the globe, with complex judicial systems, stable mediums of exchange and a precarious yet diplomatically managed balance of power between nations.
+            </p>
+            <p>
+                Then why is the theory of social constructionism, a notion rooted in philosophy and sociology and riddled with elements of theory of knowledge, something so widely controversial and heavily politicized? It is obvious to us, after a few minutes of thinking, as to what is objective and subjective, what is a construct and what is not. While rivers, houses, the floor and my cup noodles are definitely there (probably, unless we live in some sort of simulation or this is all a dream), I may perceive the sky dappled with colours of the sunset as angry, while others, as a display of love between the fiery ball of gas and the horizon.
+            </p>
+            <p>
+                In fact, subjectivity can be best explained from the concept of qualia in which consciousness matches different connotations to colours, based on one's mood. Inter-subjectivity showcases the power of perception at another level. The value of money is a concept that exists collectively in the brains of millions, hence constructing its value.
+            </p>
+            <p>
+                From all this, it is understood that a social construct exists through inter-subjectivity and is extremely influential in paving the path followed by society. If the construct of justice didn't exist, wouldn't violence, anarchy and chaos fester? If the construct of money didn't exist, wouldn't we suffer under the barter system, the curse of double coincidence of wants?
+            </p>
+            <p>
+                The political ambivalence comes with the question: are social constructs natural? It's a political argument to claim either for or otherwise, an argument indiscriminately used by people in power. Slavery was a social construct until it was abolished in 1865, with the 13th amendment to the U.S Constitution (and even today, it proliferates in the fringes, especially with the white slave trade). Even Aristotle, a supposed kindred spirit, proclaimed "He who is by nature not his own but another's man, is by nature a slave". Yet, is slavery natural? In hindsight, it is easy to say no. However, social constructs are so rigid, inflexible, and ingrained in societal dynamics that it almost always unabashedly becomes a permanent part of human culture. The construct of slavery took so much effort, time and revolutions to abolish, even though it became so obviously toxic to human society in many dimensions. The same can be said for the social construct of the divine right of monarchs.
+            </p>
+            <p>
+                This is precisely why people who aggressively claim that social constructs are natural, are those who inhibit societal change and advocate, instead, the status quo. While social constructs ensure the smooth functioning of society, they also hold society back. For example, the social construct of gender is something that has remained largely unmoving these few years. Within the nature vs. nurture debate, it is agreed widely that there are biological as well as social implications of gender. Simon De Bouveris phrased gender as the "social interpretation of sex" while many equate genitals, gonads and chromosomes to gender. However, those who vehemently argue the social construct of gender as natural and written in stone are those who accept status quo and deny transgender and non-binary gender people of basic human rights, that are otherwise extended to cisgenders. The same can be said to the social constructs of race and religion.
+            </p>
+            <p>
+                In fact, the argument that racial hierarchy is natural is what that propped up the oppressive authoritarian regime of Adolf Hitler, the Third Reich, 1933-45. The genocidal tendencies of the Nazis and the dogma of Aryan supremacy and Social Darwinism culminated with the Final Solution, where 6 million Jews were killed, becoming the scar tissue of a once proud and strong nation today. Can this genocide be justified on the grounds that the Jews were racially weaker? Contrary to Hitler's doctrine, it was generally the Jews who were the most educated, ran the best businesses and earned the most profits. Although this example may be an extreme case, milder versions of this discrimination propagates through society perpetually. The Jews were never scientifically proven as inferior, yet they were the ones considered to be pollutants to the German society. The same can be said for the African Americans, whose ancestors were only imported to America for slavery (instead of Europeans) because of their superior resistance to disease, the close proximity of Africa to the States and the economic feasibility. Does this make them racially inferior in any way? It's more plausible that the racial hierarchy was only created to maintain a pretty superiority complex. Shouldn't we try to debunk the common myths surrounding social constructs instead of post-rationalising them? I think that in order for society to become more inclusive, we need to evolve these constructs, a goal well within our reach.
+            </p>
+            <p>
+                Who are you? Would you be surprised if I said that you yourself are a social construct? Or would it just catalyse an identity crisis? Charles Cooley stated based on his Looking-Glass-Self theory: "I am not who you think I am; I am not who I think I am; I am who I think you think I am." Unless there is an innate quality to the self, the individual is partially formed from his/her interactions with, reactions to and expectations of society. The individual imitates members of society, compares itself to others and falls into the roles/categories imposed on it by society.
+            </p>
+            <p>
+                This reflects Jungian philosophy, in the sense that the Individual is said to consist of the Ego, Persona and Shadow. While the Ego is our true self that stays constant through our lifetime, the pretence we put on in front of society is known as the "Persona", a spin-off of the literal masks worn on stage by Greek play-actors. The Persona essentially is "a kind of mask, designed on one hand to make a definite impression upon others, and on the other you conceal the true nature of the individual". Furthermore, the self is organized differently outside and within society, hence fulfilling the definition of a social construct. In the context of the Pygmalion effect, other's expectations of a target person affect the target person's performance. For example, increased expectations of better results may cause you to perform better on a test. The inverse is applicable as well, denoting the negative form of a self-fulfilling prophecy.
+            </p>
+            <p>
+                To conclude, you are partially a social construct and it goes without saying that you too are as versatile, fluid and malleable as one's perceptions. This malleability applies to society as well, the biggest social construct of all.
+            </p>
+            <p>
+                Since society is so malleable, why is the pace of change relatively slow? If left to natural forces, social constructs evolve on the basis of selective pressure. Constructs essential to the survival of mankind are built while those that are debilitating are eliminated. However, this process of natural selection is too slow and painful to be efficient for the progress of humanity in this day and age, when homo sapiens have experienced a meteoric rise to the top of the food chain and colonised most parts of the globe, and even celestial objects. Intelligent evolution, where society and individuals actively evolve to achieve that mirage-like utopia, is inhibited by the rigidity of toxic social constructs. We should not change our dream to reflect reality but rather, change our reality to reflect our dream. This may seem more do-able once we realise the power invested in us, through the ability to construct our own self and society, and more importantly, our own reality.
+            </p>
+
+            <p class="post-note">This was the first draft of the Talk that I gave at TEDxNPSIS 2020, a personal milestone for me. My exploration into Social Constructs was largely because I wanted to explore how individual identity worked as a Social Construct. My exploration led to the realisation that identity is malleable and not as rigid as it initially seemed!</p>
+
+        </div>
+
+        <div class="section-divider">
+            <div class="line"></div>
+            <div class="dot"></div>
+            <div class="line"></div>
+        </div>
+
+        <a href="index.html#thoughts" class="post-footer-nav">&larr; back to all thoughts</a>
+    </main>
+
+    <footer>
+        &copy; 2026 Tarunyaa Sivakumar
+    </footer>
+</body>
+</html>

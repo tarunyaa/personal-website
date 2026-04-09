@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Are We Alone? | Stream of Taru</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fcfcfc;
+            --text: #1a1a2e;
+            --text-secondary: #4a4a5a;
+            --text-muted: #8a8a9a;
+            --text-dim: #b8b8c8;
+            --accent: #1e2a4a;
+            --accent-light: #2d3f6e;
+            --accent-wash: rgba(30, 42, 74, 0.05);
+            --border: #ebebf0;
+            --border-hover: #d8d8e2;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+        a:hover { color: var(--accent-light); }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .serif { font-family: 'Newsreader', Georgia, serif; }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 0 48px;
+            height: 54px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(252, 252, 252, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-name {
+            font-family: 'Newsreader', Georgia, serif;
+            font-weight: 400;
+            font-size: 17px;
+            font-style: italic;
+            color: var(--accent);
+            letter-spacing: -0.3px;
+        }
+
+        .nav-back {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+            transition: color 0.25s;
+        }
+
+        .nav-back:hover { color: var(--accent); }
+
+        main {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 108px 24px 80px;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .post-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-dim);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .post-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--accent-wash);
+            border: 1px solid var(--border);
+            padding: 2px 10px;
+            border-radius: 4px;
+        }
+
+        .post-read-time {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        h1 {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 34px;
+            font-weight: 400;
+            margin-bottom: 44px;
+            line-height: 1.3;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+
+        .post-content {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 17px;
+            line-height: 1.9;
+            color: var(--text);
+            font-weight: 300;
+        }
+
+        .post-content p {
+            margin-bottom: 24px;
+        }
+
+        .post-content em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .post-content blockquote {
+            border-left: 2px solid var(--border);
+            padding-left: 20px;
+            margin: 32px 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .post-content h2 {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 22px;
+            font-weight: 400;
+            margin: 40px 0 16px;
+            color: var(--text);
+        }
+
+        .post-content ol, .post-content ul {
+            margin-bottom: 24px;
+            padding-left: 24px;
+        }
+
+        .post-content li {
+            margin-bottom: 12px;
+        }
+
+        .post-content a {
+            color: var(--text-secondary);
+            text-decoration-line: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 3px;
+            transition: text-decoration-color 0.2s, color 0.2s;
+        }
+
+        .post-content a:hover {
+            color: var(--accent);
+            text-decoration-color: var(--accent);
+        }
+
+        .post-note {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 56px 0;
+        }
+
+        .section-divider .line {
+            width: 48px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-divider .dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .post-footer-nav {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.25s;
+        }
+
+        .post-footer-nav:hover { color: var(--accent); }
+
+        footer {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 640px) {
+            nav { padding: 0 20px; }
+            main { padding: 90px 20px 60px; }
+            h1 { font-size: 28px; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.35s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="nav-name">Stream of Taru</a>
+        <a href="index.html#thoughts" class="nav-back">&larr; back to thoughts</a>
+    </nav>
+
+    <main class="fade-in">
+        <div class="post-meta">
+            <span class="post-date mono">17.07.19</span>
+            <span class="post-tag">Science</span>
+            <span class="post-read-time">15 min read</span>
+        </div>
+
+        <h1>Are We Alone?</h1>
+
+        <div class="post-content">
+            <p>
+                The Drake's equation, the Fermi paradox and the Great Filter. Are we close to getting an answer?
+            </p>
+            <p>
+                A question echoed by the greatest minds and laymen alike. A question that has been heard so many times over the past century, yet has fallen on deaf ears for the lack of a better answer. A question that has invoked existential angst in many. Conspiracy theorists claim that they have seen "little green men" climb out from otherwise elusive UFOs, while others wildly gesticulate about aliens locked up in the quarantine of the enigmatic Area 51. Some Hollywood movies entertain the fleeting possibility of humans becoming friends with aliens. Others portray the plausible demonic intelligence and self-propagating nature of deceptively innocent extraterrestrial beings (I'm looking at you, "Life." You traumatized me).
+            </p>
+            <p>
+                Human perceptions about alien life differ greatly from the actual realm of possibilities that this question represents. Today, I'm here to debunk some common myths and present an unflinchingly raw and true picture of the many hypotheticals that the search for extraterrestrial life has conjured till now. I believe that the reality of the situation is somehow scarier than the phantasm painted in our heads by popular media and midnight binges on conspiracy videos.
+            </p>
+            <p>
+                Let's face the true logistics of our situation. In our very own galaxy itself, there are up to 4 hundred billion stars, about 100,000 stars for every grain of sand on every beach on Earth. Many of these stars are not only billions of years older than our solar system, but entirely capable of housing Earth-sized planets within their respective Goldilock's zones, the region around a star where the temperature is 'just right' for life to flourish. A November 2013 study using data from the Kepler Space Telescope suggested that one in five sun-like stars has an Earth-sized planet orbiting in it's Goldilock's zone. There has been, and there are millions of planets that should be capable of sustaining intelligent life in our local group, the galaxy group that contains the Milky way.
+            </p>
+            <p>
+                It has been about 13.8 billion years since the Big Bang, since our universe rapidly inflated from a pinprick of a point in space and time, since something emerged from nothing. The universe became habitable 1-2 billion years after the pangs of its birth subsided and its heat simmered down. Our home planet was created only 4 billion years ago, quite young in the context of the age of the universe. Against that background, the Earth is a veritable embryo in the nursery that is the universe. There have probably been trillions of chances for life to develop elsewhere in our local group. Not only that, it is entirely possible that somewhere, there are alien civilizations older and more technologically advanced than us.
+            </p>
+            <p>
+                While Carl Sagan has put us at a Type 0.7 civilization on the Kardashev Scale, it is entirely possible that Type 2 or 3 civilizations have emerged, harnessed interstellar travel, colonized entire galaxies and managed to capture 100% of the power output of its star, using a Dyson Sphere perhaps. There should be foreign space-crafts traversing the vast expanses of the Milky Way at this very moment. In fact, we should have been visited by aliens time and time again. Instead, we are met with an iron wall of silence.
+            </p>
+            <p>
+                So, we are back to the question: where is everybody? This dilemma is represented pointedly by the Fermi Paradox. While Drake's equation indicates that the probability of alien life elsewhere in the Milky Way galaxy is high, we haven't found any evidence to back the estimate. In light of this glaring inconsistency, what are some hypotheticals that could explain this paradox?
+            </p>
+            <p>
+                The question that we should be asking is not "Where is everybody?" Rather, it is "What happened to everyone?", a very worrying area of inquiry. What if the reason we can't procure evidence for alien life is that all semblances of their civilization were actually destroyed? Is the universe a graveyard? This theory is known as the Great Filter, an insurmountable roadblock that must be faced by all intelligent civilizations at some point in time, a metaphorical barrier that has reduced the number of burgeoning intelligent civilizations to one: the humans. It is some developmental wall that we may face/have already faced.
+            </p>
+            <p>
+                The optimistic approach: The Great Filter is already passed. The evolutionary path of intelligent species is one filled with potholes, sudden U-turns and dumb luck. For example, abiogenesis (the evolution of life from inorganic or inanimate substances), the emergence of self-replicating molecules like DNA and RNA, or the development of complex eukaryotic organisms from simple prokaryotic life. The evolution of big brains and the invention of tools were pretty important steps too. These developments were so inexplicable, random and otherwise improbable that they may be unique to our civilization. The scarcity of these crucial stages of development on other planets may have restricted the formation of intelligent life. Hence, humans have passed the Great Filter, and that is a feat to greatly rejoice.
+            </p>
+            <p>
+                The pessimistic approach: The Great Filter is still to come. This would be an event of mass destruction, an incident so much more devastating than anything we have ever experienced before. Perhaps, all other alien life destroyed themselves in this enormous arms race or nuclear Armageddon. Perhaps, alien life succumbed to the grey goo scenario in which out-of-control nanotechnology devours all organic matter in quest for self-propagation. Maybe, evil AI killed them all or perhaps, it was a deadly virus. The filter could be something so terrifying that we can't even imagine it right now. It could be something really simple as well. Like the running out of scarce resources due to immense competition, or even air pollution. These Filters may have erased alien life elsewhere in our galaxy and may be waiting to destroy us as well. It all depends on how you look at it. After all, self-annihilation is regarded as imminent in many pop cultures. All intelligent life may suffer from the same curse: the obliteration of creators by their creations.
+            </p>
+            <p>
+                This may seem a bit far-fetched, but an open mind is imperative in this field of speculation. There could be an ancient, technologically superior Type 3 civilization that has passed the great filter. They monitor the universe and crush any other alien civilization that has the potential to become a threat. It is also possible that the civilization could have imposed a mass radio silence through the universe, thus preventing us from communicating with intelligent extraterrestrial beings. Other explanations for the Fermi paradox include extraterrestrials "spying" on Earth, ignoring it altogether or visiting it before civilization arose.
+            </p>
+            <p>
+                Another answer that may explain our apparent loneliness in the universe could be the ineffectiveness of our method of communication. We monitor electromagnetic radiation (namely, radio waves) for signs of transmissions from civilizations on other planets. What if aliens are using another way of letting us know that they are there? It is possible that both humans and aliens are signaling at each other, albeit on different channels. It is also possible that alien signals are too expensive to spread throughout the galaxy, civilizations broadcast signals for only a brief period or civilizations are too far apart. For example, if we assume that there are about 50 advanced civilizations spread out evenly across the Milky Way galaxy, the distance between 2 civilizations would be 7000 light-years. A two-way conversation would take 14000 light-years. It would be almost impossible to sustain an interesting conversation with alien life in another galaxy!
+            </p>
+            <p>
+                Or perhaps, the Fermi paradox doesn't exist. The Earth is unique and we have severely underestimated the rarity of the conditions that incubate life. It is only here, on Earth, where a multitude of favourable circumstances coalesce and produce an environment in which life can form. The Earth is the only planet that has plate tectonics in the solar system, operating as a global thermostat. We have liquid water and an atmosphere. The Earth is exceptional, it's neither too hot or too cold. We have a tidally locked moon that stabilises our planet's rotation and seasons. It was by a stroke of luck that a Mars-sized object collided with Earth 4.5 billion years ago. Not only did it knock off a chunk that would become the moon, but it gave Earth its characteristic tilt of 23.5 degrees relative to our orbital plane. This tilt gives us seasons! Without it, we would be subjugated to extreme weather conditions, in which it would have been impossible to construct a settlement.
+            </p>
+            <p>
+                So what is next? No one knows. There could be a Great filter ahead of us, and we could be waltzing into mass extinction. Conversely, we could have already passed the Great Filter, and we could be drifting languidly into our halcyon times. In light of this new information, do we really want to find any alien life? Ponder that for a while. If we do find some prokaryotes or eukaryotes on some exoplanet, it would suggest that the early stages of life weren't as rare as we predicted and that a Great Filter is ahead of us. Discovery of small extraterrestrial animals would be much more depressing. The ruins of an advanced alien civilization would signify death as we know it. The day that we do find alien life may be our doom. Perhaps it's for the best that life hasn't shown itself beyond Earth. Perhaps, we could be the first interstellar, space-faring civilization ever. Ignorance is truly bliss.
+            </p>
+            <p>
+                If you ask me for my opinion on the Fermi paradox, forgoing facts and years of scientific observation of interstellar space, I would say that aliens do exist. I don't believe that we are special in terms of our place in our universe. While we may be unique in our biology and sociology, it would be arrogant to assume that we are the only intelligent lifeforms in the universe. Aliens exist, if not in our local group, perhaps in far-flung galaxies. The universe that we know is limitless. We only know of the observable universe (space is so HUGE that light from some places hasn't even reached Earth in the 13.8 billion years since the Big Bang). Logically, of course, life has developed elsewhere.
+            </p>
+            <p>
+                I believe that humans are in their nascent stages of development. We may be searching for alien life in the wrong place altogether. At the end of the day, how exactly do you define life? Would you be able to identify alien life if you came across it? After all, the only type of life we have been exposed to is that on Earth. We only know that life ranges from unostentatious microbes to space-faring civilizations. How would one even identify sentience? How would you know that a being has the capacity to feel, and not only to capacity to do?
+            </p>
+            <p>
+                Our scientific instruments have a long way to go if we want to reach that level of mastery over the safely guarded secrets of the universe. All the more reason to work harder to uncover them, for that is the virtue of pure science. I believe that intellect and curiosity ensure survival. We need to keep moving. Stay in one place and you will stagnate. Don't commit resources to space exploration and humanity will become extinct on the surface of the Earth. One may argue that such a fate is far off, but we need to develop this field now, otherwise, we will not have the technology to escape threats in the far future. After all, a great filter can appear whenever. We are living on borrowed time.
+            </p>
+
+        </div>
+
+        <div class="section-divider">
+            <div class="line"></div>
+            <div class="dot"></div>
+            <div class="line"></div>
+        </div>
+
+        <a href="index.html#thoughts" class="post-footer-nav">&larr; back to all thoughts</a>
+    </main>
+
+    <footer>
+        &copy; 2026 Tarunyaa Sivakumar
+    </footer>
+</body>
+</html>
