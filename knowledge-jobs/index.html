@@ -4,18 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Knowledge Work Map — Tier Visualizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #0a0a0f;
-  --bg2: #12121a;
-  --bg3: #1a1a26;
-  --fg: #e6e6ee;
-  --fg2: #8a8a98;
-  --fg3: #5a5a68;
-  --accent: #ff8a3c;
-  --rule: rgba(255,255,255,0.08);
+  --bg: #fcfcfc;
+  --bg2: #ffffff;
+  --bg3: #f5f5fa;
+  --fg: #1a1a2e;
+  --fg2: #8a8a9a;
+  --fg3: #b8b8c8;
+  --accent: #1e2a4a;
+  --rule: #ebebf0;
 
   --t1:  #7a8a78;
   --t2:  #ff8a3c;
@@ -28,8 +31,9 @@
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 #wrapper {
@@ -43,9 +47,10 @@ header.page {
   margin-bottom: 28px;
 }
 header.page h1 {
-  font-size: 30px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+  letter-spacing: -0.3px;
   margin-bottom: 8px;
 }
 header.page .tagline {
@@ -121,7 +126,7 @@ header.page .credit a { color: var(--fg2); }
 }
 .thesis-section .body ul { padding-left: 22px; margin-bottom: 14px; }
 .thesis-section .body li { margin-bottom: 6px; }
-.thesis-section .body strong { color: #fff; font-weight: 600; }
+.thesis-section .body strong { color: var(--accent); font-weight: 600; }
 .thesis-section .body em { color: var(--fg); font-style: italic; }
 .thesis-section .body a { color: var(--accent); text-decoration: none; }
 .thesis-section .body a:hover { text-decoration: underline; }
@@ -133,7 +138,7 @@ header.page .credit a { color: var(--fg2); }
   border-radius: 3px;
   font-size: 12px;
   font-weight: 600;
-  color: #0a0a0f;
+  color: #ffffff;
   margin-right: 4px;
   vertical-align: 1px;
 }
@@ -226,7 +231,7 @@ canvas#canvas {
   position: fixed;
   pointer-events: none;
   background: var(--bg2);
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid var(--rule);
   border-radius: 8px;
   padding: 12px 14px;
   font-size: 12px;
@@ -235,7 +240,7 @@ canvas#canvas {
   opacity: 0;
   transition: opacity 0.12s;
   z-index: 20;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  box-shadow: 0 8px 32px rgba(30,42,74,0.10);
 }
 #tooltip.visible { opacity: 1; }
 #tooltip .tt-title-row {
@@ -247,7 +252,7 @@ canvas#canvas {
 #tooltip .tt-title {
   font-weight: 600;
   font-size: 13px;
-  color: #fff;
+  color: var(--fg);
   flex: 1;
 }
 #tooltip .tt-tier-chip {
@@ -255,7 +260,7 @@ canvas#canvas {
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 3px;
-  color: #0a0a0f;
+  color: #ffffff;
   flex-shrink: 0;
 }
 #tooltip .tt-rationale {
@@ -276,7 +281,7 @@ canvas#canvas {
   gap: 2px 12px;
   font-size: 11px;
   padding-top: 8px;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid var(--rule);
 }
 #tooltip .tt-stats .label { color: var(--fg3); }
 #tooltip .tt-stats .value { color: var(--fg); text-align: right; }
@@ -284,7 +289,7 @@ canvas#canvas {
   font-size: 10px;
   color: var(--fg3);
   margin-top: 6px;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid var(--rule);
   padding-top: 6px;
 }
 
@@ -297,10 +302,10 @@ canvas#canvas {
   border-radius: 6px;
 }
 .empty-state code {
-  background: var(--bg2);
+  background: var(--bg3);
   padding: 1px 6px;
   border-radius: 3px;
-  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace;
   font-size: 12px;
   color: var(--accent);
 }
@@ -321,11 +326,11 @@ canvas#canvas {
 .prompt-block summary:hover { color: var(--fg); }
 .prompt-block .prompt-box {
   margin-top: 8px;
-  background: rgba(0,0,0,0.3);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: var(--bg3);
+  border: 1px solid var(--rule);
   border-radius: 6px;
   padding: 14px 18px;
-  font-family: 'SF Mono', 'Menlo', 'Consolas', monospace;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace;
   font-size: 11px;
   line-height: 1.55;
   color: var(--fg2);
@@ -526,7 +531,7 @@ function layout() {
 
 function draw() {
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.fillStyle = "#0a0a0f";
+  ctx.fillStyle = "#fcfcfc";
   ctx.fillRect(0, 0, canvas.width / dpr, canvas.height / dpr);
 
   for (const r of rects) {
@@ -538,15 +543,15 @@ function draw() {
     ctx.fillRect(rx, ry, rw, rh);
 
     if (isHovered) {
-      ctx.strokeStyle = "#fff";
+      ctx.strokeStyle = "#1e2a4a";
       ctx.lineWidth = 2;
       ctx.strokeRect(rx, ry, rw, rh);
     }
 
     // Vendor overlay marker (only in vendor mode)
     if (narrativeMode === "vendors" && r.vendors && r.vendors.length > 0 && rw > 14 && rh > 14) {
-      ctx.fillStyle = "#fff";
-      ctx.font = `700 ${Math.min(14, rw / 3)}px -apple-system, system-ui, sans-serif`;
+      ctx.fillStyle = "#1a1a2e";
+      ctx.font = `700 ${Math.min(14, rw / 3)}px 'Inter', -apple-system, system-ui, sans-serif`;
       ctx.textBaseline = "top";
       ctx.fillText("★", rx + rw - 14, ry + 2);
     }
@@ -558,16 +563,16 @@ function draw() {
       ctx.rect(rx + 4, ry + 2, rw - 8, rh - 4);
       ctx.clip();
       const fontSize = Math.min(13, Math.max(9, Math.min(rw / 10, rh / 3)));
-      ctx.font = `500 ${fontSize}px -apple-system, system-ui, sans-serif`;
+      ctx.font = `500 ${fontSize}px 'Inter', -apple-system, system-ui, sans-serif`;
       const fade = (narrativeMode === "t2-focus" && r.tier !== "T2") ? 0.4 : 0.92;
-      ctx.fillStyle = isHovered ? "#fff" : `rgba(255,255,255,${fade})`;
+      ctx.fillStyle = isHovered ? "#1a1a2e" : `rgba(26,26,46,${fade})`;
       ctx.textBaseline = "top";
       ctx.fillText(r.title, rx + 5, ry + 4);
 
       if (rh > 36 && rw > 70) {
-        ctx.font = `400 ${Math.max(8, fontSize - 2)}px -apple-system, system-ui, sans-serif`;
+        ctx.font = `400 ${Math.max(8, fontSize - 2)}px 'Inter', -apple-system, system-ui, sans-serif`;
         const subFade = (narrativeMode === "t2-focus" && r.tier !== "T2") ? 0.25 : 0.6;
-        ctx.fillStyle = `rgba(255,255,255,${subFade})`;
+        ctx.fillStyle = `rgba(26,26,46,${subFade})`;
         const sub = (r.tier ? r.tier + " · " : "") + (r.jobs ? formatNumber(r.jobs) + " jobs" : "");
         ctx.fillText(sub, rx + 5, ry + 4 + fontSize + 2);
       }
@@ -761,8 +766,8 @@ window.addEventListener("resize", resize);
 // ── Load ───────────────────────────────────────────────────────────────
 
 Promise.all([
-  fetch("thesis.json").then(r => r.ok ? r.json() : null).catch(() => null),
-  fetch("data.json").then(r => r.json()),
+  fetch("/knowledge-jobs/thesis.json").then(r => r.ok ? r.json() : null).catch(() => null),
+  fetch("/knowledge-jobs/data.json").then(r => r.json()),
 ])
   .then(([thesis, d]) => {
     if (thesis) {
