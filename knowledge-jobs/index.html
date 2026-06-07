@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Knowledge Work Map — Tier Visualizer</title>
+<title>The Frontier Labs' Real Business Model</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -12,28 +12,27 @@
 
 :root {
   --bg: #fcfcfc;
-  --bg2: #ffffff;
-  --bg3: #f5f5fa;
-  --fg: #1a1a2e;
-  --fg2: #8a8a9a;
-  --fg3: #b8b8c8;
-  --accent: #1e2a4a;
-  --rule: #ebebf0;
+  --bg2: #f6f6f8;
+  --bg3: #ececf0;
+  --fg: #1a1a22;
+  --fg2: #565663;
+  --fg3: #8a8a98;
+  --accent: #e8730f;
+  --rule: rgba(0,0,0,0.12);
 
-  --t1:  #7a8a78;
+  --t1:  #6f8a76;
   --t2:  #ff8a3c;
-  --t3a: #5da4d8;
-  --t3b: #a06bd1;
-  --t3c: #e07ba9;
-  --tnone: #4a4a55;
+  --t3a: #4a93d0;
+  --t3b: #9159c9;
+  --t3c: #d96a9c;
+  --tnone: #b8b8c2;
 }
 
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
 }
 
 #wrapper {
@@ -57,6 +56,7 @@ header.page .tagline {
   font-size: 17px;
   color: var(--fg);
   font-weight: 500;
+  font-style: italic;
   max-width: 720px;
   margin-bottom: 10px;
 }
@@ -74,17 +74,18 @@ header.page .subquestions li {
   margin-bottom: 3px;
 }
 header.page .subquestions li::before {
-  content: "—";
+  content: "·";
   position: absolute;
   left: 0;
   color: var(--fg3);
 }
-header.page .credit {
+.credit {
   font-size: 12px;
   color: var(--fg3);
-  margin-top: 8px;
+  max-width: 760px;
+  margin: 18px 0 4px;
 }
-header.page .credit a { color: var(--fg2); }
+.credit a { color: var(--fg2); }
 
 /* ── Thesis sections (accordion) ──────────────────────────────────── */
 
@@ -123,7 +124,7 @@ header.page .credit a { color: var(--fg2); }
   font-variant-numeric: tabular-nums;
 }
 .thesis-section .caption {
-  margin-top: 6px;
+  margin-top: 8px;
   margin-left: 30px;
   font-size: 14px;
   font-style: italic;
@@ -132,7 +133,7 @@ header.page .credit a { color: var(--fg2); }
 }
 .thesis-section .caption p { margin-bottom: 0; }
 .thesis-section .body {
-  margin-top: 16px;
+  margin-top: 14px;
   margin-left: 30px;
   max-width: 760px;
   display: none;
@@ -147,8 +148,42 @@ header.page .credit a { color: var(--fg2); }
 }
 .thesis-section .body ul { padding-left: 22px; margin-bottom: 14px; }
 .thesis-section .body li { margin-bottom: 6px; }
-.thesis-section .body strong { color: var(--accent); font-weight: 600; }
+.thesis-section .body strong { color: #000; font-weight: 600; }
 .thesis-section .body em { color: var(--fg); font-style: italic; }
+
+/* Tier 3 sub-tier dropdown */
+.subtier-toggle {
+  margin: 12px 0 4px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--bg2);
+  padding: 0 14px;
+}
+.subtier-toggle summary {
+  cursor: pointer;
+  user-select: none;
+  padding: 11px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  list-style: none;
+}
+.subtier-toggle summary::-webkit-details-marker { display: none; }
+.subtier-toggle summary::before {
+  content: "▸ ";
+  color: var(--accent);
+  display: inline-block;
+  transition: transform 0.15s;
+}
+.subtier-toggle[open] summary::before { content: "▾ "; }
+.subtier-toggle[open] summary { border-bottom: 1px solid var(--rule); }
+.subtier-toggle p {
+  font-size: 13px;
+  color: var(--fg);
+  margin: 12px 0;
+  line-height: 1.55;
+}
+.subtier-toggle p:first-of-type { margin-top: 14px; }
 .thesis-section .body a { color: var(--accent); text-decoration: none; }
 .thesis-section .body a:hover { text-decoration: underline; }
 
@@ -159,7 +194,7 @@ header.page .credit a { color: var(--fg2); }
   border-radius: 3px;
   font-size: 12px;
   font-weight: 600;
-  color: #ffffff;
+  color: #0a0a0f;
   margin-right: 4px;
   vertical-align: 1px;
 }
@@ -246,13 +281,61 @@ canvas#canvas {
   font-style: italic;
 }
 
+/* Data-findings dropdown beside the map */
+.map-facts {
+  max-width: 980px;
+  margin: 0 0 8px;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--bg2);
+  padding: 0 16px;
+}
+.map-facts summary {
+  cursor: pointer;
+  user-select: none;
+  padding: 12px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fg);
+  list-style: none;
+}
+.map-facts summary::-webkit-details-marker { display: none; }
+.map-facts summary::before { content: "▸ "; color: var(--accent); }
+.map-facts[open] summary::before { content: "▾ "; }
+.map-facts[open] summary { border-bottom: 1px solid var(--rule); }
+
+/* Per-tier stat rows */
+#tierStatsBody { padding: 14px 0 16px; }
+.tier-row {
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+}
+.tier-row:first-child { border-top: none; }
+.tier-row-head {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px;
+  font-size: 14px; color: var(--fg);
+}
+.tier-row-head b { color: #000; font-weight: 600; }
+.tier-row-head .tier-share {
+  font-size: 12px; color: var(--fg2); margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+.tier-metrics {
+  display: flex; flex-wrap: wrap; gap: 6px 18px;
+  margin: 7px 0 6px;
+  font-size: 12px; color: var(--fg2);
+}
+.tier-metrics b { color: var(--fg); font-weight: 700; font-variant-numeric: tabular-nums; }
+.tier-insight { font-size: 12.5px; color: var(--fg); line-height: 1.5; }
+.tier-top { font-size: 11px; color: var(--fg3); margin-top: 4px; }
+
 /* ── Tooltip ───────────────────────────────────────────────────────── */
 
 #tooltip {
   position: fixed;
   pointer-events: none;
-  background: var(--bg2);
-  border: 1px solid var(--rule);
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.14);
   border-radius: 8px;
   padding: 12px 14px;
   font-size: 12px;
@@ -261,7 +344,7 @@ canvas#canvas {
   opacity: 0;
   transition: opacity 0.12s;
   z-index: 20;
-  box-shadow: 0 8px 32px rgba(30,42,74,0.10);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.18);
 }
 #tooltip.visible { opacity: 1; }
 #tooltip .tt-title-row {
@@ -281,7 +364,7 @@ canvas#canvas {
   font-weight: 700;
   padding: 2px 6px;
   border-radius: 3px;
-  color: #ffffff;
+  color: #0a0a0f;
   flex-shrink: 0;
 }
 #tooltip .tt-rationale {
@@ -302,7 +385,7 @@ canvas#canvas {
   gap: 2px 12px;
   font-size: 11px;
   padding-top: 8px;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid rgba(0,0,0,0.08);
 }
 #tooltip .tt-stats .label { color: var(--fg3); }
 #tooltip .tt-stats .value { color: var(--fg); text-align: right; }
@@ -310,7 +393,7 @@ canvas#canvas {
   font-size: 10px;
   color: var(--fg3);
   margin-top: 6px;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid rgba(0,0,0,0.08);
   padding-top: 6px;
 }
 
@@ -323,7 +406,7 @@ canvas#canvas {
   border-radius: 6px;
 }
 .empty-state code {
-  background: var(--bg3);
+  background: var(--bg2);
   padding: 1px 6px;
   border-radius: 3px;
   font-family: 'JetBrains Mono', 'SF Mono', 'Menlo', 'Consolas', monospace;
@@ -331,10 +414,17 @@ canvas#canvas {
   color: var(--accent);
 }
 
-/* ── Scoring prompt (Karpathy-style collapsible) ──────────────────── */
+/* ── Scoring prompts (Karpathy-style collapsibles) ────────────────── */
+.prompt-methodology { margin: 8px 0 4px; max-width: 760px; }
+.prompt-methodology-label {
+  font-size: 12px;
+  color: var(--fg2);
+  margin-bottom: 8px;
+}
+.prompt-methodology-label a { color: var(--accent); text-decoration: none; }
+.prompt-methodology-label a:hover { text-decoration: underline; }
 .prompt-block {
-  margin-top: 14px;
-  margin-left: 30px;
+  margin: 0 0 6px;
   max-width: 760px;
 }
 .prompt-block summary {
@@ -347,7 +437,7 @@ canvas#canvas {
 .prompt-block summary:hover { color: var(--fg); }
 .prompt-block .prompt-box {
   margin-top: 8px;
-  background: var(--bg3);
+  background: var(--bg2);
   border: 1px solid var(--rule);
   border-radius: 6px;
   padding: 14px 18px;
@@ -361,6 +451,68 @@ canvas#canvas {
   word-break: break-word;
 }
 .prompt-block .prompt-box strong { color: var(--fg); }
+
+/* ── 2×2 quadrant (the only inline diagram) ───────────────────────── */
+.diagram { margin: 24px 0; }
+.diagram-cap {
+  font-size: 11px;
+  color: var(--fg3);
+  font-style: italic;
+  text-align: center;
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+.quadrant { display: flex; align-items: stretch; gap: 8px; }
+.quadrant .q-axis-y {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  text-align: center; font-size: 11px; font-weight: 600;
+  color: var(--fg2); text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 26px 0 0;
+}
+.quadrant .q-main { flex: 1; min-width: 0; }
+.quadrant .q-grid {
+  display: grid;
+  grid-template-columns: 52px 1fr 1fr;
+  grid-template-rows: auto 1fr 1fr;
+  gap: 8px;
+}
+.quadrant .q-colhead {
+  text-align: center; font-size: 11px; font-weight: 600;
+  color: var(--fg2); align-self: end; padding-bottom: 2px;
+}
+.quadrant .q-rowhead {
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 600; color: var(--fg2);
+}
+.quadrant .q-cell {
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-left-width: 4px;
+  border-radius: 8px;
+  padding: 13px 14px;
+  min-height: 120px;
+}
+.quadrant .q-cell.c-blue   { border-left-color: var(--t3a); }
+.quadrant .q-cell.c-orange { border-left-color: var(--accent); }
+.quadrant .q-cell.c-purple { border-left-color: var(--t3b); }
+.quadrant .q-cell.c-green  { border-left-color: var(--t1); }
+.quadrant .q-win { font-size: 14px; font-weight: 700; color: #000; margin-bottom: 6px; }
+.quadrant .q-why { font-size: 12px; color: var(--fg); line-height: 1.5; margin-bottom: 8px; }
+.quadrant .q-stat {
+  font-size: 11px; color: var(--fg2); margin-bottom: 6px;
+  padding-top: 7px; border-top: 1px solid var(--rule);
+}
+.quadrant .q-stat b { color: var(--fg); font-weight: 700; font-variant-numeric: tabular-nums; }
+.quadrant .q-ex { font-size: 11px; color: var(--fg2); font-weight: 500; }
+.quadrant .q-axis-x {
+  text-align: center; font-size: 11px; font-weight: 600;
+  color: var(--fg2); text-transform: uppercase; letter-spacing: 0.06em;
+  margin-top: 8px;
+}
+@media (max-width: 620px) {
+  .quadrant .q-why { display: none; }
+  .quadrant .q-cell { min-height: 72px; }
+}
 </style>
 </head>
 <body>
@@ -368,24 +520,20 @@ canvas#canvas {
 <div id="wrapper">
 
 <header class="page">
-  <h1>Knowledge Work Map</h1>
-  <p class="tagline">When and how will AI create value at the application layer?</p>
-  <ul class="subquestions">
-    <li>When will frontier labs become profitable?</li>
-    <li>How will AI agents be deployed?</li>
-    <li>How will AI agents be priced?</li>
-  </ul>
-  <p class="credit">Built on <a href="https://karpathy.ai/jobs/">Karpathy's BLS visualizer</a>. Same Bureau of Labor Statistics dataset; filtered to high-digital-exposure occupations; recoloured by tier.</p>
+  <h1>The Frontier Labs' Real Business Model</h1>
+  <p class="tagline">An agentic systems thesis on whether frontier labs can be profitable.</p>
 </header>
 
-<!-- Thesis sections before the map (§1, §2) — populated from thesis.json -->
+<!-- Thesis sections before the map (§1–§3) — populated from thesis.json -->
 <div id="thesisBeforeMap"></div>
 
-<!-- The actual scoring prompt the LLM was given (populated from thesis.json) -->
-<details class="prompt-block">
-  <summary>View the scoring prompt the LLM was given (single axis: skill transferability)</summary>
-  <div class="prompt-box" id="scoringPromptBox"></div>
-</details>
+<p class="credit">Built on <a href="https://karpathy.ai/jobs/">Karpathy's BLS visualizer</a>. Same Bureau of Labor Statistics dataset; filtered to high-digital-exposure occupations; recoloured by tier.</p>
+
+<!-- Methodology: the LLM prompts behind the map (populated from thesis.json) -->
+<div class="prompt-methodology">
+  <p class="prompt-methodology-label">Methodology: the LLM prompts behind this map, on <a href="https://karpathy.ai/jobs/">Karpathy's BLS pipeline</a>.</p>
+  <div id="promptBlocks"></div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════════════════════
      THE MAP
@@ -405,7 +553,13 @@ canvas#canvas {
   <p class="map-note" id="mapNote"></p>
 </div>
 
-<!-- Thesis sections after the map (§3, §4, §5) — populated from thesis.json -->
+<!-- Per-tier stats beside the map (not part of the essay), from thesis.json -->
+<details class="map-facts" id="tierStats">
+  <summary>Each tier at a glance</summary>
+  <div id="tierStatsBody"></div>
+</details>
+
+<!-- Thesis sections after the map (§4–§6) — populated from thesis.json -->
 <div id="thesisAfterMap"></div>
 
 </div>
@@ -425,21 +579,21 @@ canvas#canvas {
 // ── Constants ──────────────────────────────────────────────────────────
 
 const TIER_DEFS = [
-  { id: "T1",  label: "T1 — Genericizable",            color: "#7a8a78" },
-  { id: "T2",  label: "T2 — Framework + config",       color: "#ff8a3c" },
-  { id: "T3a", label: "T3a — Documentable tacit",      color: "#5da4d8" },
-  { id: "T3b", label: "T3b — Genuinely tacit",         color: "#a06bd1" },
-  { id: "T3c", label: "T3c — Relational",              color: "#e07ba9" },
+  { id: "T1",  label: "T1 · Genericizable",            color: "#6f8a76" },
+  { id: "T2",  label: "T2 · Framework + config",       color: "#ff8a3c" },
+  { id: "T3a", label: "T3a · Documentable tacit",      color: "#4a93d0" },
+  { id: "T3b", label: "T3b · Genuinely tacit",         color: "#9159c9" },
+  { id: "T3c", label: "T3c · Relational",              color: "#d96a9c" },
 ];
 const TIER_COLOR = Object.fromEntries(TIER_DEFS.map(t => [t.id, t.color]));
 const TIER_LABEL = Object.fromEntries(TIER_DEFS.map(t => [t.id, t.label]));
-const NONE_COLOR = "#4a4a55";
+const NONE_COLOR = "#b8b8c2";
 
 // Map narrative modes (driven by which section is open).
 const MODE_COPY = {
   "default":  "Each rectangle is one US occupation; area = total employment. Color = tier in the framework above. Click any tile for the BLS page; hover for the rationale.",
-  "t2-focus": "Highlighting Tier 2 only — the contested middle where the 2a vs 2b deployment battle is fought. Other tiers dimmed.",
-  "vendors":  "Tiles marked with ★ have a named AI vendor operating in that occupation today. Hover to see who.",
+  "t2-focus": "Highlighting Tier 2 only, 60% of knowledge work, the contested middle the $5.5B FDE bet is sized for. Other tiers dimmed.",
+  "vendors":  "Tiles marked with ★ have a named AI vendor operating in that occupation today, the application-layer players the labs meter underneath. Hover to see who.",
 };
 
 // ── Hex → rgba helper ─────────────────────────────────────────────────
@@ -569,14 +723,14 @@ function draw() {
     ctx.fillRect(rx, ry, rw, rh);
 
     if (isHovered) {
-      ctx.strokeStyle = "#1e2a4a";
+      ctx.strokeStyle = "#1a1a22";
       ctx.lineWidth = 2;
       ctx.strokeRect(rx, ry, rw, rh);
     }
 
     // Vendor overlay marker (only in vendor mode)
     if (narrativeMode === "vendors" && r.vendors && r.vendors.length > 0 && rw > 14 && rh > 14) {
-      ctx.fillStyle = "#1a1a2e";
+      ctx.fillStyle = "#1a1a22";
       ctx.font = `700 ${Math.min(14, rw / 3)}px 'Inter', -apple-system, system-ui, sans-serif`;
       ctx.textBaseline = "top";
       ctx.fillText("★", rx + rw - 14, ry + 2);
@@ -590,15 +744,15 @@ function draw() {
       ctx.clip();
       const fontSize = Math.min(13, Math.max(9, Math.min(rw / 10, rh / 3)));
       ctx.font = `500 ${fontSize}px 'Inter', -apple-system, system-ui, sans-serif`;
-      const fade = (narrativeMode === "t2-focus" && r.tier !== "T2") ? 0.4 : 0.92;
-      ctx.fillStyle = isHovered ? "#1a1a2e" : `rgba(26,26,46,${fade})`;
+      const fade = (narrativeMode === "t2-focus" && r.tier !== "T2") ? 0.35 : 0.88;
+      ctx.fillStyle = isHovered ? "#000" : `rgba(0,0,0,${fade})`;
       ctx.textBaseline = "top";
       ctx.fillText(r.title, rx + 5, ry + 4);
 
       if (rh > 36 && rw > 70) {
         ctx.font = `400 ${Math.max(8, fontSize - 2)}px 'Inter', -apple-system, system-ui, sans-serif`;
         const subFade = (narrativeMode === "t2-focus" && r.tier !== "T2") ? 0.25 : 0.6;
-        ctx.fillStyle = `rgba(26,26,46,${subFade})`;
+        ctx.fillStyle = `rgba(0,0,0,${subFade})`;
         const sub = (r.tier ? r.tier + " · " : "") + (r.jobs ? formatNumber(r.jobs) + " jobs" : "");
         ctx.fillText(sub, rx + 5, ry + 4 + fontSize + 2);
       }
@@ -713,6 +867,115 @@ function setNarrativeMode(mode) {
   draw();
 }
 
+// ── Inline diagrams (injected where {{MARKER}} appears in a section) ───
+
+const DIAGRAMS = {
+  TIER2_MATRIX: `
+    <div class="diagram quadrant">
+      <div class="q-axis-y">Workflow repeatability</div>
+      <div class="q-main">
+        <div class="q-grid">
+          <div class="q-corner"></div>
+          <div class="q-colhead">Concentrated customers</div>
+          <div class="q-colhead">Fragmented customers</div>
+          <div class="q-rowhead">High</div>
+          <div class="q-cell c-blue">
+            <div class="q-win">Vertical AI startups win</div>
+            <div class="q-why">When the job packages cleanly and a small cohort of large companies can use the same infrastructure, a startup can build the operational context layer once and sell it to them.</div>
+            <div class="q-ex">Decagon · Harvey · Abridge</div>
+          </div>
+          <div class="q-cell c-orange">
+            <div class="q-win">Horizontal agents win</div>
+            <div class="q-why">When a job is broadly similar across companies but not exactly, a horizontal agent captures the surface. Most admin and secretary work falls here, the largest unclaimed cell and the one the labs have a real shot at.</div>
+            <div class="q-ex">Claude managed agents · OpenAI workspace agents · Microsoft Copilot</div>
+          </div>
+          <div class="q-rowhead">Low</div>
+          <div class="q-cell c-purple">
+            <div class="q-win">Platform incumbents win</div>
+            <div class="q-why">When jobs vary significantly across companies, only players who already own that variation can extend it into AI.</div>
+            <div class="q-ex">Salesforce Agentforce · ServiceNow · FIS</div>
+          </div>
+          <div class="q-cell c-green">
+            <div class="q-win">Enterprises go internal</div>
+            <div class="q-why">When neither factor is favorable, technically capable enterprises build their own architectures and call lab models as the engine underneath.</div>
+            <div class="q-ex">JPMorgan LLM Suite · Bridgewater</div>
+          </div>
+        </div>
+        <div class="q-axis-x">Company concentration →</div>
+      </div>
+    </div>
+    <div class="diagram-cap">Two factors split the 27M Tier 2 jobs into four pockets, and the labs win at most one.</div>`,
+};
+
+function injectDiagrams(html) {
+  for (const key in DIAGRAMS) {
+    const re = new RegExp(`(?:<p>\\s*)?\\{\\{${key}\\}\\}(?:\\s*</p>)?`, "g");
+    html = html.replace(re, DIAGRAMS[key]);
+  }
+  return html;
+}
+
+// ── Quantified 2×2 (built from thesis.quadrant) ───────────────────────
+
+function fmtJobs(n) { return n >= 1e6 ? (n / 1e6).toFixed(1) + "M" : Math.round(n / 1e3) + "K"; }
+function fmtWages(n) { return n >= 1e12 ? "$" + (n / 1e12).toFixed(2) + "T" : "$" + Math.round(n / 1e9) + "B"; }
+
+function quadrantCell(c) {
+  if (!c) return `<div class="q-cell"></div>`;
+  const top = (c.top && c.top.length) ? ` title="Top: ${c.top.join(", ")}"` : "";
+  return `<div class="q-cell ${c.cls}"${top}>
+      <div class="q-win">${c.winner}</div>
+      <div class="q-why">${c.why}</div>
+      <div class="q-stat"><b>${fmtJobs(c.jobs)}</b> jobs · <b>${fmtWages(c.wages)}</b> wages · ${c.pct}% of T2</div>
+      <div class="q-ex">${c.ex}</div>
+    </div>`;
+}
+
+function quadrantHTML(q) {
+  const labs = q["high-fragmented"] || { wages: 0, pct: 0, pay: 0 };
+  const inc = q["low-concentrated"] || { pay: 0 };
+  return `<div class="diagram quadrant">
+      <div class="q-axis-y">Workflow repeatability</div>
+      <div class="q-main">
+        <div class="q-grid">
+          <div class="q-corner"></div>
+          <div class="q-colhead">Concentrated customers</div>
+          <div class="q-colhead">Fragmented customers</div>
+          <div class="q-rowhead">High</div>
+          ${quadrantCell(q["high-concentrated"])}
+          ${quadrantCell(q["high-fragmented"])}
+          <div class="q-rowhead">Low</div>
+          ${quadrantCell(q["low-concentrated"])}
+          ${quadrantCell(q["low-fragmented"])}
+        </div>
+        <div class="q-axis-x">Company concentration →</div>
+      </div>
+    </div>
+    <div class="diagram-cap">Cells placed by <b>company concentration</b> (whether the agent's buyers are a small cohort of large enterprises or a long tail), sized by the Tier 2 wages at stake. Placements are majority-vote LLM judgments over 51 occupations, directional and not exact. The labs' one cell, horizontal agents for fragmented work, is the largest in Tier 2 at <b>${labs.pct}%</b> of jobs but the lowest-paid (about $${Math.round(labs.pay/1000)}K, versus $${Math.round(inc.pay/1000)}K for the incumbent-owned cell). The labs win the volume; the higher-value work stays with vertical startups, incumbents, and in-house teams.</div>`;
+}
+
+function renderTierStats(stats) {
+  const box = document.getElementById("tierStatsBody");
+  const wrap = document.getElementById("tierStats");
+  if (!box || !wrap) return;
+  if (!stats || !stats.length) { wrap.style.display = "none"; return; }
+  box.innerHTML = stats.map(s => `
+    <div class="tier-row">
+      <div class="tier-row-head">
+        <span class="tier-chip ${s.tier.toLowerCase()}">${s.tier}</span>
+        <b>${s.label}</b>
+        <span class="tier-share">${fmtJobs(s.jobs)} jobs · ${s.pct}% of knowledge work</span>
+      </div>
+      <div class="tier-metrics">
+        <span>Median pay <b>$${Math.round(s.pay/1000)}K</b></span>
+        <span>BLS 10-yr outlook <b>${s.outlook >= 0 ? "+" : ""}${s.outlook}%</b></span>
+        <span>AI exposure <b>${s.exposure}/10</b></span>
+      </div>
+      <div class="tier-insight">${s.insight}</div>
+      <div class="tier-top">Largest: ${s.top.join(", ")}</div>
+    </div>`).join("");
+}
+
 // ── Thesis rendering (from thesis.json) ───────────────────────────────
 
 function renderThesis(thesis) {
@@ -721,12 +984,15 @@ function renderThesis(thesis) {
   before.innerHTML = "";
   after.innerHTML = "";
 
+  // Quantified quadrant overrides the static fallback when data is present.
+  if (thesis.quadrant) DIAGRAMS.TIER2_MATRIX = quadrantHTML(thesis.quadrant);
+  renderTierStats(thesis.tier_stats);
+
   for (const s of thesis.sections) {
     const sec = document.createElement("section");
     sec.className = "thesis-section";
     sec.dataset.section = s.id;
     sec.dataset.mode = s.mode || "default";
-    if (s.id === "2") sec.classList.add("open");
 
     sec.innerHTML = `
       <div class="header-row">
@@ -734,38 +1000,56 @@ function renderThesis(thesis) {
         <h2><span class="section-num">${s.id}.</span>${s.title}</h2>
       </div>
       <div class="caption">${s.caption_html || ""}</div>
-      <div class="body">${s.body_html || ""}</div>
+      <div class="body">${injectDiagrams(s.body_html || "")}</div>
     `;
 
-    if (parseInt(s.id, 10) <= 2) before.appendChild(sec);
+    if (parseInt(s.id, 10) <= 3) before.appendChild(sec);
     else after.appendChild(sec);
   }
 
-  if (thesis.scoring_prompt) {
-    document.getElementById("scoringPromptBox").textContent = thesis.scoring_prompt;
-  }
+  const prompts = thesis.prompts ||
+    (thesis.scoring_prompt ? [{ summary: "View the scoring prompt", text: thesis.scoring_prompt }] : []);
+  renderPrompts(prompts);
+}
+
+function renderPrompts(prompts) {
+  const box = document.getElementById("promptBlocks");
+  if (!box) return;
+  box.innerHTML = prompts.map(p => `
+    <details class="prompt-block">
+      <summary>${p.summary}</summary>
+      <div class="prompt-box"></div>
+    </details>`).join("");
+  const boxes = box.querySelectorAll(".prompt-box");
+  prompts.forEach((p, i) => { if (boxes[i]) boxes[i].textContent = p.text; });
 }
 
 // ── Section accordion ─────────────────────────────────────────────────
 
 function setupSections() {
-  const sections = document.querySelectorAll(".thesis-section");
+  const sections = [...document.querySelectorAll(".thesis-section")];
+
+  // Each section toggles independently — several can be open at once. The map's
+  // narrative mode follows the section just opened; on close it falls back to
+  // the last still-open section (in document order), else default.
+  function refreshMode(justOpened) {
+    if (justOpened && justOpened.classList.contains("open")) {
+      setNarrativeMode(justOpened.dataset.mode || "default");
+      return;
+    }
+    const open = sections.filter(s => s.classList.contains("open"));
+    const last = open[open.length - 1];
+    setNarrativeMode(last ? (last.dataset.mode || "default") : "default");
+  }
+
   sections.forEach(s => {
-    const header = s.querySelector(".header-row");
-    header.addEventListener("click", () => {
-      const wasOpen = s.classList.contains("open");
-      sections.forEach(o => o.classList.remove("open"));
-      if (!wasOpen) {
-        s.classList.add("open");
-        setNarrativeMode(s.dataset.mode || "default");
-      } else {
-        setNarrativeMode("default");
-      }
+    s.querySelector(".header-row").addEventListener("click", () => {
+      s.classList.toggle("open");
+      refreshMode(s);
     });
   });
 
-  const openSec = document.querySelector(".thesis-section.open");
-  if (openSec) setNarrativeMode(openSec.dataset.mode || "default");
+  refreshMode();
 }
 
 // ── Events ────────────────────────────────────────────────────────────
