@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/the-frontier-labs-real-business-model",
+      "destination": "/knowledge-jobs/index.html"
+    }
+  ]
+}
