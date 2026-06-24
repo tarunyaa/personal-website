@@ -335,22 +335,51 @@
         .writing-title a:hover { color: var(--accent); }
 
         /* NOTES FEED */
-        .notes-intro {
+        /* Adler epigraph above the feed */
+        .notes-epigraph {
+            margin-bottom: 44px;
+            padding-left: 20px;
+            border-left: 2px solid var(--border);
+        }
+        .notes-epigraph p {
             font-family: 'Newsreader', Georgia, serif;
-            font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.85;
-            margin-bottom: 40px;
-            font-weight: 300;
+            font-size: 18px;
             font-style: italic;
+            font-weight: 400;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
         }
+        .notes-epigraph cite {
+            font-style: normal;
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+        }
+        .notes-epigraph cite em { font-style: italic; }
 
-        .note {
-            padding: 0 0 32px;
-            margin-bottom: 32px;
-            border-bottom: 1px solid var(--border);
+        /* Each date is a card containing that day's note(s) */
+        .note-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 26px;
+            margin-bottom: 18px;
+            transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
         }
-        .note:last-child { border-bottom: none; margin-bottom: 0; }
+        .note-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 6px 24px rgba(30, 42, 74, 0.06);
+            transform: translateY(-1px);
+        }
+        .note-card:last-child { margin-bottom: 0; }
+
+        /* Divider between multiple notes stacked in one day's card */
+        .note-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+        }
 
         .note-date {
             font-family: 'JetBrains Mono', monospace;
@@ -358,8 +387,33 @@
             letter-spacing: 0.5px;
             color: var(--text-dim);
             text-transform: uppercase;
-            margin-bottom: 10px;
         }
+
+        /* The date is the card's permalink; '#' surfaces on hover */
+        .note-permalink {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 6px;
+            text-decoration: none;
+            margin-bottom: 14px;
+        }
+        .note-permalink .note-date { transition: color 0.2s; }
+        .note-permalink:hover .note-date { color: var(--accent); }
+        .note-hash {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-dim);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .note-permalink:hover .note-hash { opacity: 1; }
+
+        /* Brief highlight when you land on a card via its permalink */
+        @keyframes noteFlash {
+            0%   { background: var(--accent-wash); border-color: var(--border-hover); }
+            100% { background: var(--card-bg); border-color: var(--border); }
+        }
+        .note-flash { animation: noteFlash 1.8s ease-out; }
 
         .note-title {
             font-family: 'Newsreader', Georgia, serif;
@@ -592,9 +646,10 @@
         <!-- ========== NOTES ========== -->
         <div class="page" id="page-notes">
             <div class="section-label">Notes</div>
-            <p class="notes-intro">
-                Short thoughts, links, and things I'm chewing on &mdash; posted as they come, before they become anything bigger.
-            </p>
+            <blockquote class="notes-epigraph">
+                <p>&ldquo;The person who says he knows what he thinks but cannot express it usually does not know what he thinks.&rdquo;</p>
+                <cite>&mdash; Mortimer Adler, <em>How to Read a Book</em></cite>
+            </blockquote>
             <div class="notes-list" id="notes-list"></div>
         </div>
 
@@ -602,7 +657,7 @@
         <div class="page" id="page-archive">
             <div class="section-label">Archive</div>
             <p class="thoughts-intro">
-                Older writing &mdash; a few thoughts that could either brighten up your day or trigger an existential crisis :)
+                Older writing from high school &mdash; a few thoughts that could either brighten up your day or trigger an existential crisis :)
             </p>
 
             <div class="writing-list">
@@ -748,23 +803,41 @@
             if (!list || typeof NOTES === 'undefined') return;
             const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
             const sorted = [...NOTES].sort((a, b) => (a.date < b.date ? 1 : -1));
-            list.innerHTML = sorted.map(n => {
-                const [y, m, d] = n.date.split('-');
+
+            // Group notes by date — one card per day, newest day first.
+            const groups = [];
+            const byDate = {};
+            for (const n of sorted) {
+                if (!byDate[n.date]) { byDate[n.date] = { date: n.date, notes: [] }; groups.push(byDate[n.date]); }
+                byDate[n.date].notes.push(n);
+            }
+
+            const seen = {};
+            list.innerHTML = groups.map(g => {
+                const [y, m, d] = g.date.split('-');
                 const date = `${parseInt(d, 10)} ${months[parseInt(m, 10) - 1]} ${y}`;
-                const title = n.title ? `<div class="note-title">${n.title}</div>` : '';
-                const link = n.link
-                    ? `<div class="note-link"><a href="${n.link.url}" target="_blank">${n.link.label}</a></div>`
-                    : '';
-                return `<div class="note">
-                    <div class="note-date mono">${date}</div>
-                    ${title}
-                    <div class="note-body">${n.body}</div>
-                    ${link}
-                </div>`;
+                // Card permalink id: a `slug` on any note that day pins it; else note-<date>.
+                const base = (g.notes.find(n => n.slug) || {}).slug || ('note-' + g.date);
+                const id = seen[base] ? base + '-' + (++seen[base]) : (seen[base] = 1, base);
+
+                const items = g.notes.map(n => {
+                    const title = n.title ? `<div class="note-title">${n.title}</div>` : '';
+                    const link = n.link
+                        ? `<div class="note-link"><a href="${n.link.url}" target="_blank">${n.link.label}</a></div>`
+                        : '';
+                    return `<div class="note-item">${title}<div class="note-body">${n.body}</div>${link}</div>`;
+                }).join('<div class="note-divider"></div>');
+
+                return `<article class="note-card" id="${id}">
+                    <a class="note-permalink" href="#${id}" data-note="${id}">
+                        <span class="note-date mono">${date}</span><span class="note-hash">#</span>
+                    </a>
+                    ${items}
+                </article>`;
             }).join('');
         }
 
-        function setPage(page) {
+        function activatePage(page) {
             document.querySelectorAll('.page').forEach(p => {
                 p.classList.remove('active', 'fade-in');
             });
@@ -781,9 +854,27 @@
 
             const navLink = document.querySelector('.nav-links a[data-page="' + page + '"]');
             if (navLink) navLink.classList.add('active');
+        }
 
+        function setPage(page) {
+            activatePage(page);
             window.scrollTo({ top: 0, behavior: 'smooth' });
             history.pushState(null, '', page === 'home' ? '/' : '#' + page);
+        }
+
+        // Open the notes page and scroll to one note, updating the URL to its permalink.
+        function goToNote(noteId, push = true) {
+            activatePage('notes');
+            if (push) history.pushState(null, '', '#' + noteId);
+            const el = document.getElementById(noteId);
+            if (el) {
+                requestAnimationFrame(() => {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    el.classList.remove('note-flash');
+                    void el.offsetWidth;
+                    el.classList.add('note-flash');
+                });
+            }
         }
 
         document.querySelectorAll('.nav-links a[data-page]').forEach(link => {
@@ -793,10 +884,23 @@
             });
         });
 
+        // Permalink clicks: smooth-scroll + flash instead of a hard jump.
+        const notesList = document.getElementById('notes-list');
+        if (notesList) {
+            notesList.addEventListener('click', (e) => {
+                const a = e.target.closest('.note-permalink');
+                if (!a) return;
+                e.preventDefault();
+                goToNote(a.dataset.note);
+            });
+        }
+
         window.addEventListener('load', () => {
             renderNotes();
             const hash = window.location.hash.replace('#', '');
-            if (hash && document.getElementById('page-' + hash)) {
+            if (hash.startsWith('note-') && document.getElementById(hash)) {
+                goToNote(hash, false);
+            } else if (hash && document.getElementById('page-' + hash)) {
                 setPage(hash);
             }
         });
