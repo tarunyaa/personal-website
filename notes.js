@@ -41,6 +41,11 @@ const NOTES = [
     body: `Does there exist an online simulator that could show what world inequality would look like today given different initial conditions, the ones that led to different political and economic institutions?`,
   },
   {
+    date: "2026-06-21",
+    title: "The grid is a coordination problem",
+    body: `Is the US power grid a patchwork mess that makes it hard to send electricity beyond the region it's made in, blocking renewable transmission from far-away states? Mostly yes, structurally, though it still works. The country isn't one grid but three interconnections (Eastern, Western, Texas) that run largely independently, and inside each there are many operators (PJM, MISO, CAISO) and state-level control over permitting, with no strong national planner.<br><br>That fragmentation is a real bottleneck. The best wind is in the Midwest and Texas, the best solar in the Southwest, but demand is on the coasts, so you need long-distance lines. Buildout is slow, permitting is fragmented, interconnection queues run years, and a single line can take a decade. So clean energy gets curtailed, wasted, because it can't reach where it's needed.<br><br>HVDC (high-voltage direct current) is the main fix: it moves power long distances with low losses and can bridge regions that aren't synchronized, like highways between otherwise disconnected systems. Today it exists only as limited tie-lines, not a national backbone. DOE studies suggest a real interregional buildout could save hundreds of billions, but it's stalled by state-by-state approval, who-benefits disputes, and financing.<br><br>The real constraint isn't physics, it's institutions and incentives. Physics says build the lines and move power freely; reality is that states block projects, regions optimize locally, and nobody owns the national optimization. The grid is a coordination problem.`,
+  },
+  {
     date: "2026-06-20",
     title: "Path dependence theory",
     body: `Humans are high-inertia beings because we aren't a hive mind; we need systems to coordinate effort. Civilization is a massive coordination problem, and the economy is the coordination axis.`,
