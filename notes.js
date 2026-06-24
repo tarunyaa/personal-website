@@ -22,6 +22,11 @@
 
 const NOTES = [
   {
+    date: "2026-05-28",
+    title: "Why Chennai's shops cluster",
+    body: `I'm in Chennai and the shops are all clustered right up against the road, buildings in every color, packed together. It's how older Indian cities grew organically, long before modern zoning: streets became bazaars where commerce, housing, temples, and tea stalls share one compressed space. Land was expensive and split into small plots, so people built right to the property line, and the streets were made for pedestrians, cycles, and rickshaws, not cars. The colors are cultural, not regulated; no HOA telling you to paint beige.<br><br>The huge variety of tiny shops isn't hyper-capitalism; it's almost the opposite. India still has millions of family-run shops because formal capital hasn't consolidated retail yet. In the US, cheap and abundant capital (public markets, banks, PE roll-ups, low rates) flowed into retail, so Walmart could build distribution networks, buy direct from manufacturers, and undercut local stores. That consolidation was engineered by capital, plus highways and permissive antitrust, not by Walmart being inherently better at selling.<br><br>India stayed fragmented by policy and structure: the License Raj reserved whole categories for small producers, foreign retail was banned, household savings went into gold and real estate rather than equities, banks were nationalized, contract enforcement was slow, and interest rates were high. There was no deep pool of patient capital to fund a retail rollout. Meanwhile the kirana shop's cost base is unbeatable at small scale: family labor at near-zero wages, inherited premises, tiny fast-turnover inventory, cash transactions.<br><br>So the sharp point: Indian small retail is one of the most cost-efficient retail systems on earth at the unit level. What it lacks is access to capital, not operational efficiency. Consolidators win not by being more efficient but by buying direct (skipping wholesale markups), selling convenience (10-minute delivery), and absorbing years of losses on VC money, which no kirana can do. The clustered streets aren't backwardness; they're what retail looks like before cheap capital floods in. Blinkit and Zepto are now doing in five years what Walmart did to American main streets in fifty, so the streetscape may look very different in a decade.`,
+  },
+  {
     date: "2026-05-13",
     body: `The only difference between investing and gambling is time horizon.`,
   },
@@ -39,6 +44,11 @@ const NOTES = [
     date: "2026-04-15",
     title: "A simulator for counterfactual history",
     body: `Does there exist an online simulator that could show what world inequality would look like today given different initial conditions, the ones that led to different political and economic institutions?`,
+  },
+  {
+    date: "2026-06-17",
+    title: "Why bubbles aren't noise",
+    body: `If irrationality were random, it would average out to a roughly rational market. But it doesn't, because individual irrationality isn't independent; it's correlated by shared narratives. Everyone's irrationality points the same direction at once, and that's what turns sentiment into a bubble instead of noise.<br><br>Or maybe everyone is rational in the same direction, and synchronized belief is an evolved trait for solving the coordination problem of building things too big for any individual to rationally back alone. In that view, bubbles are just a byproduct of the most efficient system we can muster.`,
   },
   {
     date: "2026-06-23",
