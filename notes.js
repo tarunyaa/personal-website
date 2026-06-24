@@ -27,7 +27,7 @@ const NOTES = [
     body: `Humans are high-inertia beings because we aren't a hive mind; we need systems to coordinate effort. Civilization is a massive coordination problem, and the economy is the coordination axis.`,
   },
   {
-    date: "2026-06-23",
+    date: "2026-01-15",
     title: "Agency, Maslow, and judging less harshly",
     body: `Building's place in Maslow's hierarchy of needs. Can differences in human agency across individuals be explained by varying biological and social initial conditions?<br><br>The capacity for agency isn't evenly distributed, because of variance in biology and initial conditions. Whether someone's Maslow needs were met matters: if a life lacks safety or emotional stability, the brain often allocates more energy toward survival and emotional regulation instead of long-term agency and growth. One of the hardest truths is that many highly agentic people became that way partly because they were rewarded early, had stable attachment and supportive environments, and experienced competence young. Chronic stress can genuinely impair a person and psychologically regress them.<br><br>Agency can be defined as the ability to sustain willpower and discipline, but it shows up differently across people. For some it's conventional markers like career or wealth; for others it's emotional resilience, caregiving, and so on. And it can be a different human experience altogether: people experience effort differently, and what feels manageable to one person can feel overwhelming to another.<br><br>So judge less harshly. Everyone is grey, not black and white.`,
   },
