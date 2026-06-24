@@ -527,12 +527,26 @@
 
         /* RESPONSIVE */
         @media (max-width: 640px) {
-            nav { padding: 0 20px; }
+            nav { padding: 0 16px; gap: 12px; }
             main { padding: 90px 20px 60px; }
             .hero-row { flex-direction: column-reverse; gap: 24px; }
             .hero-photo { width: 120px; height: 140px; }
-            .nav-links { gap: 18px; }
-            .nav-links a { font-size: 12px; }
+            .nav-name { font-size: 15px; flex-shrink: 0; }
+            /* Let the links scroll horizontally instead of overflowing the bar.
+               padding+negative-margin keeps the active underline (bottom: -16px)
+               from being clipped by overflow-y. */
+            .nav-links {
+                gap: 16px;
+                min-width: 0;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                padding: 16px 0;
+                margin: -16px 0;
+            }
+            .nav-links::-webkit-scrollbar { display: none; }
+            .nav-links a { font-size: 12px; white-space: nowrap; flex-shrink: 0; }
         }
 
         /* FADE IN */
