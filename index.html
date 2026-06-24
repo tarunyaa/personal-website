@@ -515,6 +515,105 @@
             font-style: italic;
         }
 
+        /* LEARNINGS — sub-tabs + timelines */
+        .subnav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 36px;
+        }
+        .subnav a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 7px 14px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            transition: color 0.2s, background 0.2s, border-color 0.2s;
+        }
+        .subnav a:hover { border-color: var(--border-hover); color: var(--accent); }
+        .subnav a.active {
+            color: #fff;
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .subpage { display: none; }
+        .subpage.active { display: block; animation: fadeIn 0.35s ease; }
+
+        .tl-section { margin-bottom: 52px; }
+        .tl-section:last-child { margin-bottom: 0; }
+        .tl-heading {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: -0.3px;
+            margin-bottom: 24px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 26px;
+            border-left: 2px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .tl-item { position: relative; }
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 5px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--border-hover);
+        }
+        .tl-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.3px;
+        }
+        .tl-label {
+            font-size: 14.5px;
+            font-weight: 500;
+            color: var(--text);
+            margin-top: 3px;
+        }
+        .tl-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            margin-top: 4px;
+        }
+        .tl-note {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 15px;
+            font-style: italic;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-top: 24px;
+            padding-left: 20px;
+            border-left: 2px solid var(--border);
+        }
+
+        .tl-flow { display: flex; flex-direction: column; align-items: flex-start; }
+        .tl-flow-step { font-size: 14px; color: var(--text-secondary); }
+        .tl-flow-step:not(:first-child) { margin-top: 4px; }
+        .tl-flow-step:not(:first-child)::before {
+            content: '\2193';
+            display: block;
+            color: var(--text-dim);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+        .tl-flow-end { font-weight: 600; color: var(--text); }
+
         /* FOOTER */
         footer {
             max-width: 640px;
@@ -569,7 +668,7 @@
             <a href="#writing" data-page="writing">essays</a>
             <a href="#projects" data-page="projects">projects</a>
             <a href="#archive" data-page="archive">archive</a>
-            <a href="#words" data-page="words">words</a>
+            <a href="#learnings" data-page="learnings">learnings</a>
             <a href="#values" data-page="values">values</a>
         </div>
     </nav>
@@ -806,9 +905,16 @@
             </div>
         </div>
 
-        <!-- ========== WORDS ========== -->
-        <div class="page" id="page-words">
-            <div class="section-label">Words</div>
+        <!-- ========== LEARNINGS ========== -->
+        <div class="page" id="page-learnings">
+            <div class="section-label">Learnings</div>
+            <div class="subnav">
+                <a href="#" data-sub="words" class="active">Words</a>
+                <a href="#" data-sub="timelines">Timelines</a>
+            </div>
+
+            <!-- WORDS -->
+            <div class="subpage active" id="sub-words">
             <p class="thoughts-intro">
                 A running glossary of terms I've come across and wanted to pin down.
             </p>
@@ -883,8 +989,87 @@
                     <div class="value-desc">A program's maximum speedup is capped by its sequential part, the bottleneck.</div>
                 </div>
                 <div class="value-item">
+                    <div class="value-title">Strong scaling</div>
+                    <div class="value-desc">Fix the total problem size and add processors; measures how much faster a fixed workload runs (the Amdahl's Law regime).</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-title">Weak scaling</div>
+                    <div class="value-desc">Grow the problem size in step with the processor count so work per processor stays fixed; measures whether bigger problems stay tractable (the Gustafson's Law regime).</div>
+                </div>
+                <div class="value-item">
                     <div class="value-title">Law of large numbers</div>
                     <div class="value-desc">As a sample grows, its average converges on the true expected value.</div>
+                </div>
+            </div>
+            </div><!-- /sub-words -->
+
+            <!-- TIMELINES -->
+            <div class="subpage" id="sub-timelines">
+                <p class="thoughts-intro">
+                    Timelines I've put together to keep scale and sequence straight.
+                </p>
+
+                <div class="tl-section">
+                    <h3 class="tl-heading">A history of everything</h3>
+                    <div class="timeline">
+                        <div class="tl-item"><div class="tl-date">4.54 billion years ago</div><div class="tl-label">Earth forms</div></div>
+                        <div class="tl-item"><div class="tl-date">3.5 billion years ago</div><div class="tl-label">First simple life appears</div></div>
+                        <div class="tl-item"><div class="tl-date">541 million years ago</div><div class="tl-label">Complex life rapidly expands in the oceans</div></div>
+                        <div class="tl-item"><div class="tl-date">252-201 million years ago</div><div class="tl-label">Triassic period</div><div class="tl-sub">First dinosaurs appear.</div></div>
+                        <div class="tl-item"><div class="tl-date">201-145 million years ago</div><div class="tl-label">Jurassic period</div><div class="tl-sub">Giant dinosaurs dominate.</div></div>
+                        <div class="tl-item"><div class="tl-date">145-66 million years ago</div><div class="tl-label">Cretaceous period</div><div class="tl-sub">T. rex and Triceratops live.</div></div>
+                        <div class="tl-item"><div class="tl-date">66 million years ago</div><div class="tl-label">Dinosaur extinction</div><div class="tl-sub">Asteroid impact.</div></div>
+                        <div class="tl-item"><div class="tl-date">7 million years ago</div><div class="tl-label">Earliest human ancestors appear</div></div>
+                        <div class="tl-item"><div class="tl-date">300,000 years ago</div><div class="tl-label">First modern humans (Homo sapiens)</div></div>
+                        <div class="tl-item"><div class="tl-date">70,000-50,000 years ago</div><div class="tl-label">Humans migrate across the world</div></div>
+                        <div class="tl-item"><div class="tl-date">12,000-10,000 BCE</div><div class="tl-label">Neolithic Revolution</div><div class="tl-sub">Farming and permanent villages begin.</div></div>
+                        <div class="tl-item"><div class="tl-date">3500-3000 BCE</div><div class="tl-label">First civilizations</div><div class="tl-sub">Mesopotamia and Sumerian cities emerge.</div></div>
+                        <div class="tl-item"><div class="tl-date">2630-2500 BCE</div><div class="tl-label">Great Pyramids of Giza built</div></div>
+                        <div class="tl-item"><div class="tl-date">776 BCE</div><div class="tl-label">First Olympic Games in Greece</div></div>
+                        <div class="tl-item"><div class="tl-date">27 BCE</div><div class="tl-label">Roman Empire begins</div></div>
+                        <div class="tl-item"><div class="tl-date">69-30 BCE</div><div class="tl-label">Cleopatra VII</div><div class="tl-sub">Last active ruler of Ptolemaic Egypt. She lived closer in time to the Moon landing than to the building of the pyramids.</div></div>
+                    </div>
+                </div>
+
+                <div class="tl-section">
+                    <h3 class="tl-heading">Human milestones</h3>
+                    <div class="timeline">
+                        <div class="tl-item"><div class="tl-date">300,000 years ago</div><div class="tl-label">Homo sapiens</div></div>
+                        <div class="tl-item"><div class="tl-date">12,000-10,000 years ago</div><div class="tl-label">Agriculture</div></div>
+                        <div class="tl-item"><div class="tl-date">~5,300 years ago</div><div class="tl-label">Writing</div></div>
+                        <div class="tl-item"><div class="tl-date">~2,000 years ago</div><div class="tl-label">Christianity</div></div>
+                        <div class="tl-item"><div class="tl-date">~1,400 years ago</div><div class="tl-label">Islam</div></div>
+                    </div>
+                    <p class="tl-note">About 98% of human history happened before writing existed, so almost everything before ~3000 BCE is prehistoric.</p>
+                </div>
+
+                <div class="tl-section">
+                    <h3 class="tl-heading">The human line</h3>
+                    <div class="timeline">
+                        <div class="tl-item"><div class="tl-date">7 million years ago</div><div class="tl-label">First human ancestors</div></div>
+                        <div class="tl-item"><div class="tl-date">2 million years ago</div><div class="tl-label">Early Homo species</div></div>
+                        <div class="tl-item"><div class="tl-date">300,000 years ago</div><div class="tl-label">Homo sapiens appear</div></div>
+                        <div class="tl-item"><div class="tl-date">40,000 years ago</div><div class="tl-label">Most other human species gone</div></div>
+                        <div class="tl-item"><div class="tl-date">Today</div><div class="tl-label">Only Homo sapiens remain</div></div>
+                    </div>
+                </div>
+
+                <div class="tl-section">
+                    <h3 class="tl-heading">From Rome to the Industrial Revolution</h3>
+                    <div class="tl-flow">
+                        <span class="tl-flow-step">Collapse of Rome</span>
+                        <span class="tl-flow-step">Breakdown of centralized authority</span>
+                        <span class="tl-flow-step">Rise of feudalism and manorial agriculture</span>
+                        <span class="tl-flow-step">Slow recovery of trade and towns</span>
+                        <span class="tl-flow-step">Black Death weakens the feudal labor system</span>
+                        <span class="tl-flow-step">Growth of wage labor and markets</span>
+                        <span class="tl-flow-step">Rise of stronger states and merchant capitalism</span>
+                        <span class="tl-flow-step">Atlantic trade and colonial expansion</span>
+                        <span class="tl-flow-step">Capital accumulation and commercial growth</span>
+                        <span class="tl-flow-step">England gains wealth, markets, labor, and resources</span>
+                        <span class="tl-flow-step tl-flow-end">Industrial Revolution</span>
+                    </div>
+                    <p class="tl-note">Each step removes a constraint the last one created. Rome's collapse fragments power into feudalism; the Black Death's labor shortage breaks serfdom into wage labor and markets; Atlantic trade concentrates capital in stronger states; and once England has capital, labor, markets, and resources in one place, it tips into industrialization.</p>
                 </div>
             </div>
         </div>
@@ -979,6 +1164,18 @@
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 setPage(this.dataset.page);
+            });
+        });
+
+        // Learnings sub-tabs (Words / Timelines)
+        document.querySelectorAll('.subnav a[data-sub]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.subpage').forEach(p => p.classList.remove('active'));
+                document.querySelectorAll('.subnav a[data-sub]').forEach(a => a.classList.remove('active'));
+                const target = document.getElementById('sub-' + this.dataset.sub);
+                if (target) target.classList.add('active');
+                this.classList.add('active');
             });
         });
 

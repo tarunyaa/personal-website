@@ -26,6 +26,21 @@ const NOTES = [
     body: `The only difference between investing and gambling is time horizon.`,
   },
   {
+    date: "2026-06-23",
+    title: "Consume or create?",
+    body: `Do humans tend to consume or create? And which is better for us? Back in the pre-device days, I think we mostly created, whether it was art or stories.`,
+  },
+  {
+    date: "2026-06-22",
+    title: "The illusion of scarcity",
+    body: `My mom has been trying to buy gold in India. She found one design she loved in Salem but didn't buy it, wanting to see more options first since it's an expensive, infrequent purchase. We looked in Singapore, she liked a few, didn't buy. Now we're back in Chennai, nothing clicks, and the Salem design is gone.<br><br>My argument: there are too many stores and too many choices in India, and not all of them are online, so you can't physically see everything. It's an illusion of scarcity. The market is vastly larger than the visible search window, so one design disappearing doesn't mean true scarcity.<br><br>A few models that fit: the secretary problem (optimal stopping under uncertainty), choice overload (more options, less confidence), and satisficing vs maximizing (expensive, symbolic purchases push you to maximize, which means longer delays and more regret). Both can be true at once: the market is objectively abundant, but the experience is subjectively scarce.`,
+  },
+  {
+    date: "2026-06-21",
+    title: "A simulator for counterfactual history",
+    body: `Does there exist an online simulator that could show what world inequality would look like today given different initial conditions, the ones that led to different political and economic institutions?`,
+  },
+  {
     date: "2026-06-20",
     title: "Path dependence theory",
     body: `Humans are high-inertia beings because we aren't a hive mind; we need systems to coordinate effort. Civilization is a massive coordination problem, and the economy is the coordination axis.`,
@@ -92,8 +107,23 @@ const NOTES = [
     body: `I visited Chennai. The roads have minimal rules: no lanes, no signaling before switching, no U-turn conventions. Driving there is a decentralized game where every agent optimizes for their own arrival, their life, and the lives of others. Surprisingly, it works: mostly car damage, not much that's mortality-threatening.<br><br>In the US and other first-world countries there are far more rules aiming at the same effect, minimizing accidents. But is the outcome actually better? How does Chennai's accident rate compare to a similar American city, or to Singapore?<br><br>My hunch is that the demand for more rules is driven by a lower tolerance for car damage, which is often aesthetic or non-functional; it doesn't affect how the car actually works. If so, why did car aesthetics, and the rules protecting them, evolve this way? And why is breaking into cars so much more common in California than in Chennai?`,
   },
   {
+    date: "2026-05-25",
+    title: "Accept imperfection",
+    body: `Accept yourself and other adults as imperfect creatures. Life is unpredictable, and everyone is just trying their best, making decisions under asymmetric information and limited cognitive ability. So you should never analyze another person's actions too much.<br><br>A few things I keep in mind: most adults accept incompleteness, that some meaningful things will simply go undone. Most revisit their priorities periodically and choose tradeoffs consciously. Most are awkward, hold opinions, and sometimes don't verbalize them well. And chronic stress can psychologically regress a person, on top of the fact that agency takes different forms. So don't judge too harshly.`,
+  },
+  {
+    date: "2026-06-19",
+    title: "Are chess and go solvable?",
+    body: `Are chess and go solvable games, and which games aren't? The technical classification is "solved games," with a hierarchy: ultra-weakly solved (you know the outcome from the start), weakly solved (you know a perfect strategy from the start), and strongly solved (you know the optimal move from every position).<br><br>Chess is still unsolved at every level. We don't actually know whether perfect play is a draw, though most believe it is. Engines like Stockfish and AlphaZero are superhuman but not proofs; they approximate optimal play, which is different from a mathematical solution. Endgames with 7 or fewer pieces are strongly solved via tablebases, so chess is solved in tiny regions but globally unsolved. Generalized chess is EXPTIME-complete: solving arbitrarily large boards needs resources that grow exponentially with board size.`,
+  },
+  {
     date: "2026-06-18",
     body: `How does writing something change your prefrontal cortex?`,
+  },
+  {
+    date: "2026-05-09",
+    title: "Thoughts as clouds",
+    body: `View negative thoughts as passing clouds. In Buddhism, thoughts are seen as natural, passing events rather than a reflection of who you are. Observe them like clouds drifting across the sky or leaves floating down a stream: acknowledge their presence, refrain from clinging to them, and let them naturally pass.<br><br>This matters because, from a biological and evolutionary perspective, the brain wasn't optimized for perfect truth or calm or perfectly useful thoughts. It was optimized for survival and prediction under uncertainty. That produces a mind that generates many noisy thoughts that aren't a true reflection of your morality.`,
   },
   {
     date: "2026-06-16",
@@ -104,6 +134,11 @@ const NOTES = [
     date: "2026-06-08",
     title: "Social constructs and societal inertia",
     body: `Social constructionism was needed because human society has too much inertia from its sheer size. Social constructs let a wide range of people agree on the same systems. When there's an economic crisis, nothing actually changed, but the social constructs we use to organize large societies broke. This ties to the idea from <em>Sapiens</em> that humans colonized the world because of their innate ability to tell stories.`,
+  },
+  {
+    date: "2026-04-27",
+    title: "Reduce replaying",
+    body: `Replaying moments or fantasizing about the future isn't abnormal; it looks like a normal function of the human nervous system. The brain relies on mental simulations to process the social world, driven by the Default Mode Network (DMN), the part that's active when you're not focused on the outside environment.<br><br>Replaying can be the mind's way of resolving unfinished feelings, or of preparing for future social situations. If it gets to be too much, just stop and divert your attention.`,
   },
   {
     date: "2026-06-12",
