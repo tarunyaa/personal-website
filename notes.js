@@ -146,6 +146,11 @@ const NOTES = [
     body: `Replaying moments or fantasizing about the future isn't abnormal; it looks like a normal function of the human nervous system. The brain relies on mental simulations to process the social world, driven by the Default Mode Network (DMN), the part that's active when you're not focused on the outside environment.<br><br>Replaying can be the mind's way of resolving unfinished feelings, or of preparing for future social situations. If it gets to be too much, just stop and divert your attention.`,
   },
   {
+    date: "2026-06-14",
+    title: "Do we feel strangers' suffering?",
+    body: `Are we physically incapable of feeling unknown humans' suffering the way we feel that of people we know? Do we treat strangers with the same emotional regard as aliens, a feature of evolution? Why did Eren Yeager choose genocide?`,
+  },
+  {
     date: "2026-06-12",
     title: "Nation vs. nation, earth vs. aliens",
     body: `How much of our society is constructed around nation vs. nation, and what would it look like under earth vs. alien planets? How decentralized would that latter effort be across nations? Why did we stop sending men to the moon after the fall of the USSR?`,
