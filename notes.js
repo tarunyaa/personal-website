@@ -70,6 +70,21 @@ const NOTES = [
   {
     date: "2026-04-24",
     title: "Social constructs and societal inertia",
-    body: `Social constructionism was needed because human society has too much inertia from its sheer size. Social constructs let a wide range of people agree on the same systems. When there's an economic crisis, nothing actually changed, but the social constructs we use to organize large societies broke. This ties to the idea from <em>Sapiens</em> that humans colonized the world because of their innate ability to tell stories.<br><br>How much of our society is constructed around nation vs. nation, and what would it look like under earth vs. alien planets? How decentralized would that latter effort be across nations? Why did we stop sending men to the moon after the fall of the USSR?<br><br>Mobility does exist within society: there are locks and keys for those who see the systems and how the world around them works, with mobility across the strata. Social media, food, and other incentives sedate most of the population, extracting value through the economy. But I suspect there are people living on a different plane altogether: those in power, making the actual society-level decisions.<br><br>Economic growth isn't just more and better machines and more and better educated people; it's a transformative, destabilizing process of widespread creative destruction. A Citrini piece this week is a damning example: a kind of Randian genre fiction in which markets are unceasing, rational beings sitting outside human creation and thrust upon us without choice. The fear of mass job displacement is real, but it rests on a flawed premise: that what we sit atop are radical, infallible systems of pure market competition. Capitalism has never been this. Global markets are, at most, a few hundred people coordinating to make difficult trade-offs, organizing trillions in capital and billions of jobs. That is not a natural force thrust onto us.`,
+    body: `Social constructionism was needed because human society has too much inertia from its sheer size. Social constructs let a wide range of people agree on the same systems. When there's an economic crisis, nothing actually changed, but the social constructs we use to organize large societies broke. This ties to the idea from <em>Sapiens</em> that humans colonized the world because of their innate ability to tell stories.`,
+  },
+  {
+    date: "2026-04-23",
+    title: "Nation vs. nation, earth vs. aliens",
+    body: `How much of our society is constructed around nation vs. nation, and what would it look like under earth vs. alien planets? How decentralized would that latter effort be across nations? Why did we stop sending men to the moon after the fall of the USSR?`,
+  },
+  {
+    date: "2026-04-22",
+    title: "Mobility across the strata",
+    body: `Mobility does exist within society: there are locks and keys for those who see the systems and how the world around them works, with mobility across the strata. Social media, food, and other incentives sedate most of the population, extracting value through the economy. But I suspect there are people living on a different plane altogether: those in power, making the actual society-level decisions.`,
+  },
+  {
+    date: "2026-04-21",
+    title: "Markets aren't a natural force",
+    body: `Economic growth isn't just more and better machines and more and better educated people; it's a transformative, destabilizing process of widespread creative destruction. A Citrini piece this week is a damning example: a kind of Randian genre fiction in which markets are unceasing, rational beings sitting outside human creation and thrust upon us without choice. The fear of mass job displacement is real, but it rests on a flawed premise: that what we sit atop are radical, infallible systems of pure market competition. Capitalism has never been this. Global markets are, at most, a few hundred people coordinating to make difficult trade-offs, organizing trillions in capital and billions of jobs. That is not a natural force thrust onto us.`,
   },
 ];
