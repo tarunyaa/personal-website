@@ -84,7 +84,7 @@ const NOTES = [
   },
   {
     date: "2026-04-21",
-    title: "Markets aren't a natural force",
-    body: `Economic growth isn't just more and better machines and more and better educated people; it's a transformative, destabilizing process of widespread creative destruction. A Citrini piece this week is a damning example: a kind of Randian genre fiction in which markets are unceasing, rational beings sitting outside human creation and thrust upon us without choice. The fear of mass job displacement is real, but it rests on a flawed premise: that what we sit atop are radical, infallible systems of pure market competition. Capitalism has never been this. Global markets are, at most, a few hundred people coordinating to make difficult trade-offs, organizing trillions in capital and billions of jobs. That is not a natural force thrust onto us.`,
+    title: "Creative destruction",
+    body: `Economic growth isn't just more and better machines and more and better educated people; it's a transformative, destabilizing process of widespread creative destruction.`,
   },
 ];
