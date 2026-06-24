@@ -42,13 +42,20 @@ const NOTES = [
   },
   {
     date: "2026-06-05",
-    title: "Fragments: agency, systems, first principles",
-    body: `Extractive systems arise because human agency varies; someone can always see farther ahead.<br><br>Multi-agent debate as a new scaling law.<br><br>I need to put less time into work and more into myself, my projects, and Twitter.<br><br>Not many people try to understand things from first principles. Understanding systems is the new gold of this age, maybe because the activation energy required is so high.`,
+    body: `Not many people try to understand things from first principles. Understanding systems is the new gold of this age, maybe because the activation energy required is so high.`,
+  },
+  {
+    date: "2026-06-04",
+    body: `Multi-agent debate as a new scaling law.`,
+  },
+  {
+    date: "2026-06-03",
+    body: `Extractive systems arise because human agency varies; someone can always see farther ahead.<br><br>(In the context of <em>Why Nations Fail</em>.)`,
   },
   {
     date: "2026-05-27",
     title: "Ego detachment",
-    body: `Do a lot of successful people simply not have egos? Ego detachment as the thing that lets them reinvent themselves over and over.<br><br>And: how does writing something down change your neural wiring?`,
+    body: `Do a lot of successful people simply not have egos? Ego detachment as the thing that lets them reinvent themselves over and over.<br><br>And: how does writing something change your prefrontal cortex?`,
   },
   {
     date: "2026-05-16",
