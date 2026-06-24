@@ -23,6 +23,10 @@
 const NOTES = [
   {
     date: "2026-06-24",
+    body: `The only difference between investing and gambling is time horizon.`,
+  },
+  {
+    date: "2026-06-24",
     title: "Path dependence theory",
     body: `Humans are high-inertia beings because we aren't a hive mind; we need systems to coordinate effort. Civilization is a massive coordination problem, and the economy is the coordination axis.`,
   },
