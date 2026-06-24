@@ -57,8 +57,8 @@ const NOTES = [
   },
   {
     date: "2026-05-05",
-    title: "Fuck derivatives",
-    body: `Everything is a derivative play, which is why humans are such high-inertia beings. Systems built upon systems upon systems.<br><br>Systems created to extract value, then systems built on top of those to extract value, then systems on top of <em>those</em>, which is why removing a single layer is so hard. At every layer there are humans with incentives to keep it, because of the fake value it creates. It's an onion-peeling exercise.<br><br>Everybody wants to change the world. But no one wants to try.<br><br>Next time you build something, ask yourself whether it actually creates value or is just another derivative play.`,
+    title: "Fuck derivates",
+    body: `Everything is a derivative play which is why humans are such high inertia beings<br>Systems built upon systems upon systems<br>Systems created to extract value and systems created ontop of that to extract value and systems created ontop of that to extract value which is why removing a layer of system is so hard. At every layer there are humans with incentives to keep that layer because of the fake value it creates.<br>It's an onion peeling exercise.<br>Everybody wants to change the world. But no one wants to try.<br>Next to you build something, ask yourself if it actually creates value or is a derivative play.`,
   },
   {
     date: "2026-04-24",
