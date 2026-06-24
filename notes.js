@@ -26,17 +26,17 @@ const NOTES = [
     body: `The only difference between investing and gambling is time horizon.`,
   },
   {
-    date: "2026-06-23",
+    date: "2026-04-23",
     title: "Consume or create?",
     body: `Do humans tend to consume or create? And which is better for us? Back in the pre-device days, I think we mostly created, whether it was art or stories.`,
   },
   {
-    date: "2026-06-22",
+    date: "2026-04-19",
     title: "The illusion of scarcity",
     body: `My mom has been trying to buy gold in India. She found one design she loved in Salem but didn't buy it, wanting to see more options first since it's an expensive, infrequent purchase. We looked in Singapore, she liked a few, didn't buy. Now we're back in Chennai, nothing clicks, and the Salem design is gone.<br><br>My argument: there are too many stores and too many choices in India, and not all of them are online, so you can't physically see everything. It's an illusion of scarcity. The market is vastly larger than the visible search window, so one design disappearing doesn't mean true scarcity.<br><br>A few models that fit: the secretary problem (optimal stopping under uncertainty), choice overload (more options, less confidence), and satisficing vs maximizing (expensive, symbolic purchases push you to maximize, which means longer delays and more regret). Both can be true at once: the market is objectively abundant, but the experience is subjectively scarce.`,
   },
   {
-    date: "2026-06-21",
+    date: "2026-04-15",
     title: "A simulator for counterfactual history",
     body: `Does there exist an online simulator that could show what world inequality would look like today given different initial conditions, the ones that led to different political and economic institutions?`,
   },
