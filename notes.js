@@ -22,7 +22,7 @@
 
 const NOTES = [
   {
-    date: "2026-06-24",
+    date: "2026-05-13",
     body: `The only difference between investing and gambling is time horizon.`,
   },
   {
