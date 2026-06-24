@@ -23,13 +23,38 @@
 const NOTES = [
   {
     date: "2026-06-23",
+    title: "Path dependence theory",
+    body: `Humans are high-inertia beings because we aren't a hive mind; we need systems to coordinate effort. Civilization is a massive coordination problem, and the economy is the coordination axis.`,
+  },
+  {
+    date: "2026-06-23",
     title: "Agency, Maslow, and judging less harshly",
     body: `Building's place in Maslow's hierarchy of needs. Can differences in human agency across individuals be explained by varying biological and social initial conditions?<br><br>The capacity for agency isn't evenly distributed, because of variance in biology and initial conditions. Whether someone's Maslow needs were met matters: if a life lacks safety or emotional stability, the brain often allocates more energy toward survival and emotional regulation instead of long-term agency and growth. One of the hardest truths is that many highly agentic people became that way partly because they were rewarded early, had stable attachment and supportive environments, and experienced competence young. Chronic stress can genuinely impair a person and psychologically regress them.<br><br>Agency can be defined as the ability to sustain willpower and discipline, but it shows up differently across people. For some it's conventional markers like career or wealth; for others it's emotional resilience, caregiving, and so on. And it can be a different human experience altogether: people experience effort differently, and what feels manageable to one person can feel overwhelming to another.<br><br>So judge less harshly. Everyone is grey, not black and white.`,
+  },
+  {
+    date: "2026-06-22",
+    title: "Building for others vs. yourself",
+    body: `I've been spending countless sleepless nights building Crux. Back in college, all-nighters were the worst feeling because the cause was external: an exam, a homework deadline. Today I'm staying up because of an inner compulsion to build this out.<br><br>Even though the cause is internal now, it's still mentally strenuous, just in a different way. It's harder to work for yourself. You keep doubting whether this is what you should be doing with your time. When someone else told you what to do with your time, it was a given. Society has normalized working for others; it hasn't normalized working for yourself.`,
+  },
+  {
+    date: "2026-06-21",
+    title: "Is building an expression of the soul?",
+    body: `Tesla apparently received visions of his inventions, not sketches but fully formed machines he had to bring into existence. Mozart described music arriving to him. Newton poked sticks into his eyeballs because he wanted to know what colors were made of. Kafka wrote through the night compulsively, believing writing was the only authentic expression of his inner life.<br><br>I think building is an expression of the soul when the idea comes from your inner muse. The common thread among these people is that they felt the visions were theirs, and theirs to put into the world. This inner world exists within you, and building externalizes it.<br><br>C&eacute;zanne spent his life trying to paint what he actually <em>saw</em>: not the conventional representation of a mountain, but the raw perceptual experience of looking at one. He failed constantly, by his own account, but the failure was generative because the standard he measured against was his interior truth. Dostoevsky said his novels came from trying to answer questions that tormented him personally; the books weren't entertainment, they were his inner arguments made visible. He needed readers not for validation but as <em>witnesses</em>.<br><br>I think this is what gives life meaning. In one way. Not sure. Newton poking his eyeball is different: there's a difference between meaning and curiosity.<br><br>Self-improvement is a gateway drug into entrepreneurship, because you start seeing life as a system you can optimize. You start to believe that if you don't like something about your life, you can change it. And since the source of most people's problems is money, you stop waiting for a raise and start building something. The ultimate goal is getting paid to be yourself: to solve problems you can't help but solve, to study what you can't pull yourself away from, to eliminate any work that doesn't challenge you creatively.<br><br><em>"There is something special about working on a project of your own. I wouldn't say exactly that you're happier. A better word would be excited, or engaged. You're happy when things are going well, but often they aren't... So why do it at all? Because to the kind of people who like working this way, nothing else feels as right. You feel as if you're an animal in its natural habitat, doing what you were meant to do: not always happy, maybe, but awake and alive."</em><br>(Paul Graham)<br><br>Open threads: Being a founder is like being a crafter. Do humans tend toward creation or consumption? Maybe creation's first-time cost is the existential effort, and after that it's joy. What leads to the creation of extractive institutions (something I keep wondering as I read <em>Why Nations Fail</em>)? Are humans inherently selfish, wanting their own pleasure at the cost of others' suffering? Is it survival of the fittest that stopped being about survival and became about comfort, with institutions persisting because we're high-inertia beings? Or are we physically incapable of feeling unknown humans' suffering the way we feel that of people we know? Do we treat strangers with the same emotional regard as aliens, a feature of evolution? Why did Eren Yeager choose genocide?`,
   },
   {
     date: "2026-06-20",
     title: "Datacenters in space",
     body: `If AI demand is overwhelming enough to exceed incremental terrestrial capacity, then deploy to space. But even then it's expensive; it'll take years of engineering to reach Space-Earth datacenter cost parity. So is the real incentive avoiding regulation? No, even if it costs more, demand might overshoot terrestrial capacity enough to make space datacenters a necessity.`,
+  },
+  {
+    date: "2026-06-19",
+    title: "Treasure hunt",
+    body: `I would create a global, open-ended treasure hunt. It would unfold across different spaces: cryptic maps hidden in public libraries, puzzles in radio signals, star charts buried underground, historical riddles. Players would have to think about whether the Hanging Gardens of Babylon were ever real, which borders didn't exist in Pangea, what Nikola Tesla would have felt before he died alone and poor despite building a nation's electricity infrastructure, and whether digital twins of humans are actually possible.<br><br>When I was younger I did a competition called World Scholar's Cup, where we argued about whether the value of a charitable action depends on the motive behind it, and whether love potions (if they existed) would be ethical. I want to recreate the feeling of shared adventure and collaboration found in <em>Hunter x Hunter</em> and <em>The 39 Clues</em>. Cicada 3301 is a real-world example: a series of puzzles posted to recruit highly intelligent people skilled in cryptography.<br><br>Although we're becoming a very technologically advanced society, our inner motivations and worldly curiosity haven't evolved. We're still living for our base needs. I want to use this treasure hunt to bring about the cultural renaissance humanity so desperately needs.`,
+  },
+  {
+    date: "2026-06-18",
+    title: "National interest as innovation's engine",
+    body: `Is national and self-interest the real driving force behind innovation? AGI looks like the next instance: US vs. China. The space race was the prior one, and it stalled almost completely after the fall of the USSR, once there was no rival left to race against.`,
   },
   {
     date: "2026-06-12",
@@ -84,7 +109,12 @@ const NOTES = [
   },
   {
     date: "2026-04-21",
-    title: "Creative destruction",
-    body: `Economic growth isn't just more and better machines and more and better educated people; it's a transformative, destabilizing process of widespread creative destruction.`,
+    title: "Markets aren't a natural force",
+    body: `A line from <em>Why Nations Fail</em> that stuck with me: "Economic growth is not just a process of more and better machines, and more and better educated people, but also a transformative and destabilizing process associated with widespread creative destruction."<br><br>Then I read this, <a href="https://minutes.substack.com/p/on-the-garden-against-citrini" target="_blank">on the garden, against Citrini</a>, which made me think: "A Citrini piece this week is a damning example: a kind of Randian genre fiction in which markets are unceasing, rational beings sitting outside human creation and thrust onto us without choice. The fear of mass job displacement is real, but it rests on a flawed premise: that what we sit atop are radical, infallible systems of pure market competition. Capitalism has never been this. Global markets are, at most, a few hundred people coordinating to make difficult trade-offs, organizing trillions in capital and billions of jobs. That is not a natural force thrust onto us."`,
+  },
+  {
+    date: "2025-12-15",
+    title: "The statistics I tell myself",
+    body: `Becoming an adult has mostly meant inheriting the consequences of my own carelessness: no one left to double-check the stove, the fridge door, the tap, the hair iron, the lock. So I developed new fears, each one a small catastrophe my brain insists is imminent.<br><br>Affirmations don't work on me; "it'll be fine" feels like a lie my brain has already audited and rejected. But statistics do. They're a kind of cognitive judo: they take the catastrophic story and replace it with a number that doesn't care how I feel. Most stove fires never leave the pan. A running tap can't flood a house unless the drain is also blocked. Hair irons shut themselves off. Burglaries have fallen for decades. Roughly 1 in 294 cars is stolen in a year. A day of overeating is water, not fat.<br><br>What I keep noticing: adults don't avoid disaster through superhuman vigilance. We've built environments, habits, and rituals that route around our forgetfulness. The drain is faster than the faucet. The iron has a timer. The door locks when it closes. Carelessness isn't a moral failing; it's the default condition of a creature with finite working memory, and the systems are what make me reliable.<br><br>I am median. The pan is contained. The drain is open. The iron has shut itself off. The door has held. The car is fine. The body resets. That, somehow, works.`,
   },
 ];
