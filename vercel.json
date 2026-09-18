@@ -5,8 +5,12 @@
       "destination": "/knowledge-jobs/index.html"
     },
     {
+      "source": "/the-amortization-game",
+      "destination": "/amortization-game/index.html"
+    },
+    {
       "source": "/the-amortization-frontier",
-      "destination": "/amortization-frontier/index.html"
+      "destination": "/amortization-game/index.html"
     }
   ]
 }
