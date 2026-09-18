@@ -6,7 +6,7 @@
 <title>The Amortization Game</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Newsreader:ital,wght@1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -19,19 +19,19 @@
   --accent: #e8730f;
   --rule: rgba(0,0,0,0.12);
 
-  /* Two families: Inter for everything you read, Space Grotesk for the four
-     lines that have to land. The nav wordmark keeps the serif it uses on
-     every other page of the site. */
+  /* Same structure as the Frontier Labs piece: the serif is reserved for the
+     page title and the nav wordmark, Inter carries everything else. */
   --f-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  --f-display: 'Space Grotesk', 'Inter', sans-serif;
+  --f-display: 'Newsreader', Georgia, serif;
 
   /* One size per kind of information. */
-  --t-display: 34px;   /* page title */
-  --t-lead:    19px;   /* caption, thesis, pull quote */
-  --t-body:    16px;   /* running prose */
-  --t-small:   13.5px; /* tabular and figure text: tables, tooltips */
-  --t-label:   11.5px; /* labels, legends, metadata */
-  --t-caption: 10px;   /* notes under a figure */
+  --t-display: 32px; /* page title */
+  --t-section: 19px; /* section headings, pull quote */
+  --t-lead:    17px; /* caption, thesis statement */
+  --t-body:    16px; /* running prose */
+  --t-small:   13px; /* toggle controls, tables, secondary text */
+  --t-label:   12px; /* legends, metadata, footer */
+  --t-caption: 11px; /* notes under a figure */
 
   /* Regime colors: validated for CVD separation against this surface. */
   --r-amortize: #2f9e7a;
@@ -100,15 +100,15 @@ header.page .eyebrow {
 header.page h1 {
   font-family: var(--f-display);
   font-size: var(--t-display);
-  font-weight: 600;
-  letter-spacing: -1px;
+  font-weight: 400;
+  letter-spacing: -0.3px;
   margin-bottom: 8px;
 }
 header.page .tagline {
-  font-family: var(--f-display);
   font-size: var(--t-lead);
   color: var(--fg);
   font-weight: 500;
+  font-style: italic;
   max-width: 720px;
   margin-bottom: 10px;
 }
@@ -120,22 +120,27 @@ header.page .tagline {
   padding: 18px 0 16px;
   margin: 24px 0 26px;
 }
-/* One section-title style, used for every heading on the page. */
-.claim .label,
+/* Section headings. */
 .prose h2,
-.map-header h3,
 .closing-label {
-  font-size: var(--t-label);
+  font-size: var(--t-section);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+/* Small labels above a thesis or a figure. */
+.claim .label,
+.map-header h3 {
+  font-size: var(--t-small);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--accent);
 }
 .claim .label { margin-bottom: 12px; }
 .claim .statement {
-  font-family: var(--f-display);
   font-size: var(--t-lead);
-  line-height: 1.45;
+  line-height: 1.5;
   max-width: 720px;
   margin-bottom: 10px;
 }
@@ -195,8 +200,7 @@ header.page .tagline {
 }
 
 .pullquote {
-  font-family: var(--f-display);
-  font-size: var(--t-lead);
+  font-size: var(--t-section);
   font-weight: 500;
   line-height: 1.5;
   color: var(--fg);
@@ -220,7 +224,7 @@ details.inline-def > summary {
   cursor: pointer;
   user-select: none;
   padding: 11px 0;
-  font-size: var(--t-body);
+  font-size: var(--t-small);
   font-weight: 600;
   color: var(--fg);
   list-style: none;
@@ -303,7 +307,7 @@ details.table-view {
 details.table-view > summary {
   cursor: pointer; user-select: none;
   padding: 11px 0;
-  font-size: var(--t-body); font-weight: 600; color: var(--fg);
+  font-size: var(--t-small); font-weight: 600; color: var(--fg);
   list-style: none;
 }
 details.table-view > summary::-webkit-details-marker { display: none; }
@@ -395,7 +399,7 @@ table.domains .dot {
   margin-top: 44px;
   padding-top: 18px;
   border-top: 1px solid var(--rule);
-  font-size: var(--t-label);
+  font-size: var(--t-small);
   color: var(--fg3);
   font-style: italic;
 }
@@ -651,11 +655,11 @@ function layoutFor(W) {
     // Data labels are sized to the plot geometry; the chrome below follows
     // the document scale (--t-label / --t-caption).
     label:   narrow ? 11   : 12.5,
-    region:  narrow ? 9    : 10,
-    axis:    narrow ? 10   : 11.5,
-    axisSub: narrow ? 9    : 10,
+    region:  narrow ? 9    : 11,
+    axis:    narrow ? 10   : 12,
+    axisSub: narrow ? 9    : 11,
     dotR:    narrow ? 5    : 6,
-    annot:   narrow ? 9.5  : 11.5,
+    annot:   narrow ? 9.5  : 11,
   };
 }
 
