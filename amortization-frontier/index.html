@@ -19,7 +19,7 @@
   --accent: #e8730f;
   --rule: rgba(0,0,0,0.12);
 
-  /* Regime colors — validated for CVD separation against this surface. */
+  /* Regime colors: validated for CVD separation against this surface. */
   --r-amortize: #2f9e7a;
   --r-search:   #3a6fd8;
   --r-hard:     #c04a8f;
@@ -301,7 +301,7 @@ details.inline-def .def-body li { font-size: 13.5px; margin-bottom: 6px; }
 }
 .legend-item b { color: var(--fg); font-weight: 600; }
 
-/* The chart scrolls rather than shrinks — below ~760px the labels would be
+/* The chart scrolls rather than shrinks. Below ~760px the labels would be
    too small to read, so let narrow screens pan instead. */
 .chart-scroll { overflow-x: auto; }
 #chart { display: block; width: 100%; min-width: 760px; height: auto; }
@@ -440,22 +440,20 @@ footer.page {
 <header class="page">
   <p class="eyebrow">18.09.26</p>
   <h1>The Amortization Frontier</h1>
-  <p class="tagline">Every domain has an optimal split between what you train into the weights and what you search for at test time. I think the split is predictable &mdash; and movable.</p>
+  <p class="tagline">Can we make search productive in weakly verifiable domains and then amortize what it discovers back into the policy?</p>
   <p class="disclaimer">The views and opinions expressed in this article are my own and do not represent those of my employer.</p>
 </header>
 
 <div class="claim">
   <p class="label">Hypothesis</p>
-  <p class="statement">The optimal train/test-time allocation is a property of the domain, and can be predicted from two terms:</p>
+  <p class="statement">The optimal train/test-time allocation is a property of the domain, and can be predicted from,</p>
   <div class="formula">
     <div class="term">
       <div class="term-name">Combinatorial search complexity</div>
-      <div class="term-def">What the trained policy can&rsquo;t already resolve.</div>
     </div>
     <div class="times">&times;</div>
     <div class="term">
       <div class="term-name">Verification advantage</div>
-      <div class="term-def">How cheaply candidates can be evaluated.</div>
     </div>
   </div>
 </div>
@@ -463,55 +461,40 @@ footer.page {
 <div class="prose">
 
   <details class="inline-def">
-    <summary>The two terms, at more length</summary>
+    <summary>Definitions</summary>
     <div class="def-body">
-      <p><strong>Combinatorial search complexity</strong> is not the raw size of the space. It&rsquo;s the <em>residual</em> &mdash; the part of the space the system still has to walk because the policy can&rsquo;t pattern-match its way to the answer. A domain can be astronomically large and have almost no residual search: there are more grammatical English sentences than chess positions, but a good language model doesn&rsquo;t search over them. The residual is what&rsquo;s left after amortization, which means it shrinks as models improve. It is a property of the domain <em>and</em> the current policy, not the domain alone.</p>
-      <p><strong>Verification advantage</strong> is the gap between the cost of producing a candidate and the cost of judging it. When that gap is wide, search is nearly free &mdash; you can afford to be wrong a thousand times, because being wrong is cheap to notice. When it&rsquo;s narrow or nonexistent, every sample you draw costs about as much to evaluate as it did to generate, and search stops paying for itself.</p>
-      <p>The product is what predicts the architecture. Both high, and you keep a search loop at test time more or less forever. Both low, and you amortize everything into weights and ship a single forward pass. The interesting cases are the corners where one term is large and the other isn&rsquo;t.</p>
+      <p><strong>Combinatorial search complexity:</strong> What the trained policy can&rsquo;t already resolve.</p>
+      <p><strong>Verification advantage:</strong> How cheaply candidates can be evaluated.</p>
     </div>
   </details>
 
-  <h2>Premise: most domains can be formulated as a game</h2>
+  <h2>Premise</h2>
 
-  <p>A game needs four things: a state you can observe, a set of actions you can enumerate, a transition rule, and some signal about how you did. That&rsquo;s a low bar, and more domains clear it than people assume. What usually blocks it isn&rsquo;t that a domain is mysterious or irreducibly human. It&rsquo;s that nobody has built the representation in which the state is observable and the actions are enumerable.</p>
+  <p>Most domains can be formulated as a &lsquo;game&rsquo;.</p>
 
-  <p>Once a domain has that shape, self-play is on the table. And self-play is the only mechanism we know of that produces capability nobody demonstrated first.</p>
+  <h2>Hypothesis</h2>
 
-  <h2>Hypothesis: harnesses move the split</h2>
-
-  <p>A harness gets described as tool integration &mdash; give the model a shell, a browser, an API, some function calls. I think that undersells what it does. A harness is what makes a domain <em>searchable</em>. It exposes state, enumerates actions, and returns feedback. It decides whether the model gets to look at a position or has to guess at one.</p>
-
-  <p>Which means the two terms above aren&rsquo;t fixed properties of the world. They&rsquo;re properties of the world <strong>plus the interface you built over it</strong>. A domain with a huge space and no exposed state <em>looks</em> weakly verifiable, and you can spend years believing that, when the truth is that you never built the thing that would have done the verifying.</p>
-
-  <p>This is the part of the framework I&rsquo;m least sure about and most interested in. If harnesses move domains around the map, then the map isn&rsquo;t a taxonomy of how hard things are. It&rsquo;s a snapshot of how much engineering has been done.</p>
+  <p>Harnesses can change that split. They are not just tool integrations; they can make a domain searchable by exposing state, actions, and feedback.</p>
 
   <h2>Two domains I work on</h2>
 
-  <p><strong>Chip design</strong> has enormous combinatorial structure and genuinely strong verifiers. Routing, timing, congestion &mdash; all computable, all fast relative to the cost of producing a floorplan. On paper it sits in the best corner of the map.</p>
+  <p>I arrived at this through two domains I work on: chip design and debate.</p>
 
-  <p>At NVIDIA the bottleneck turned out to be neither the verifier nor the model. There was no ontology to search over: no clean object model of what a floorplan <em>is</em>, what moves are legal, what a partial solution looks like, how to say that two candidates differ. The verifiers existed but the agent had nothing to hand them. Once I built that representation, I could let the agent rip overnight and come back to floorplans my team could actually use. Nothing about the model changed. The representation changed.</p>
+  <p><strong>Chip design</strong> has an enormous combinatorial structure but strong verifiers: routing, timing, congestion, etc. At NVIDIA, the issue was that there was no ontology to build this search structure. Once I built that, I was able to let my agent rip overnight and produce usable floorplans for my team.</p>
 
-  <p><strong>Debate</strong> has a comparably large space and weak verification. For open-ended research questions there is no ground truth to check against &mdash; that&rsquo;s most of what makes them research questions. You can&rsquo;t compile an argument and you can&rsquo;t run its tests.</p>
+  <p><strong>Debate</strong> has a similarly large search space but weak verification. For open-ended research questions, there&rsquo;s no ground truth. With <a href="https://cruxai.dev/" target="_blank">Crux</a>, I&rsquo;m working on externalizing search for debate so the LLM can be trained to have research taste in the structured disagreement space I define.</p>
 
-  <p>With <a href="https://cruxai.dev/" target="_blank">Crux</a> I&rsquo;m trying to externalize the search: define a structured disagreement space so that <em>where exactly do these two people diverge</em> becomes an object you can enumerate over rather than a thing you have taste about. If that works, a model can be trained to have research taste inside the structure, the same way a policy network gets trained to have positional taste inside chess. The bet is that you can manufacture enough verification signal out of structure to make search productive even where no oracle exists.</p>
-
-  <p>I don&rsquo;t know yet whether that bet is right. It&rsquo;s the reason I care about this framework at all.</p>
-
-  <h2>So, for every domain</h2>
+  <h2>So. For every domain</h2>
 
   <ol>
-    <li>Can you formulate it as a game?</li>
-    <li>What is the search space size, and what verifiers are actually available to the agent?</li>
-    <li>Let it rip &mdash; self-play, and make it better.</li>
+    <li>Can you formulate it as a &lsquo;game&rsquo;?</li>
+    <li>What is search space size and verifier availability</li>
+    <li>Let it rip: self play and make it better</li>
   </ol>
 
-  <p>Most of the field&rsquo;s effort right now sits before step one: making the model better at guessing. I think more of it belongs at step one. We need to get to letting it rip.</p>
-
   <div class="pullquote">
-    Can we make search productive in weakly verifiable domains, and then amortize what it discovers back into the policy?
+    We need to get to letting it rip. And this is the amortization frontier I&rsquo;m interested in.
   </div>
-
-  <p>That&rsquo;s the amortization frontier. Not the question of whether to train or to search &mdash; that one resolves itself once you know the two numbers &mdash; but the question of whether the numbers themselves can be engineered.</p>
 
 </div>
 
@@ -521,7 +504,7 @@ footer.page {
 <div class="map-block">
   <div class="map-header">
     <h3>Where domains sit</h3>
-    <p>Each dot is a domain, positioned by how much search the trained policy can&rsquo;t absorb (vertical) against how cheaply a candidate can be judged &mdash; <em>by the harness you actually have</em>, not by what physics permits (horizontal). Color is the architecture the two terms predict. Hover any dot for the detail.</p>
+    <p>Each dot is a domain, positioned by how much search the trained policy can&rsquo;t absorb (vertical) against how cheaply a candidate can be judged (horizontal). The horizontal axis is verification <em>as your harness realizes it</em>, not as physics permits. Color is the architecture the two terms predict. Hover any dot for the detail.</p>
   </div>
 
   <div class="legend" id="legend"></div>
@@ -530,7 +513,7 @@ footer.page {
     <svg id="chart" viewBox="0 0 920 600" role="img" aria-label="Scatter plot of domains by residual search complexity against verification advantage. A table version follows below."></svg>
   </div>
 
-  <p class="map-note">Positions are my judgments, not measurements &mdash; the point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</p>
+  <p class="map-note">Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</p>
 
   <details class="table-view">
     <summary>Read it as a table</summary>
@@ -555,32 +538,29 @@ footer.page {
   <p class="closing-label">Things I&rsquo;m thinking about</p>
 
   <details class="inline-def">
-    <summary>What Jev changed, and what it didn&rsquo;t</summary>
+    <summary>Jev</summary>
     <div class="def-body">
-      <p>TypeSafe released <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev" target="_blank">Jev</a> three days ago, and it sharpened something I&rsquo;d been circling. Jev doesn&rsquo;t generate text. It takes unstructured state plus a set of typed questions and returns decisions with calibrated probabilities, non-autoregressively, in 70&ndash;500ms rather than seconds. The training method they call RLCD &mdash; reinforcement learning for calibrated decisions &mdash; optimizes for probabilities that are epistemically honest rather than for outputs a human would rate highly.</p>
-      <p>The number everyone quoted was the speed. I think the speed is the least interesting part. <strong>Verification advantage is a ratio</strong>, and Jev is a two-orders-of-magnitude cut to the denominator. A cheap, calibrated, typed scorer over an enumerated action space is a value function in everything but name. That moves domains rightward on the map without anyone building a new oracle &mdash; the oracle was always affordable in principle and too expensive to put in a loop.</p>
-      <p>Their Wikiracing demo is the tell. Hundreds to thousands of link choices per step, no dense reward, and what makes the search tractable is simply that scoring the options got cheap enough to do at every node. That is the AlphaGo shape arriving in a domain nobody had bothered to formulate as a game.</p>
-      <p>But I want to be honest about the limit: Jev is deliberately a <em>short-horizon</em> model. System One. Nothing about it addresses credit assignment across long horizons, which is the actual obstacle in the weak-verification regime. It doesn&rsquo;t move debate. It moves every domain where the actions were always enumerable and evaluation was merely too expensive to loop on &mdash; which is a lot of domains, just not mine.</p>
-      <p>The open question I&rsquo;d want answered: does a scorer trained for calibration stay calibrated <em>off-distribution</em>? Because a search loop&rsquo;s entire job is to go off-distribution. A verifier that&rsquo;s honest on the training manifold and quietly confident outside it is exactly the failure mode that makes search turn into adversarial search against your own metric.</p>
+      <p>The recent release of <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev" target="_blank">Jev</a> has confirmed my suspicions.</p>
+      <p>Jev doesn&rsquo;t generate text. You give it state and a set of typed questions, and it returns decisions with calibrated probabilities. It runs in 70 to 500ms instead of seconds, and costs about 100x less.</p>
+      <p>The speed isn&rsquo;t the interesting part. Verification advantage is a ratio, and Jev cuts the denominator by two orders of magnitude. A cheap calibrated scorer over a typed action space is a value function in everything but name. That moves domains rightward on the map without anyone building a new oracle.</p>
+      <p>Their Wikiracing demo is the tell: hundreds to thousands of link choices per step, no dense reward, and search becomes tractable purely because scoring the options got cheap.</p>
+      <p>The limit is that Jev is deliberately short horizon. Nothing about it addresses credit assignment over long horizons, which is the actual obstacle in the weak verification regime. So it doesn&rsquo;t move debate yet.</p>
+      <p>What I&rsquo;d want to know: does a scorer trained for calibration stay calibrated off-distribution? A search loop&rsquo;s whole job is to go off-distribution.</p>
     </div>
   </details>
 
   <details class="inline-def">
-    <summary>Background: the AlphaGo analogue</summary>
+    <summary>Background</summary>
     <div class="def-body">
-      <p>The closest popular analogue is AlphaGo. Training compresses search into a policy network, but at inference the system still runs MCTS, because the space is too large for the policy to cover alone.</p>
-      <p>The lesson most people took from it was &ldquo;self-play works.&rdquo; The lesson I take is that the policy and the search were never competitors. The policy&rsquo;s job was to make the search cheaper; the search&rsquo;s job was to generate better training data for the policy. The split between them wasn&rsquo;t a design preference &mdash; it settled where the domain&rsquo;s two numbers put it, and it would have settled somewhere else in a different domain.</p>
-      <p>Which is the whole argument here, just restricted to a domain where both numbers happened to be enormous and someone had already built the harness for us. Go came pre-formulated. Almost nothing else does.</p>
+      <p>The closest, most popular analogue is AlphaGo: training compresses search into a policy network but at inference time, the system still performs MCTS because the search space is so large.</p>
     </div>
   </details>
 
   <details class="inline-def">
-    <summary>Motivation, and the thing that worries me</summary>
+    <summary>Motivation</summary>
     <div class="def-body">
-      <p>I work on AI for GPU floorplans, alongside building Crux. Both projects keep pushing me to the same question: is the bottleneck the model, or the environment we give it?</p>
-      <p>The Bitter Lesson makes me wary of hand-built ontologies. Every ontology is a claim about what matters, and the history of the field is mostly a history of those claims being wrong in ways their authors couldn&rsquo;t see. So the question I keep asking about my own work: are we encoding an expert&rsquo;s preferred answers, or providing a representation in which search and learning can discover better ones?</p>
-      <p>The floorplan ontology I built could honestly be either. It produced floorplans my team used, which is evidence of something, but &ldquo;an expert&rsquo;s preferences, executed faster&rdquo; also produces usable floorplans. The test I haven&rsquo;t run is whether the agent ever returns something that violates what I believed when I wrote the representation &mdash; and is right. Until a harness surprises its author, you can&rsquo;t tell which kind you built.</p>
-      <p>That&rsquo;s the tension I want to investigate.</p>
+      <p>I work on AI for GPU floorplans, alongside building Crux. Both projects make me ask whether the bottleneck is the model or the environment we give it.</p>
+      <p>The Bitter Lesson makes me wary of hand-built ontologies. Are we encoding an expert&rsquo;s preferred answers, or providing a representation in which search and learning can discover better ones? That is the tension I want to investigate.</p>
     </div>
   </details>
 </div>
@@ -601,7 +581,7 @@ footer.page {
 const REGIMES = {
   amortize: { color: "#2f9e7a", label: "Amortize into weights",   note: "no residual search worth running" },
   search:   { color: "#3a6fd8", label: "Policy + search loop",    note: "verification is cheap enough to loop on" },
-  hard:     { color: "#c04a8f", label: "The hard regime",         note: "huge space, no oracle — the frontier" },
+  hard:     { color: "#c04a8f", label: "The hard regime",         note: "huge space, no oracle, the frontier" },
 };
 
 // x = verification advantage (0–100), y = residual search complexity (0–100).
@@ -637,11 +617,11 @@ const DOMAINS = [
     ghost: 24, ghostLabel: "before the ontology" },
   { name: "Open-ended scientific reasoning", x: 12, y: 90, r: "hard", anchor: "right",
     search: "Extreme", verify: "Often low", feedback: "Sparse",
-    arch: "Hard regime — no known good answer" },
+    arch: "Hard regime, no known good answer" },
   { name: "Debate / scalable oversight", x: 16, y: 66, r: "hard", anchor: "below",
     search: "Extreme", verify: "Direct verifier poor", feedback: "Manufactured verification signal",
     arch: "Multi-agent protocol + judge",
-    target: 50, targetLabel: "Crux — in progress" },
+    target: 50, targetLabel: "Crux (in progress)" },
 ];
 
 // ── Geometry ──────────────────────────────────────────────────────────
@@ -836,10 +816,10 @@ for (const d of DOMAINS) {
 
 document.getElementById("legend").innerHTML = Object.values(REGIMES).map(r =>
   `<span class="legend-item"><span class="legend-swatch" style="background:${r.color}"></span>` +
-  `<b>${r.label}</b> &mdash; ${r.note}</span>`
+  `<b>${r.label}</b>: ${r.note}</span>`
 ).join("") +
   `<span class="legend-item"><span class="legend-swatch" style="background:#e8730f;border-radius:2px"></span>` +
-  `<b>What a harness buys you</b> &mdash; movement along the horizontal</span>`;
+  `<b>What a harness buys you</b>: movement along the horizontal</span>`;
 
 // ── Table view ────────────────────────────────────────────────────────
 
