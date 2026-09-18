@@ -26,7 +26,7 @@
 
   /* One size per kind of information. */
   --t-display: 32px; /* page title */
-  --t-section: 19px; /* section headings, pull quote */
+  --t-section: 19px; /* pull quote */
   --t-lead:    17px; /* caption, thesis statement */
   --t-body:    16px; /* running prose */
   --t-small:   13px; /* toggle controls, tables, secondary text */
@@ -120,17 +120,11 @@ header.page .tagline {
   padding: 18px 0 16px;
   margin: 24px 0 26px;
 }
-/* Section headings. */
+/* One orange uppercase style for every heading and label on the page. */
+.claim .label,
+.map-header h3,
 .prose h2,
 .closing-label {
-  font-size: var(--t-section);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--fg);
-}
-/* Small labels above a thesis or a figure. */
-.claim .label,
-.map-header h3 {
   font-size: var(--t-small);
   font-weight: 600;
   text-transform: uppercase;
