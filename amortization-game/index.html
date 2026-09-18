@@ -6,7 +6,7 @@
 <title>The Amortization Game</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -19,9 +19,9 @@
   --accent: #e8730f;
   --rule: rgba(0,0,0,0.12);
 
-  /* Two families. */
-  --f-serif: 'Newsreader', Georgia, serif;
-  --f-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  /* One family for all article text. The site wordmark in the nav keeps the
+     serif it uses on every other page. */
+  --f-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
 
   /* One size per kind of information. */
   --t-display: 34px;   /* page title */
@@ -96,14 +96,12 @@ header.page .eyebrow {
   margin-bottom: 10px;
 }
 header.page h1 {
-  font-family: var(--f-serif);
   font-size: var(--t-display);
-  font-weight: 400;
-  letter-spacing: -0.3px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
   margin-bottom: 8px;
 }
 header.page .tagline {
-  font-family: var(--f-serif);
   font-size: var(--t-lead);
   color: var(--fg);
   font-weight: 500;
@@ -132,9 +130,8 @@ header.page .tagline {
 }
 .claim .label { margin-bottom: 12px; }
 .claim .statement {
-  font-family: var(--f-serif);
   font-size: var(--t-lead);
-  line-height: 1.5;
+  line-height: 1.45;
   max-width: 720px;
   margin-bottom: 10px;
 }
@@ -194,9 +191,9 @@ header.page .tagline {
 }
 
 .pullquote {
-  font-family: var(--f-serif);
   font-size: var(--t-lead);
-  line-height: 1.55;
+  font-weight: 500;
+  line-height: 1.5;
   color: var(--fg);
   border-left: 3px solid var(--accent);
   padding: 4px 0 4px 20px;
@@ -449,7 +446,7 @@ footer.page {
 
   <h2>Hypothesis</h2>
 
-  <p>Harnesses can change that split. They are not just tool integrations. They can make a domain searchable by exposing state, actions, and feedback.</p>
+  <p>Harnesses can change that split. They are not just tool integrations. They can make a domain externally searchable by exposing state, actions, and feedback.</p>
 
   <h2>Two domains I work on</h2>
 
@@ -519,6 +516,8 @@ footer.page {
   <p>External search is not just more inference-time compute. It turns invisible reasoning into observable decisions: which branch to explore, what evidence to seek, when to abandon a hypothesis, when to stop. Internal reasoning leaves you a final answer. External search leaves state-action-outcome traces, and if humans can evaluate those decisions, the traces can train the next search policy.</p>
 
   <p>A harness cannot manufacture ground truth, but it can break an ungradable final judgment into locally testable ones.</p>
+
+  <p>We couldn&rsquo;t externalize search into the LLM because ordinary language completion is mostly amortized into the model. External search adds little because plausible continuations are easy to generate but difficult to verify against a cheap objective. Search becomes useful only when language generation is embedded in a verifiable task, such as coding, retrieval, or factual question answering.</p>
 
 </div>
 
