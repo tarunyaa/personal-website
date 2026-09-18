@@ -3,6 +3,10 @@
     {
       "source": "/the-frontier-labs-real-business-model",
       "destination": "/knowledge-jobs/index.html"
+    },
+    {
+      "source": "/the-amortization-frontier",
+      "destination": "/amortization-frontier/index.html"
     }
   ]
 }
