@@ -285,61 +285,36 @@ details.inline-def .def-body li { font-size: 13.5px; margin-bottom: 6px; }
 #chart text { font-family: 'Inter', -apple-system, sans-serif; }
 #chart .dot-group { cursor: pointer; }
 
-/* Small screens get a plain 2x2 instead of a shrunken scatter: below ~800px
-   the scatter's labels are unreadable and it can't be hovered anyway. */
-.quad { display: none; }
-.quad-axis {
+/* Narrow screens number the dots instead of labelling them; this is the key. */
+.chart-key { display: none; margin-top: 12px; }
+.chart-key ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 14px;
+}
+.chart-key li {
   display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--fg3);
-  margin-bottom: 6px;
-}
-.quad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.quad-cell {
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  background: var(--bg2);
-  padding: 11px 11px 12px;
-}
-.quad-cell h4 {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--fg2);
-  line-height: 1.35;
-}
-.quad-cell .sub { font-size: 10px; color: var(--fg3); margin-bottom: 9px; }
-.quad-cell ul { list-style: none; }
-.quad-cell li {
-  font-size: 12px;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 11px;
   line-height: 1.35;
   color: var(--fg);
-  margin-bottom: 7px;
-  padding-left: 13px;
-  position: relative;
 }
-.quad-cell li:last-child { margin-bottom: 0; }
-.quad-cell li .qdot {
-  position: absolute;
-  left: 0; top: 5px;
+.chart-key .n {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--fg3);
+  width: 13px;
+  flex-shrink: 0;
+  text-align: right;
+}
+.chart-key .kdot {
   width: 7px; height: 7px;
   border-radius: 50%;
+  flex-shrink: 0;
+  align-self: center;
 }
-.quad-moves {
-  margin-top: 10px;
-  font-size: 11px;
-  color: var(--accent);
-  line-height: 1.5;
-}
-
-@media (max-width: 799px) {
-  .chart-frame { display: none; }
-  .quad { display: block; }
-  .chart-only { display: none; }
 }
 
 .map-note {
@@ -546,7 +521,7 @@ footer.page {
 <div class="map-block">
   <div class="map-header">
     <h3>Where domains sit</h3>
-    <p>Domains placed by how much search the trained policy can&rsquo;t absorb against how cheaply a candidate can be judged. Verification here means <em>as your harness realizes it</em>, not as physics permits. Color is the architecture the two terms predict.<span class="chart-only"> Hover or tap any dot for the detail.</span></p>
+    <p>Domains placed by how much search the trained policy can&rsquo;t absorb against how cheaply a candidate can be judged. Verification here means <em>as your harness realizes it</em>, not as physics permits. Color is the architecture the two terms predict. Hover or tap any dot for the detail.</p>
   </div>
 
   <div class="legend" id="legend"></div>
@@ -555,17 +530,10 @@ footer.page {
     <svg id="chart" viewBox="0 0 920 600" role="img" aria-label="Scatter plot of domains by residual search complexity against verification advantage. A table version follows below."></svg>
   </div>
 
-  <!-- Small-screen replacement for the scatter, built from the same data. -->
-  <div class="quad">
-    <div class="quad-axis">
-      <span>&larr; weaker verification</span>
-      <span>stronger verification &rarr;</span>
-    </div>
-    <div class="quad-grid" id="quadGrid"></div>
-    <p class="quad-moves" id="quadMoves"></p>
-  </div>
+  <!-- Populated only on narrow screens, where the dots are numbered. -->
+  <div class="chart-key" id="chartKey"></div>
 
-  <p class="map-note">Positions are my judgments, not measurements.<span class="chart-only"> The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</span></p>
+  <p class="map-note">Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</p>
 
   <details class="table-view">
     <summary>Read it as a table</summary>
@@ -687,15 +655,11 @@ const DOMAINS = [
     target: 50, targetLabel: "Crux (in progress)" },
 ];
 
-// ── Geometry ──────────────────────────────────────────────────────────
-
-const W = 920, H = 600;
-const M = { top: 34, right: 44, bottom: 78, left: 96 };
-const PW = W - M.left - M.right;
-const PH = H - M.top - M.bottom;
-
-const px = v => M.left + (v / 100) * PW;
-const py = v => M.top + ((100 - v) / 100) * PH;
+// ── Rendering ─────────────────────────────────────────────────────────
+// The chart re-lays-out to whatever width it is given, so it always fits
+// its container exactly: no clipping, no horizontal scroll. Below ~620px
+// it switches to numbered dots with a key underneath, because direct
+// labels cannot fit without colliding.
 
 const SVG_NS = "http://www.w3.org/2000/svg";
 function el(tag, attrs, text) {
@@ -705,186 +669,232 @@ function el(tag, attrs, text) {
   return n;
 }
 
-const svg = document.getElementById("chart");
+const svg     = document.getElementById("chart");
+const frame   = document.querySelector(".chart-frame");
+const keyBox  = document.getElementById("chartKey");
+const tooltip = document.getElementById("tooltip");
 
-// ── Plot frame: faint quadrant guides + corner region labels ──────────
-
-svg.appendChild(el("rect", {
-  x: M.left, y: M.top, width: PW, height: PH,
-  fill: "#fbfbfc", stroke: "rgba(0,0,0,0.10)", rx: 6,
-}));
-
-// Quadrant guides at the midpoint of each axis.
-svg.appendChild(el("line", {
-  x1: px(50), y1: M.top, x2: px(50), y2: M.top + PH,
-  stroke: "rgba(0,0,0,0.09)", "stroke-dasharray": "3 5",
-}));
-svg.appendChild(el("line", {
-  x1: M.left, y1: py(50), x2: M.left + PW, y2: py(50),
-  stroke: "rgba(0,0,0,0.09)", "stroke-dasharray": "3 5",
-}));
-
-const REGION_LABELS = [
-  { t: "THE HARD REGIME",  x: M.left + 18,      y: M.top + 24,       a: "start" },
-  { t: "POLICY + SEARCH",  x: M.left + PW - 18, y: M.top + 24,       a: "end"   },
-  { t: "AMORTIZE",         x: M.left + 18,      y: M.top + PH - 16,  a: "start" },
-];
-for (const r of REGION_LABELS) {
-  svg.appendChild(el("text", {
-    x: r.x, y: r.y, "text-anchor": r.a,
-    "font-size": 11, "font-weight": 600, "letter-spacing": "0.1em",
-    fill: "rgba(0,0,0,0.16)",
-  }, r.t));
+function layoutFor(W) {
+  const narrow = W < 620;
+  return {
+    narrow, W,
+    H: narrow ? Math.round(Math.min(560, Math.max(380, W * 1.25))) : 600,
+    M: narrow ? { top: 20, right: 26, bottom: 48, left: 40 }
+              : { top: 34, right: 44, bottom: 78, left: 96 },
+    label:   narrow ? 11   : 12.5,
+    region:  narrow ? 8.5  : 11,
+    axis:    narrow ? 10   : 12,
+    axisSub: narrow ? 8.5  : 11,
+    dotR:    narrow ? 5    : 6,
+    annot:   narrow ? 9    : 11,
+  };
 }
-
-// ── Axes ──────────────────────────────────────────────────────────────
-
-svg.appendChild(el("text", {
-  x: M.left + PW / 2, y: H - 34, "text-anchor": "middle",
-  "font-size": 12, "font-weight": 600, fill: "#565663", "letter-spacing": "0.04em",
-}, "VERIFICATION ADVANTAGE →"));
-svg.appendChild(el("text", {
-  x: M.left + PW / 2, y: H - 16, "text-anchor": "middle",
-  "font-size": 11, fill: "#8a8a98",
-}, "how cheaply your harness can judge a candidate"));
-
-const yAxis = el("text", {
-  x: 26, y: M.top + PH / 2, "text-anchor": "middle",
-  "font-size": 12, "font-weight": 600, fill: "#565663", "letter-spacing": "0.04em",
-  transform: `rotate(-90, 26, ${M.top + PH / 2})`,
-}, "RESIDUAL SEARCH COMPLEXITY →");
-svg.appendChild(yAxis);
-const yAxisSub = el("text", {
-  x: 44, y: M.top + PH / 2, "text-anchor": "middle",
-  "font-size": 11, fill: "#8a8a98",
-  transform: `rotate(-90, 44, ${M.top + PH / 2})`,
-}, "what the policy can’t already resolve");
-svg.appendChild(yAxisSub);
-
-// ── Arrow marker ──────────────────────────────────────────────────────
-
-const defs = el("defs");
-for (const [id, fill] of [["arrowSolid", "#e8730f"], ["arrowGhost", "#e8730f"]]) {
-  const m = el("marker", {
-    id, viewBox: "0 0 10 10", refX: 8, refY: 5,
-    markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse",
-  });
-  m.appendChild(el("path", { d: "M 0 0 L 10 5 L 0 10 z", fill, opacity: id === "arrowGhost" ? 0.55 : 1 }));
-  defs.appendChild(m);
-}
-svg.appendChild(defs);
-
-// ── Harness arrows (drawn under the dots) ─────────────────────────────
-
-for (const d of DOMAINS) {
-  if (d.ghost != null) {
-    // A move already made: hollow origin → solid current position.
-    svg.appendChild(el("circle", {
-      cx: px(d.ghost), cy: py(d.y), r: 6,
-      fill: "none", stroke: "#e8730f", "stroke-width": 1.5, "stroke-dasharray": "2 2", opacity: 0.6,
-    }));
-    svg.appendChild(el("line", {
-      x1: px(d.ghost) + 10, y1: py(d.y), x2: px(d.x) - 12, y2: py(d.y),
-      stroke: "#e8730f", "stroke-width": 2, "marker-end": "url(#arrowSolid)",
-    }));
-    svg.appendChild(el("text", {
-      x: (px(d.ghost) + px(d.x)) / 2, y: py(d.y) - 14, "text-anchor": "middle",
-      "font-size": 11, "font-style": "italic", fill: "#e8730f",
-    }, d.ghostLabel));
-  }
-  if (d.target != null) {
-    // A move being attempted: solid origin → hollow target, dashed.
-    svg.appendChild(el("line", {
-      x1: px(d.x) + 12, y1: py(d.y), x2: px(d.target) - 10, y2: py(d.y),
-      stroke: "#e8730f", "stroke-width": 2, "stroke-dasharray": "5 4",
-      "marker-end": "url(#arrowGhost)", opacity: 0.85,
-    }));
-    svg.appendChild(el("circle", {
-      cx: px(d.target), cy: py(d.y), r: 6,
-      fill: "none", stroke: "#e8730f", "stroke-width": 1.5, "stroke-dasharray": "2 2", opacity: 0.6,
-    }));
-    svg.appendChild(el("text", {
-      x: (px(d.x) + px(d.target)) / 2, y: py(d.y) - 15, "text-anchor": "middle",
-      "font-size": 11, "font-style": "italic", fill: "#e8730f",
-    }, d.targetLabel));
-  }
-}
-
-// ── Dots + direct labels ──────────────────────────────────────────────
 
 const LABEL_OFFSET = 13;
 const ANCHOR_POS = {
-  right: d => ({ dx:  LABEL_OFFSET, dy: 4,  a: "start"  }),
-  left:  d => ({ dx: -LABEL_OFFSET, dy: 4,  a: "end"    }),
-  above: d => ({ dx: 0, dy: -LABEL_OFFSET,  a: "middle" }),
-  below: d => ({ dx: 0, dy:  LABEL_OFFSET + 8, a: "middle" }),
+  right: () => ({ dx:  LABEL_OFFSET, dy: 4,  a: "start"  }),
+  left:  () => ({ dx: -LABEL_OFFSET, dy: 4,  a: "end"    }),
+  above: () => ({ dx: 0, dy: -LABEL_OFFSET,  a: "middle" }),
+  below: () => ({ dx: 0, dy:  LABEL_OFFSET + 8, a: "middle" }),
 };
 
-const tooltip = document.getElementById("tooltip");
+function render() {
+  const avail = frame.clientWidth || 920;
+  const L = layoutFor(Math.max(260, avail));
+  const { W, H, M, narrow } = L;
+  const PW = W - M.left - M.right;
+  const PH = H - M.top - M.bottom;
+  const px = v => M.left + (v / 100) * PW;
+  const py = v => M.top + ((100 - v) / 100) * PH;
 
-for (const d of DOMAINS) {
-  const color = REGIMES[d.r].color;
-  const cx = px(d.x), cy = py(d.y);
-  const g = el("g", { class: "dot-group", tabindex: "0", role: "listitem" });
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
 
-  // 2px surface ring so overlapping marks stay separable.
-  g.appendChild(el("circle", { cx, cy, r: 8, fill: "#fbfbfc" }));
-  g.appendChild(el("circle", { cx, cy, r: 6, fill: color }));
+  // Arrow markers.
+  const defs = el("defs");
+  for (const [id, op] of [["arrowSolid", 1], ["arrowGhost", 0.55]]) {
+    const m = el("marker", {
+      id, viewBox: "0 0 10 10", refX: 8, refY: 5,
+      markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse",
+    });
+    m.appendChild(el("path", { d: "M 0 0 L 10 5 L 0 10 z", fill: "#e8730f", opacity: op }));
+    defs.appendChild(m);
+  }
+  svg.appendChild(defs);
 
-  const pos = ANCHOR_POS[d.anchor](d);
-  g.appendChild(el("text", {
-    x: cx + pos.dx, y: cy + pos.dy, "text-anchor": pos.a,
-    "font-size": 12.5, "font-weight": 500, fill: "#1a1a22",
-  }, d.name));
+  // Plot frame and quadrant guides.
+  svg.appendChild(el("rect", {
+    x: M.left, y: M.top, width: PW, height: PH,
+    fill: "#fbfbfc", stroke: "rgba(0,0,0,0.10)", rx: 6,
+  }));
+  svg.appendChild(el("line", {
+    x1: px(50), y1: M.top, x2: px(50), y2: M.top + PH,
+    stroke: "rgba(0,0,0,0.09)", "stroke-dasharray": "3 5",
+  }));
+  svg.appendChild(el("line", {
+    x1: M.left, y1: py(50), x2: M.left + PW, y2: py(50),
+    stroke: "rgba(0,0,0,0.09)", "stroke-dasharray": "3 5",
+  }));
 
-  // Generous invisible hit target.
-  const hit = el("circle", { cx, cy, r: 16, fill: "transparent", style: "cursor:pointer" });
-  g.appendChild(hit);
+  const pad = narrow ? 8 : 18;
+  for (const r of [
+    { t: "THE HARD REGIME", x: M.left + pad,      y: M.top + (narrow ? 14 : 24), a: "start" },
+    { t: "POLICY + SEARCH", x: M.left + PW - pad, y: M.top + (narrow ? 14 : 24), a: "end"   },
+    { t: "AMORTIZE",        x: M.left + pad,      y: M.top + PH - (narrow ? 9 : 16), a: "start" },
+  ]) {
+    svg.appendChild(el("text", {
+      x: r.x, y: r.y, "text-anchor": r.a,
+      "font-size": L.region, "font-weight": 600, "letter-spacing": "0.1em",
+      fill: "rgba(0,0,0,0.16)",
+    }, r.t));
+  }
 
-  const show = (ev) => {
-    tooltip.querySelector(".tt-title").textContent = d.name;
-    tooltip.querySelector(".tt-grid").innerHTML =
-      `<div class="k">Residual search</div><div class="v">${d.search}</div>` +
-      `<div class="k">Verification</div><div class="v">${d.verify}</div>` +
-      `<div class="k">Feedback</div><div class="v">${d.feedback}</div>`;
-    tooltip.querySelector(".tt-arch").innerHTML =
-      `<b>Expected architecture:</b> ${d.arch}` + (d.note ? `<br>${d.note}` : "");
-    tooltip.classList.add("visible");
-    move(ev);
-  };
-  const move = (ev) => {
-    const r = tooltip.getBoundingClientRect();
-    const src = ev.touches ? ev.touches[0] : ev;
-    let x = (src.clientX ?? cx) + 16;
-    let y = (src.clientY ?? cy) + 16;
-    if (x + r.width > window.innerWidth - 12) x = src.clientX - r.width - 16;
-    if (y + r.height > window.innerHeight - 12) y = src.clientY - r.height - 16;
-    tooltip.style.left = x + "px";
-    tooltip.style.top = y + "px";
-  };
-  const hide = () => tooltip.classList.remove("visible");
+  // Axes.
+  svg.appendChild(el("text", {
+    x: M.left + PW / 2, y: H - (narrow ? 22 : 34), "text-anchor": "middle",
+    "font-size": L.axis, "font-weight": 600, fill: "#565663", "letter-spacing": "0.04em",
+  }, narrow ? "VERIFICATION ADVANTAGE →" : "VERIFICATION ADVANTAGE →"));
+  svg.appendChild(el("text", {
+    x: M.left + PW / 2, y: H - (narrow ? 9 : 16), "text-anchor": "middle",
+    "font-size": L.axisSub, fill: "#8a8a98",
+  }, narrow ? "how cheaply a candidate can be judged" : "how cheaply your harness can judge a candidate"));
 
-  g.addEventListener("mouseenter", show);
-  g.addEventListener("mousemove", move);
-  g.addEventListener("mouseleave", hide);
-  g.addEventListener("focus", () => {
-    const b = hit.getBoundingClientRect();
-    show({ clientX: b.left + b.width / 2, clientY: b.top });
+  const yMid = M.top + PH / 2;
+  const yx = narrow ? 12 : 26;
+  svg.appendChild(el("text", {
+    x: yx, y: yMid, "text-anchor": "middle",
+    "font-size": L.axis, "font-weight": 600, fill: "#565663", "letter-spacing": "0.04em",
+    transform: `rotate(-90, ${yx}, ${yMid})`,
+  }, narrow ? "RESIDUAL SEARCH →" : "RESIDUAL SEARCH COMPLEXITY →"));
+  if (!narrow) {
+    svg.appendChild(el("text", {
+      x: 44, y: yMid, "text-anchor": "middle",
+      "font-size": L.axisSub, fill: "#8a8a98",
+      transform: `rotate(-90, 44, ${yMid})`,
+    }, "what the policy can’t already resolve"));
+  }
+
+  // Harness arrows, drawn under the dots.
+  for (const d of DOMAINS) {
+    if (d.ghost != null) {
+      svg.appendChild(el("circle", {
+        cx: px(d.ghost), cy: py(d.y), r: L.dotR,
+        fill: "none", stroke: "#e8730f", "stroke-width": 1.5,
+        "stroke-dasharray": "2 2", opacity: 0.6,
+      }));
+      svg.appendChild(el("line", {
+        x1: px(d.ghost) + L.dotR + 4, y1: py(d.y), x2: px(d.x) - L.dotR - 6, y2: py(d.y),
+        stroke: "#e8730f", "stroke-width": 2, "marker-end": "url(#arrowSolid)",
+      }));
+      svg.appendChild(el("text", {
+        x: (px(d.ghost) + px(d.x)) / 2, y: py(d.y) - (narrow ? 7 : 14), "text-anchor": "middle",
+        "font-size": L.annot, "font-style": "italic", fill: "#e8730f",
+      }, narrow ? "ontology" : "before the ontology"));
+    }
+    if (d.target != null) {
+      svg.appendChild(el("line", {
+        x1: px(d.x) + L.dotR + 6, y1: py(d.y), x2: px(d.target) - L.dotR - 4, y2: py(d.y),
+        stroke: "#e8730f", "stroke-width": 2, "stroke-dasharray": "5 4",
+        "marker-end": "url(#arrowGhost)", opacity: 0.85,
+      }));
+      svg.appendChild(el("circle", {
+        cx: px(d.target), cy: py(d.y), r: L.dotR,
+        fill: "none", stroke: "#e8730f", "stroke-width": 1.5,
+        "stroke-dasharray": "2 2", opacity: 0.6,
+      }));
+      svg.appendChild(el("text", {
+        x: (px(d.x) + px(d.target)) / 2, y: py(d.y) - (narrow ? 7 : 15), "text-anchor": "middle",
+        "font-size": L.annot, "font-style": "italic", fill: "#e8730f",
+      }, narrow ? "Crux" : "Crux (in progress)"));
+    }
+  }
+
+  // Dots, plus their label (wide) or index number (narrow).
+  DOMAINS.forEach((d, i) => {
+    const color = REGIMES[d.r].color;
+    const cx = px(d.x), cy = py(d.y);
+    const g = el("g", { class: "dot-group", tabindex: "0" });
+
+    g.appendChild(el("circle", { cx, cy, r: L.dotR + 2, fill: "#fbfbfc" }));
+    g.appendChild(el("circle", { cx, cy, r: L.dotR, fill: color }));
+
+    if (narrow) {
+      g.appendChild(el("text", {
+        x: cx + L.dotR + 3, y: cy + 3.5, "text-anchor": "start",
+        "font-size": L.label, "font-weight": 600, fill: "#1a1a22",
+      }, String(i + 1)));
+    } else {
+      const pos = ANCHOR_POS[d.anchor]();
+      g.appendChild(el("text", {
+        x: cx + pos.dx, y: cy + pos.dy, "text-anchor": pos.a,
+        "font-size": L.label, "font-weight": 500, fill: "#1a1a22",
+      }, d.name));
+    }
+
+    const hit = el("circle", { cx, cy, r: 16, fill: "transparent" });
+    g.appendChild(hit);
+
+    const show = (ev) => {
+      tooltip.querySelector(".tt-title").textContent = `${narrow ? (i + 1) + ". " : ""}${d.name}`;
+      tooltip.querySelector(".tt-grid").innerHTML =
+        `<div class="k">Residual search</div><div class="v">${d.search}</div>` +
+        `<div class="k">Verification</div><div class="v">${d.verify}</div>` +
+        `<div class="k">Feedback</div><div class="v">${d.feedback}</div>`;
+      tooltip.querySelector(".tt-arch").innerHTML =
+        `<b>Expected architecture:</b> ${d.arch}` + (d.note ? `<br>${d.note}` : "");
+      tooltip.classList.add("visible");
+      move(ev);
+    };
+    const move = (ev) => {
+      const r = tooltip.getBoundingClientRect();
+      let x = (ev.clientX ?? 0) + 16;
+      let y = (ev.clientY ?? 0) + 16;
+      if (x + r.width  > window.innerWidth  - 12) x = Math.max(8, ev.clientX - r.width - 16);
+      if (y + r.height > window.innerHeight - 12) y = Math.max(8, ev.clientY - r.height - 16);
+      tooltip.style.left = x + "px";
+      tooltip.style.top  = y + "px";
+    };
+    const hide = () => tooltip.classList.remove("visible");
+
+    g.addEventListener("mouseenter", show);
+    g.addEventListener("mousemove", move);
+    g.addEventListener("mouseleave", hide);
+    g.addEventListener("focus", () => {
+      const b = hit.getBoundingClientRect();
+      show({ clientX: b.left + b.width / 2, clientY: b.top });
+    });
+    g.addEventListener("blur", hide);
+    // Touch/pen: tap to pin. Stop it reaching the document dismiss handler.
+    g.addEventListener("pointerup", (ev) => {
+      if (ev.pointerType === "mouse") return;
+      ev.stopPropagation();
+      show(ev);
+    });
+
+    svg.appendChild(g);
   });
-  g.addEventListener("blur", hide);
 
-  // Touch/pen: tap a dot to pin its tooltip. The document handler below
-  // dismisses it, so stop this event from reaching it immediately.
-  g.addEventListener("pointerup", (ev) => {
-    if (ev.pointerType === "mouse") return;
-    ev.stopPropagation();
-    show(ev);
-  });
-
-  svg.appendChild(g);
+  // Numbered key, only when the dots are numbered.
+  if (narrow) {
+    keyBox.innerHTML = "<ul>" + DOMAINS.map((d, i) =>
+      `<li><span class="n">${i + 1}</span>` +
+      `<span class="kdot" style="background:${REGIMES[d.r].color}"></span>` +
+      `<span>${d.short || d.name}</span></li>`
+    ).join("") + "</ul>";
+    keyBox.style.display = "block";
+  } else {
+    keyBox.style.display = "none";
+  }
 }
 
+render();
 document.addEventListener("pointerup", () => tooltip.classList.remove("visible"));
+
+let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(render, 120);
+});
 
 // ── Legend ────────────────────────────────────────────────────────────
 
@@ -894,31 +904,6 @@ document.getElementById("legend").innerHTML = Object.values(REGIMES).map(r =>
 ).join("") +
   `<span class="legend-item"><span class="legend-swatch" style="background:#e8730f;border-radius:2px"></span>` +
   `<b>What a harness buys you</b>: movement along the horizontal</span>`;
-
-// ── Small-screen 2x2 ──────────────────────────────────────────────────
-// Same domains, binned by the two axes instead of plotted on them.
-
-const QUADS = [
-  { hi: true,  strong: false, title: "High residual search", sub: "weak verification" },
-  { hi: true,  strong: true,  title: "High residual search", sub: "strong verification" },
-  { hi: false, strong: false, title: "Low residual search",  sub: "weak verification" },
-  { hi: false, strong: true,  title: "Low residual search",  sub: "strong verification" },
-];
-
-document.getElementById("quadGrid").innerHTML = QUADS.map(q => {
-  const items = DOMAINS.filter(d => (d.y >= 50) === q.hi && (d.x >= 50) === q.strong);
-  return `<div class="quad-cell">
-    <h4>${q.title}</h4>
-    <div class="sub">${q.sub}</div>
-    <ul>${items.map(d =>
-      `<li><span class="qdot" style="background:${REGIMES[d.r].color}"></span>${d.short || d.name}</li>`
-    ).join("")}</ul>
-  </div>`;
-}).join("");
-
-document.getElementById("quadMoves").textContent =
-  "Chip design started in the weak column and moved right once I built the ontology. " +
-  "Debate is the move I’m attempting.";
 
 // ── Table view ────────────────────────────────────────────────────────
 
