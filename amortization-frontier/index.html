@@ -110,8 +110,8 @@ header.page .disclaimer {
 .claim {
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
-  padding: 26px 0 22px;
-  margin: 30px 0 34px;
+  padding: 18px 0 16px;
+  margin: 24px 0 26px;
 }
 .claim .label {
   font-family: 'JetBrains Mono', monospace;
@@ -124,47 +124,27 @@ header.page .disclaimer {
 }
 .claim .statement {
   font-family: 'Newsreader', Georgia, serif;
-  font-size: 20px;
-  line-height: 1.55;
-  max-width: 760px;
-  margin-bottom: 20px;
+  font-size: 18px;
+  line-height: 1.5;
+  max-width: 720px;
+  margin-bottom: 10px;
 }
+/* A single compact line, not two cards. */
 .claim .formula {
   display: flex;
-  align-items: stretch;
-  gap: 0;
+  align-items: baseline;
   flex-wrap: wrap;
-  max-width: 760px;
-}
-.claim .term {
-  flex: 1 1 260px;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  background: var(--bg2);
-  padding: 14px 16px;
+  gap: 2px 9px;
 }
 .claim .term-name {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--fg);
-  margin-bottom: 5px;
-}
-.claim .term-def {
-  font-size: 12.5px;
-  color: var(--fg2);
-  line-height: 1.5;
 }
 .claim .times {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 14px;
-  font-size: 18px;
+  font-size: 15px;
   color: var(--accent);
   font-weight: 500;
-}
-@media (max-width: 620px) {
-  .claim .times { padding: 10px 0; width: 100%; }
 }
 
 /* ── Prose ─────────────────────────────────────────────────────────── */
@@ -301,11 +281,66 @@ details.inline-def .def-body li { font-size: 13.5px; margin-bottom: 6px; }
 }
 .legend-item b { color: var(--fg); font-weight: 600; }
 
-/* The chart scrolls rather than shrinks. Below ~760px the labels would be
-   too small to read, so let narrow screens pan instead. */
-.chart-scroll { overflow-x: auto; }
-#chart { display: block; width: 100%; min-width: 760px; height: auto; }
+#chart { display: block; width: 100%; height: auto; }
 #chart text { font-family: 'Inter', -apple-system, sans-serif; }
+#chart .dot-group { cursor: pointer; }
+
+/* Small screens get a plain 2x2 instead of a shrunken scatter: below ~800px
+   the scatter's labels are unreadable and it can't be hovered anyway. */
+.quad { display: none; }
+.quad-axis {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg3);
+  margin-bottom: 6px;
+}
+.quad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.quad-cell {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--bg2);
+  padding: 11px 11px 12px;
+}
+.quad-cell h4 {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg2);
+  line-height: 1.35;
+}
+.quad-cell .sub { font-size: 10px; color: var(--fg3); margin-bottom: 9px; }
+.quad-cell ul { list-style: none; }
+.quad-cell li {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--fg);
+  margin-bottom: 7px;
+  padding-left: 13px;
+  position: relative;
+}
+.quad-cell li:last-child { margin-bottom: 0; }
+.quad-cell li .qdot {
+  position: absolute;
+  left: 0; top: 5px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+}
+.quad-moves {
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--accent);
+  line-height: 1.5;
+}
+
+@media (max-width: 799px) {
+  .chart-frame { display: none; }
+  .quad { display: block; }
+  .chart-only { display: none; }
+}
 
 .map-note {
   margin-top: 12px;
@@ -418,6 +453,16 @@ table.domains .dot {
   border-top: 1px solid var(--rule);
 }
 
+.disclaimer-foot {
+  max-width: 720px;
+  margin-top: 44px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;
+  color: var(--fg3);
+  font-style: italic;
+}
+
 footer.page {
   max-width: 980px;
   margin: 0 auto;
@@ -441,20 +486,15 @@ footer.page {
   <p class="eyebrow">18.09.26</p>
   <h1>The Amortization Frontier</h1>
   <p class="tagline">The boundary between what a model has learned to do in its weights and what it must still search over at runtime.</p>
-  <p class="disclaimer">The views and opinions expressed in this article are my own and do not represent those of my employer.</p>
 </header>
 
 <div class="claim">
   <p class="label">Hypothesis</p>
   <p class="statement">The optimal train/test-time allocation is a property of the domain, and can be predicted from,</p>
   <div class="formula">
-    <div class="term">
-      <div class="term-name">Combinatorial search complexity</div>
-    </div>
-    <div class="times">&times;</div>
-    <div class="term">
-      <div class="term-name">Verification advantage</div>
-    </div>
+    <span class="term-name">Combinatorial search complexity</span>
+    <span class="times">&times;</span>
+    <span class="term-name">Verification advantage</span>
   </div>
 </div>
 
@@ -482,7 +522,7 @@ footer.page {
 
   <p><strong>Chip design</strong> has an enormous combinatorial structure but strong verifiers: routing, timing, congestion, etc. At NVIDIA, the issue was that there was no ontology to build this search structure. Once I built that, I was able to let my agent rip overnight and produce usable floorplans for my team.</p>
 
-  <p><strong>Debate</strong> has a similarly large search space but weak verification. For open-ended research questions, there&rsquo;s no ground truth. With <a href="https://cruxai.dev/" target="_blank">Crux</a>, I&rsquo;m working on externalizing search for debate so the LLM can be trained to have research taste in the structured disagreement space I define.</p>
+  <p><strong>Debate</strong> has a similarly large search space but much weaker verification: for open-ended research questions, truth is often delayed, expensive, or contested rather than immediately checkable. With <a href="https://cruxai.dev/" target="_blank">Crux</a>, I&rsquo;m externalizing the search over competing arguments to identify the smallest disagreement that changes the conclusion, and collecting the human judgments that could eventually teach models better research taste.</p>
 
   <h2>So. For every domain</h2>
 
@@ -506,16 +546,26 @@ footer.page {
 <div class="map-block">
   <div class="map-header">
     <h3>Where domains sit</h3>
-    <p>Each dot is a domain, positioned by how much search the trained policy can&rsquo;t absorb (vertical) against how cheaply a candidate can be judged (horizontal). The horizontal axis is verification <em>as your harness realizes it</em>, not as physics permits. Color is the architecture the two terms predict. Hover any dot for the detail.</p>
+    <p>Domains placed by how much search the trained policy can&rsquo;t absorb against how cheaply a candidate can be judged. Verification here means <em>as your harness realizes it</em>, not as physics permits. Color is the architecture the two terms predict.<span class="chart-only"> Hover or tap any dot for the detail.</span></p>
   </div>
 
   <div class="legend" id="legend"></div>
 
-  <div class="chart-scroll">
+  <div class="chart-frame">
     <svg id="chart" viewBox="0 0 920 600" role="img" aria-label="Scatter plot of domains by residual search complexity against verification advantage. A table version follows below."></svg>
   </div>
 
-  <p class="map-note">Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</p>
+  <!-- Small-screen replacement for the scatter, built from the same data. -->
+  <div class="quad">
+    <div class="quad-axis">
+      <span>&larr; weaker verification</span>
+      <span>stronger verification &rarr;</span>
+    </div>
+    <div class="quad-grid" id="quadGrid"></div>
+    <p class="quad-moves" id="quadMoves"></p>
+  </div>
+
+  <p class="map-note">Positions are my judgments, not measurements.<span class="chart-only"> The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</span></p>
 
   <details class="table-view">
     <summary>Read it as a table</summary>
@@ -543,11 +593,19 @@ footer.page {
     <summary>Jev</summary>
     <div class="def-body">
       <p>The recent release of <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev" target="_blank">Jev</a> has confirmed my suspicions.</p>
-      <p>Jev doesn&rsquo;t generate text. You give it state and a set of typed questions, and it returns decisions with calibrated probabilities. It runs in 70 to 500ms instead of seconds, and costs about 100x less.</p>
-      <p>The speed isn&rsquo;t the interesting part. Verification advantage is a ratio, and Jev cuts the denominator by two orders of magnitude. A cheap calibrated scorer over a typed action space is a value function in everything but name. That moves domains rightward on the map without anyone building a new oracle.</p>
-      <p>Their Wikiracing demo is the tell: hundreds to thousands of link choices per step, no dense reward, and search becomes tractable purely because scoring the options got cheap.</p>
-      <p>The limit is that Jev is deliberately short horizon. Nothing about it addresses credit assignment over long horizons, which is the actual obstacle in the weak verification regime. So it doesn&rsquo;t move debate yet.</p>
-      <p>What I&rsquo;d want to know: does a scorer trained for calibration stay calibrated off-distribution? A search loop&rsquo;s whole job is to go off-distribution.</p>
+      <p>Jev demonstrates the value of making a decision problem explicit. It maps a legible state and a bounded set of typed questions into fast probabilistic judgments.</p>
+      <p>External search creates exactly this interface: it turns an implicit chain of thought into inspectable states, branches, and candidate actions. Once reasoning is externalized this way, a cheaper model can repeatedly decide which branch to expand, abandon, or investigate, without asking a full generative model to reconstruct the entire problem each time.</p>
+      <p>Search generates the trajectories; repeated decisions over those trajectories can eventually be amortized into a faster policy.</p>
+    </div>
+  </details>
+
+  <details class="inline-def">
+    <summary>Humans&amp;</summary>
+    <div class="def-body">
+      <p><a href="https://persimmon.humansand.ai/blog/persimmon.html" target="_blank">Persimmon</a> is closer to the weak-verification regime. There is no single correct human response, so Humans&amp; trains against an adaptive discriminator and evaluates whether behavior matches the distribution of real human interactions over time.</p>
+      <p>The horizon is what forces that choice. Pure next-token prediction drifts as error compounds over a long conversation, and a fixed reward stops carrying signal once the model&rsquo;s own distribution moves under it. An adaptive discriminator recalibrates as the model improves. It is a verifier trained alongside the thing it verifies.</p>
+      <p>The numbers show how hard the regime is. Persimmon fools an LLM judge about 20% of the time, where 50% would mean indistinguishable, against 1.2% for the base model it started from. At 80 turns it holds coherence in 60.7% of conversations against 87.3% for humans. GPT 6 scores 98.4% on that same measure, which is the tell: being too coherent is its own way of failing to look human. You cannot score this domain on a scale where more is better.</p>
+      <p>The analogous question for Crux is: what evaluator could distinguish genuine research taste?</p>
     </div>
   </details>
 
@@ -566,6 +624,8 @@ footer.page {
     </div>
   </details>
 </div>
+
+<p class="disclaimer-foot">The views and opinions expressed in this article are my own and do not represent those of my employer.</p>
 
 </div>
 
@@ -589,38 +649,39 @@ const REGIMES = {
 // x = verification advantage (0–100), y = residual search complexity (0–100).
 // `anchor` places the label relative to the dot so nothing collides.
 const DOMAINS = [
-  { name: "Ordinary language completion", x: 20, y: 26, r: "amortize", anchor: "right",
+  { name: "Ordinary language completion", short: "Language completion", x: 20, y: 26, r: "amortize", anchor: "right",
     search: "Low–medium", verify: "Low", feedback: "Low",
-    arch: "Mostly amortized model" },
-  { name: "Image recognition", x: 62, y: 10, r: "amortize", anchor: "above",
+    arch: "Mostly amortized model",
+    note: "Search adds little: plausible continuations are easy to generate but hard to verify cheaply. It pays off only when language is embedded in a verifiable task like coding, retrieval, or factual QA." },
+  { name: "Image recognition", short: "Image recognition", x: 62, y: 10, r: "amortize", anchor: "above",
     search: "Low", verify: "High-ish", feedback: "N/A",
     arch: "Almost entirely amortized" },
-  { name: "Robotics", x: 40, y: 58, r: "search", anchor: "left",
+  { name: "Robotics", short: "Robotics", x: 40, y: 58, r: "search", anchor: "left",
     search: "High", verify: "Medium/low", feedback: "Rich but expensive",
     arch: "Learned policy + model/planning" },
-  { name: "Web agent tasks", x: 56, y: 53, r: "search", anchor: "below",
+  { name: "Web agent tasks", short: "Web agents", x: 56, y: 53, r: "search", anchor: "below",
     search: "High", verify: "Medium", feedback: "Environment feedback",
     arch: "Harnessed sequential agent" },
-  { name: "Competitive programming", x: 78, y: 60, r: "search", anchor: "below",
+  { name: "Competitive programming", short: "Competitive prog.", x: 78, y: 60, r: "search", anchor: "below",
     search: "High", verify: "High", feedback: "Tests / compiler",
     arch: "Agent + sampling/search + execution" },
-  { name: "Chess / Go", x: 93, y: 70, r: "search", anchor: "left",
+  { name: "Chess / Go", short: "Chess / Go", x: 93, y: 70, r: "search", anchor: "left",
     search: "Very high", verify: "Extremely high", feedback: "Dense",
     arch: "Policy/value network + search" },
-  { name: "SAT / constraint solving", x: 96, y: 84, r: "search", anchor: "left",
+  { name: "SAT / constraint solving", short: "SAT / constraints", x: 96, y: 84, r: "search", anchor: "left",
     search: "Extreme", verify: "Extreme", feedback: "Dense",
     arch: "Search + learned heuristics" },
-  { name: "Formal theorem proving", x: 84, y: 90, r: "search", anchor: "left",
+  { name: "Formal theorem proving", short: "Theorem proving", x: 84, y: 90, r: "search", anchor: "left",
     search: "Extreme", verify: "Extreme", feedback: "Very dense",
     arch: "Policy + proof search + formal verifier" },
-  { name: "Chip placement / routing", x: 66, y: 78, r: "search", anchor: "below",
+  { name: "Chip placement / routing", short: "Chip place / route", x: 66, y: 78, r: "search", anchor: "below",
     search: "Extreme", verify: "High", feedback: "Dense simulators / objectives",
     arch: "Learned heuristics + optimization/search",
     ghost: 24, ghostLabel: "before the ontology" },
-  { name: "Open-ended scientific reasoning", x: 12, y: 90, r: "hard", anchor: "right",
+  { name: "Open-ended scientific reasoning", short: "Open-ended science", x: 12, y: 90, r: "hard", anchor: "right",
     search: "Extreme", verify: "Often low", feedback: "Sparse",
     arch: "Hard regime, no known good answer" },
-  { name: "Debate / scalable oversight", x: 16, y: 66, r: "hard", anchor: "below",
+  { name: "Debate / scalable oversight", short: "Debate / oversight", x: 16, y: 66, r: "hard", anchor: "below",
     search: "Extreme", verify: "Direct verifier poor", feedback: "Manufactured verification signal",
     arch: "Multi-agent protocol + judge",
     target: 50, targetLabel: "Crux (in progress)" },
@@ -786,7 +847,8 @@ for (const d of DOMAINS) {
       `<div class="k">Residual search</div><div class="v">${d.search}</div>` +
       `<div class="k">Verification</div><div class="v">${d.verify}</div>` +
       `<div class="k">Feedback</div><div class="v">${d.feedback}</div>`;
-    tooltip.querySelector(".tt-arch").innerHTML = `<b>Expected architecture:</b> ${d.arch}`;
+    tooltip.querySelector(".tt-arch").innerHTML =
+      `<b>Expected architecture:</b> ${d.arch}` + (d.note ? `<br>${d.note}` : "");
     tooltip.classList.add("visible");
     move(ev);
   };
@@ -805,14 +867,24 @@ for (const d of DOMAINS) {
   g.addEventListener("mouseenter", show);
   g.addEventListener("mousemove", move);
   g.addEventListener("mouseleave", hide);
-  g.addEventListener("focus", (e) => {
+  g.addEventListener("focus", () => {
     const b = hit.getBoundingClientRect();
     show({ clientX: b.left + b.width / 2, clientY: b.top });
   });
   g.addEventListener("blur", hide);
 
+  // Touch/pen: tap a dot to pin its tooltip. The document handler below
+  // dismisses it, so stop this event from reaching it immediately.
+  g.addEventListener("pointerup", (ev) => {
+    if (ev.pointerType === "mouse") return;
+    ev.stopPropagation();
+    show(ev);
+  });
+
   svg.appendChild(g);
 }
+
+document.addEventListener("pointerup", () => tooltip.classList.remove("visible"));
 
 // ── Legend ────────────────────────────────────────────────────────────
 
@@ -822,6 +894,31 @@ document.getElementById("legend").innerHTML = Object.values(REGIMES).map(r =>
 ).join("") +
   `<span class="legend-item"><span class="legend-swatch" style="background:#e8730f;border-radius:2px"></span>` +
   `<b>What a harness buys you</b>: movement along the horizontal</span>`;
+
+// ── Small-screen 2x2 ──────────────────────────────────────────────────
+// Same domains, binned by the two axes instead of plotted on them.
+
+const QUADS = [
+  { hi: true,  strong: false, title: "High residual search", sub: "weak verification" },
+  { hi: true,  strong: true,  title: "High residual search", sub: "strong verification" },
+  { hi: false, strong: false, title: "Low residual search",  sub: "weak verification" },
+  { hi: false, strong: true,  title: "Low residual search",  sub: "strong verification" },
+];
+
+document.getElementById("quadGrid").innerHTML = QUADS.map(q => {
+  const items = DOMAINS.filter(d => (d.y >= 50) === q.hi && (d.x >= 50) === q.strong);
+  return `<div class="quad-cell">
+    <h4>${q.title}</h4>
+    <div class="sub">${q.sub}</div>
+    <ul>${items.map(d =>
+      `<li><span class="qdot" style="background:${REGIMES[d.r].color}"></span>${d.short || d.name}</li>`
+    ).join("")}</ul>
+  </div>`;
+}).join("");
+
+document.getElementById("quadMoves").textContent =
+  "Chip design started in the weak column and moved right once I built the ontology. " +
+  "Debate is the move I’m attempting.";
 
 // ── Table view ────────────────────────────────────────────────────────
 
