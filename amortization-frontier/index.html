@@ -113,15 +113,19 @@ header.page .disclaimer {
   padding: 18px 0 16px;
   margin: 24px 0 26px;
 }
-.claim .label {
+/* One section-title style, used for every heading on the page. */
+.claim .label,
+.prose h2,
+.map-header h3,
+.closing-label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--accent);
-  margin-bottom: 12px;
 }
+.claim .label { margin-bottom: 12px; }
 .claim .statement {
   font-family: 'Newsreader', Georgia, serif;
   font-size: 18px;
@@ -151,11 +155,6 @@ header.page .disclaimer {
 
 .prose { max-width: 720px; }
 .prose h2 {
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--fg2);
   margin: 40px 0 14px;
   padding-top: 18px;
   border-top: 1px solid var(--rule);
@@ -247,18 +246,11 @@ details.inline-def .def-body li { font-size: 13.5px; margin-bottom: 6px; }
   border-bottom: 1px solid var(--rule);
 }
 .map-header { margin-bottom: 14px; }
-.map-header h3 {
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--fg2);
-  margin-bottom: 5px;
-}
+.map-header h3 { margin-bottom: 8px; }
 .map-header p {
-  font-size: 13px;
+  font-size: 15.5px;
   color: var(--fg);
-  max-width: 700px;
+  max-width: 720px;
 }
 
 .legend {
@@ -285,41 +277,10 @@ details.inline-def .def-body li { font-size: 13.5px; margin-bottom: 6px; }
 #chart text { font-family: 'Inter', -apple-system, sans-serif; }
 #chart .dot-group { cursor: pointer; }
 
-/* Narrow screens number the dots instead of labelling them; this is the key. */
-.chart-key { display: none; margin-top: 12px; }
-.chart-key ul {
-  list-style: none;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px 14px;
-}
-.chart-key li {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-  font-size: 11px;
-  line-height: 1.35;
-  color: var(--fg);
-}
-.chart-key .n {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--fg3);
-  width: 13px;
-  flex-shrink: 0;
-  text-align: right;
-}
-.chart-key .kdot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  align-self: center;
-}
-}
-
 .map-note {
   margin-top: 12px;
-  font-size: 11px;
+  font-size: 10px;
+  line-height: 1.55;
   color: var(--fg3);
   font-style: italic;
   max-width: 700px;
@@ -418,11 +379,6 @@ table.domains .dot {
 
 .closing { margin-top: 44px; }
 .closing-label {
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--fg2);
   margin-bottom: 14px;
   padding-top: 18px;
   border-top: 1px solid var(--rule);
@@ -521,7 +477,7 @@ footer.page {
 <div class="map-block">
   <div class="map-header">
     <h3>Where domains sit</h3>
-    <p>Domains placed by how much search the trained policy can&rsquo;t absorb against how cheaply a candidate can be judged. Verification here means <em>as your harness realizes it</em>, not as physics permits. Color is the architecture the two terms predict. Hover or tap any dot for the detail.</p>
+    <p>Domains placed by how much search the trained policy can&rsquo;t absorb against how cheaply a candidate can be judged. Verification here means <em>as your harness realizes it</em>. Color is the architecture the two terms predict.</p>
   </div>
 
   <div class="legend" id="legend"></div>
@@ -530,10 +486,8 @@ footer.page {
     <svg id="chart" viewBox="0 0 920 600" role="img" aria-label="Scatter plot of domains by residual search complexity against verification advantage. A table version follows below."></svg>
   </div>
 
-  <!-- Populated only on narrow screens, where the dots are numbered. -->
-  <div class="chart-key" id="chartKey"></div>
 
-  <p class="map-note">Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</p>
+  <p class="map-note">Hover or tap any dot for the detail. Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</p>
 
   <details class="table-view">
     <summary>Read it as a table</summary>
@@ -552,6 +506,24 @@ footer.page {
       </table>
     </div>
   </details>
+</div>
+
+<div class="prose">
+
+  <h2>Why externalize search?</h2>
+
+  <p>The benefit of external search is not merely more inference-time compute. It converts otherwise invisible reasoning into a sequence of observable decisions: which branch to explore, what evidence to seek, when to abandon a hypothesis, and when to stop. Internal reasoning leaves us with a final answer. External search produces state-action-outcome traces. If humans can evaluate those decisions, the traces can train the next search policy.</p>
+
+  <h2>How can a harness help weak verification?</h2>
+
+  <p>A harness cannot manufacture ground truth, but it can decompose an ungradable final judgment into more locally testable decisions. In Crux, we may not know the correct answer to a policy question, but we can test whether evidence supports a claim, whether a proposed hinge is genuinely disputed, and whether changing it would alter the conclusion. The wager is that enough reliable local feedback can make search productive even when the final answer remains unverifiable.</p>
+
+  <h2>The falsifiable claim</h2>
+
+  <p>External search should outperform a direct model call only when its intermediate evaluators can rank branches better than the model&rsquo;s implicit judgment. Otherwise, the harness adds ceremony rather than intelligence.</p>
+
+  <p>My first Crux ablation demonstrated exactly that: the single agent beat the more expensive search harness.</p>
+
 </div>
 
 <div class="closing">
@@ -578,7 +550,7 @@ footer.page {
   </details>
 
   <details class="inline-def">
-    <summary>Background</summary>
+    <summary>AlphaGo</summary>
     <div class="def-body">
       <p>The closest, most popular analogue is AlphaGo: training compresses search into a policy network but at inference time, the system still performs MCTS because the search space is so large.</p>
     </div>
@@ -617,39 +589,39 @@ const REGIMES = {
 // x = verification advantage (0–100), y = residual search complexity (0–100).
 // `anchor` places the label relative to the dot so nothing collides.
 const DOMAINS = [
-  { name: "Ordinary language completion", short: "Language completion", x: 20, y: 26, r: "amortize", anchor: "right",
+  { name: "Ordinary language completion", nAnchor: "right", short: "Language completion", x: 20, y: 26, r: "amortize", anchor: "right",
     search: "Low–medium", verify: "Low", feedback: "Low",
     arch: "Mostly amortized model",
     note: "Search adds little: plausible continuations are easy to generate but hard to verify cheaply. It pays off only when language is embedded in a verifiable task like coding, retrieval, or factual QA." },
-  { name: "Image recognition", short: "Image recognition", x: 62, y: 10, r: "amortize", anchor: "above",
+  { name: "Image recognition", nAnchor: "above", short: "Image recognition", x: 62, y: 10, r: "amortize", anchor: "above",
     search: "Low", verify: "High-ish", feedback: "N/A",
     arch: "Almost entirely amortized" },
-  { name: "Robotics", short: "Robotics", x: 40, y: 58, r: "search", anchor: "left",
+  { name: "Robotics", nAnchor: "below", short: "Robotics", x: 40, y: 58, r: "search", anchor: "left",
     search: "High", verify: "Medium/low", feedback: "Rich but expensive",
     arch: "Learned policy + model/planning" },
-  { name: "Web agent tasks", short: "Web agents", x: 56, y: 53, r: "search", anchor: "below",
+  { name: "Web agent tasks", nAnchor: "below", short: "Web agents", x: 56, y: 53, r: "search", anchor: "below",
     search: "High", verify: "Medium", feedback: "Environment feedback",
     arch: "Harnessed sequential agent" },
-  { name: "Competitive programming", short: "Competitive prog.", x: 78, y: 60, r: "search", anchor: "below",
+  { name: "Competitive programming", nAnchor: "left", short: "Competitive prog.", x: 78, y: 60, r: "search", anchor: "below",
     search: "High", verify: "High", feedback: "Tests / compiler",
     arch: "Agent + sampling/search + execution" },
-  { name: "Chess / Go", short: "Chess / Go", x: 93, y: 70, r: "search", anchor: "left",
+  { name: "Chess / Go", nAnchor: "left", short: "Chess / Go", x: 93, y: 70, r: "search", anchor: "left",
     search: "Very high", verify: "Extremely high", feedback: "Dense",
     arch: "Policy/value network + search" },
-  { name: "SAT / constraint solving", short: "SAT / constraints", x: 96, y: 84, r: "search", anchor: "left",
+  { name: "SAT / constraint solving", nAnchor: "left", short: "SAT / constraints", x: 96, y: 84, r: "search", anchor: "left",
     search: "Extreme", verify: "Extreme", feedback: "Dense",
     arch: "Search + learned heuristics" },
-  { name: "Formal theorem proving", short: "Theorem proving", x: 84, y: 90, r: "search", anchor: "left",
+  { name: "Formal theorem proving", nAnchor: "left", short: "Theorem proving", x: 84, y: 90, r: "search", anchor: "left",
     search: "Extreme", verify: "Extreme", feedback: "Very dense",
     arch: "Policy + proof search + formal verifier" },
-  { name: "Chip placement / routing", short: "Chip place / route", x: 66, y: 78, r: "search", anchor: "below",
+  { name: "Chip placement / routing", nAnchor: "below", short: "Chip place / route", x: 66, y: 78, r: "search", anchor: "below",
     search: "Extreme", verify: "High", feedback: "Dense simulators / objectives",
     arch: "Learned heuristics + optimization/search",
     ghost: 24, ghostLabel: "before the ontology" },
-  { name: "Open-ended scientific reasoning", short: "Open-ended science", x: 12, y: 90, r: "hard", anchor: "right",
+  { name: "Open-ended scientific reasoning", nAnchor: "right", short: "Open-ended science", x: 12, y: 90, r: "hard", anchor: "right",
     search: "Extreme", verify: "Often low", feedback: "Sparse",
     arch: "Hard regime, no known good answer" },
-  { name: "Debate / scalable oversight", short: "Debate / oversight", x: 16, y: 66, r: "hard", anchor: "below",
+  { name: "Debate / scalable oversight", nAnchor: "below", short: "Debate / oversight", x: 16, y: 66, r: "hard", anchor: "below",
     search: "Extreme", verify: "Direct verifier poor", feedback: "Manufactured verification signal",
     arch: "Multi-agent protocol + judge",
     target: 50, targetLabel: "Crux (in progress)" },
@@ -671,7 +643,6 @@ function el(tag, attrs, text) {
 
 const svg     = document.getElementById("chart");
 const frame   = document.querySelector(".chart-frame");
-const keyBox  = document.getElementById("chartKey");
 const tooltip = document.getElementById("tooltip");
 
 function layoutFor(W) {
@@ -690,12 +661,11 @@ function layoutFor(W) {
   };
 }
 
-const LABEL_OFFSET = 13;
 const ANCHOR_POS = {
-  right: () => ({ dx:  LABEL_OFFSET, dy: 4,  a: "start"  }),
-  left:  () => ({ dx: -LABEL_OFFSET, dy: 4,  a: "end"    }),
-  above: () => ({ dx: 0, dy: -LABEL_OFFSET,  a: "middle" }),
-  below: () => ({ dx: 0, dy:  LABEL_OFFSET + 8, a: "middle" }),
+  right: o => ({ dx:  o, dy: 3.5, a: "start"  }),
+  left:  o => ({ dx: -o, dy: 3.5, a: "end"    }),
+  above: o => ({ dx: 0,  dy: -o,  a: "middle" }),
+  below: o => ({ dx: 0,  dy: o + 7, a: "middle" }),
 };
 
 function render() {
@@ -810,7 +780,7 @@ function render() {
   }
 
   // Dots, plus their label (wide) or index number (narrow).
-  DOMAINS.forEach((d, i) => {
+  for (const d of DOMAINS) {
     const color = REGIMES[d.r].color;
     const cx = px(d.x), cy = py(d.y);
     const g = el("g", { class: "dot-group", tabindex: "0" });
@@ -818,24 +788,17 @@ function render() {
     g.appendChild(el("circle", { cx, cy, r: L.dotR + 2, fill: "#fbfbfc" }));
     g.appendChild(el("circle", { cx, cy, r: L.dotR, fill: color }));
 
-    if (narrow) {
-      g.appendChild(el("text", {
-        x: cx + L.dotR + 3, y: cy + 3.5, "text-anchor": "start",
-        "font-size": L.label, "font-weight": 600, fill: "#1a1a22",
-      }, String(i + 1)));
-    } else {
-      const pos = ANCHOR_POS[d.anchor]();
-      g.appendChild(el("text", {
-        x: cx + pos.dx, y: cy + pos.dy, "text-anchor": pos.a,
-        "font-size": L.label, "font-weight": 500, fill: "#1a1a22",
-      }, d.name));
-    }
+    const pos = ANCHOR_POS[narrow ? (d.nAnchor || d.anchor) : d.anchor](narrow ? 9 : 13);
+    g.appendChild(el("text", {
+      x: cx + pos.dx, y: cy + pos.dy, "text-anchor": pos.a,
+      "font-size": L.label, "font-weight": 500, fill: "#1a1a22",
+    }, narrow ? (d.short || d.name) : d.name));
 
     const hit = el("circle", { cx, cy, r: 16, fill: "transparent" });
     g.appendChild(hit);
 
     const show = (ev) => {
-      tooltip.querySelector(".tt-title").textContent = `${narrow ? (i + 1) + ". " : ""}${d.name}`;
+      tooltip.querySelector(".tt-title").textContent = d.name;
       tooltip.querySelector(".tt-grid").innerHTML =
         `<div class="k">Residual search</div><div class="v">${d.search}</div>` +
         `<div class="k">Verification</div><div class="v">${d.verify}</div>` +
@@ -872,19 +835,8 @@ function render() {
     });
 
     svg.appendChild(g);
-  });
-
-  // Numbered key, only when the dots are numbered.
-  if (narrow) {
-    keyBox.innerHTML = "<ul>" + DOMAINS.map((d, i) =>
-      `<li><span class="n">${i + 1}</span>` +
-      `<span class="kdot" style="background:${REGIMES[d.r].color}"></span>` +
-      `<span>${d.short || d.name}</span></li>`
-    ).join("") + "</ul>";
-    keyBox.style.display = "block";
-  } else {
-    keyBox.style.display = "none";
   }
+
 }
 
 render();
