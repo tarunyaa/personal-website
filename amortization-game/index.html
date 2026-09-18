@@ -6,7 +6,7 @@
 <title>The Amortization Game</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -19,6 +19,18 @@
   --accent: #e8730f;
   --rule: rgba(0,0,0,0.12);
 
+  /* Two families. */
+  --f-serif: 'Newsreader', Georgia, serif;
+  --f-sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+  /* One size per kind of information. */
+  --t-display: 34px;   /* page title */
+  --t-lead:    19px;   /* caption, thesis, pull quote */
+  --t-body:    16px;   /* running prose */
+  --t-small:   13.5px; /* secondary prose: toggles, tables, tooltips */
+  --t-label:   11.5px; /* labels, legends, metadata */
+  --t-caption: 10px;   /* notes under a figure */
+
   /* Regime colors: validated for CVD separation against this surface. */
   --r-amortize: #2f9e7a;
   --r-search:   #3a6fd8;
@@ -28,7 +40,8 @@
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--f-sans);
+  font-size: var(--t-body);
   line-height: 1.6;
 }
 
@@ -77,34 +90,27 @@ body {
 
 header.page { margin-bottom: 30px; }
 header.page .eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
+  font-size: var(--t-label);
   color: var(--fg3);
   letter-spacing: 0.04em;
   margin-bottom: 10px;
 }
 header.page h1 {
-  font-family: 'Newsreader', Georgia, serif;
-  font-size: 34px;
+  font-family: var(--f-serif);
+  font-size: var(--t-display);
   font-weight: 400;
   letter-spacing: -0.3px;
   margin-bottom: 8px;
 }
 header.page .tagline {
-  font-size: 17px;
+  font-family: var(--f-serif);
+  font-size: var(--t-lead);
   color: var(--fg);
   font-weight: 500;
   font-style: italic;
   max-width: 720px;
   margin-bottom: 10px;
 }
-header.page .disclaimer {
-  font-size: 13px;
-  color: var(--fg3);
-  font-style: italic;
-  max-width: 720px;
-}
-
 /* ── The claim block ───────────────────────────────────────────────── */
 
 .claim {
@@ -118,17 +124,16 @@ header.page .disclaimer {
 .prose h2,
 .map-header h3,
 .closing-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 500;
+  font-size: var(--t-label);
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--accent);
 }
 .claim .label { margin-bottom: 12px; }
 .claim .statement {
-  font-family: 'Newsreader', Georgia, serif;
-  font-size: 18px;
+  font-family: var(--f-serif);
+  font-size: var(--t-lead);
   line-height: 1.5;
   max-width: 720px;
   margin-bottom: 10px;
@@ -141,12 +146,12 @@ header.page .disclaimer {
   gap: 2px 9px;
 }
 .claim .term-name {
-  font-size: 15px;
+  font-size: var(--t-body);
   font-weight: 600;
   color: var(--fg);
 }
 .claim .times {
-  font-size: 15px;
+  font-size: var(--t-body);
   color: var(--accent);
   font-weight: 500;
 }
@@ -160,7 +165,7 @@ header.page .disclaimer {
   border-top: 1px solid var(--rule);
 }
 .prose h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
-.prose p { margin-bottom: 15px; font-size: 15.5px; }
+.prose p { margin-bottom: 15px; font-size: var(--t-body); }
 .prose strong { color: #000; font-weight: 600; }
 .prose em { font-style: italic; }
 .prose a { color: var(--accent); text-decoration: none; }
@@ -172,7 +177,7 @@ header.page .disclaimer {
   position: relative;
   padding-left: 34px;
   margin-bottom: 10px;
-  font-size: 15.5px;
+  font-size: var(--t-body);
 }
 .prose ol li::before {
   content: counter(step);
@@ -182,16 +187,15 @@ header.page .disclaimer {
   border-radius: 50%;
   background: var(--bg2);
   border: 1px solid var(--rule);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  font-weight: 500;
+  font-size: var(--t-label);
+  font-weight: 600;
   color: var(--accent);
   display: flex; align-items: center; justify-content: center;
 }
 
 .pullquote {
-  font-family: 'Newsreader', Georgia, serif;
-  font-size: 19px;
+  font-family: var(--f-serif);
+  font-size: var(--t-lead);
   line-height: 1.55;
   color: var(--fg);
   border-left: 3px solid var(--accent);
@@ -214,7 +218,7 @@ details.inline-def > summary {
   cursor: pointer;
   user-select: none;
   padding: 11px 0;
-  font-size: 13px;
+  font-size: var(--t-small);
   font-weight: 600;
   color: var(--fg);
   list-style: none;
@@ -225,7 +229,7 @@ details.inline-def[open] > summary::before { content: "▾ "; }
 details.inline-def[open] > summary { border-bottom: 1px solid var(--rule); }
 details.inline-def .def-body { padding: 14px 0 16px; }
 details.inline-def .def-body p {
-  font-size: 13.5px;
+  font-size: var(--t-small);
   color: var(--fg);
   margin-bottom: 11px;
   line-height: 1.6;
@@ -235,7 +239,7 @@ details.inline-def .def-body strong { color: #000; font-weight: 600; }
 details.inline-def .def-body a { color: var(--accent); text-decoration: none; }
 details.inline-def .def-body a:hover { text-decoration: underline; }
 details.inline-def .def-body ul { padding-left: 20px; margin: 0 0 11px; }
-details.inline-def .def-body li { font-size: 13.5px; margin-bottom: 6px; }
+details.inline-def .def-body li { font-size: var(--t-small); margin-bottom: 6px; }
 
 /* ── Map block ─────────────────────────────────────────────────────── */
 
@@ -248,7 +252,7 @@ details.inline-def .def-body li { font-size: 13.5px; margin-bottom: 6px; }
 .map-header { margin-bottom: 14px; }
 .map-header h3 { margin-bottom: 8px; }
 .map-header p {
-  font-size: 15.5px;
+  font-size: var(--t-body);
   color: var(--fg);
   max-width: 720px;
 }
@@ -258,7 +262,7 @@ details.inline-def .def-body li { font-size: 13.5px; margin-bottom: 6px; }
   flex-wrap: wrap;
   gap: 8px 18px;
   margin-bottom: 12px;
-  font-size: 12px;
+  font-size: var(--t-label);
 }
 .legend-item {
   display: flex;
@@ -274,12 +278,12 @@ details.inline-def .def-body li { font-size: 13.5px; margin-bottom: 6px; }
 .legend-item b { color: var(--fg); font-weight: 600; }
 
 #chart { display: block; width: 100%; height: auto; }
-#chart text { font-family: 'Inter', -apple-system, sans-serif; }
+#chart text { font-family: var(--f-sans); }
 #chart .dot-group { cursor: pointer; }
 
 .map-note {
   margin-top: 12px;
-  font-size: 10px;
+  font-size: var(--t-caption);
   line-height: 1.55;
   color: var(--fg3);
   font-style: italic;
@@ -297,7 +301,7 @@ details.table-view {
 details.table-view > summary {
   cursor: pointer; user-select: none;
   padding: 11px 0;
-  font-size: 13px; font-weight: 600; color: var(--fg);
+  font-size: var(--t-small); font-weight: 600; color: var(--fg);
   list-style: none;
 }
 details.table-view > summary::-webkit-details-marker { display: none; }
@@ -309,13 +313,13 @@ table.domains {
   border-collapse: collapse;
   width: 100%;
   min-width: 720px;
-  font-size: 12.5px;
+  font-size: var(--t-small);
 }
 table.domains th {
   text-align: left;
   font-weight: 600;
   color: var(--fg2);
-  font-size: 11px;
+  font-size: var(--t-label);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding: 0 14px 8px 0;
@@ -347,7 +351,7 @@ table.domains .dot {
   border: 1px solid rgba(0,0,0,0.14);
   border-radius: 8px;
   padding: 11px 13px;
-  font-size: 12px;
+  font-size: var(--t-small);
   line-height: 1.5;
   max-width: 300px;
   opacity: 0;
@@ -357,21 +361,21 @@ table.domains .dot {
 }
 #tooltip.visible { opacity: 1; }
 #tooltip .tt-title {
-  font-weight: 600; font-size: 13px; color: var(--fg);
+  font-weight: 600; font-size: var(--t-small); color: var(--fg);
   margin-bottom: 7px;
 }
 #tooltip .tt-grid {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 3px 12px;
-  font-size: 11px;
+  font-size: var(--t-label);
 }
 #tooltip .tt-grid .k { color: var(--fg3); white-space: nowrap; }
 #tooltip .tt-grid .v { color: var(--fg); }
 #tooltip .tt-arch {
   margin-top: 8px; padding-top: 7px;
   border-top: 1px solid rgba(0,0,0,0.08);
-  font-size: 11px; color: var(--fg);
+  font-size: var(--t-label); color: var(--fg);
 }
 #tooltip .tt-arch b { font-weight: 600; }
 
@@ -389,7 +393,7 @@ table.domains .dot {
   margin-top: 44px;
   padding-top: 18px;
   border-top: 1px solid var(--rule);
-  font-size: 12px;
+  font-size: var(--t-label);
   color: var(--fg3);
   font-style: italic;
 }
@@ -398,7 +402,7 @@ footer.page {
   max-width: 980px;
   margin: 0 auto;
   padding: 28px;
-  font-size: 12px;
+  font-size: var(--t-label);
   color: var(--fg3);
   border-top: 1px solid var(--rule);
 }
@@ -514,9 +518,7 @@ footer.page {
 
   <p>External search is not just more inference-time compute. It turns invisible reasoning into observable decisions: which branch to explore, what evidence to seek, when to abandon a hypothesis, when to stop. Internal reasoning leaves you a final answer. External search leaves state-action-outcome traces, and if humans can evaluate those decisions, the traces can train the next search policy.</p>
 
-  <p>A harness cannot manufacture ground truth, but it can break an ungradable final judgment into locally testable ones. In Crux we may not know the right answer to a policy question, but we can test whether evidence supports a claim, whether a hinge is genuinely disputed, and whether changing it would alter the conclusion. The wager is that enough local feedback makes search productive even when the final answer stays unverifiable.</p>
-
-  <p>Which is falsifiable: external search should beat a direct model call only when its intermediate evaluators rank branches better than the model&rsquo;s implicit judgment. Otherwise the harness adds ceremony rather than intelligence. My first Crux ablation showed exactly that: the single agent beat the more expensive search harness.</p>
+  <p>A harness cannot manufacture ground truth, but it can break an ungradable final judgment into locally testable ones.</p>
 
 </div>
 
@@ -527,9 +529,8 @@ footer.page {
     <summary>Jev</summary>
     <div class="def-body">
       <p>The recent release of <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev" target="_blank">Jev</a> has confirmed my suspicions.</p>
-      <p>Jev demonstrates the value of making a decision problem explicit. It maps a legible state and a bounded set of typed questions into fast probabilistic judgments.</p>
-      <p>External search creates exactly this interface: it turns an implicit chain of thought into inspectable states, branches, and candidate actions. Once reasoning is externalized this way, a cheaper model can repeatedly decide which branch to expand, abandon, or investigate, without asking a full generative model to reconstruct the entire problem each time.</p>
-      <p>Search generates the trajectories; repeated decisions over those trajectories can eventually be amortized into a faster policy.</p>
+      <p>Jev doesn&rsquo;t generate text. You give it state and a bounded set of typed questions, and it returns decisions with calibrated probabilities. It was trained with reinforcement learning for calibrated decisions, which optimizes for honest probabilities rather than for outputs a human would rate highly. The demos are an agent playing Doom in real time and one navigating Wikipedia across thousands of link choices per step.</p>
+      <p>It makes the decision problem explicit, which is the interface search needs.</p>
     </div>
   </details>
 
@@ -537,8 +538,6 @@ footer.page {
     <summary>Humans&amp;</summary>
     <div class="def-body">
       <p><a href="https://persimmon.humansand.ai/blog/persimmon.html" target="_blank">Persimmon</a> is closer to the weak-verification regime. There is no single correct human response, so Humans&amp; trains against an adaptive discriminator and evaluates whether behavior matches the distribution of real human interactions over time.</p>
-      <p>The horizon is what forces that choice. Pure next-token prediction drifts as error compounds over a long conversation, and a fixed reward stops carrying signal once the model&rsquo;s own distribution moves under it. An adaptive discriminator recalibrates as the model improves. It is a verifier trained alongside the thing it verifies.</p>
-      <p>The numbers show how hard the regime is. Persimmon fools an LLM judge about 20% of the time, where 50% would mean indistinguishable, against 1.2% for the base model it started from. At 80 turns it holds coherence in 60.7% of conversations against 87.3% for humans. GPT 6 scores 98.4% on that same measure, which is the tell: being too coherent is its own way of failing to look human. You cannot score this domain on a scale where more is better.</p>
       <p>The analogous question for Crux is: what evaluator could distinguish genuine research taste?</p>
     </div>
   </details>
@@ -646,12 +645,14 @@ function layoutFor(W) {
     H: narrow ? Math.round(Math.min(560, Math.max(380, W * 1.25))) : 600,
     M: narrow ? { top: 20, right: 26, bottom: 48, left: 40 }
               : { top: 34, right: 44, bottom: 78, left: 96 },
+    // Data labels are sized to the plot geometry; the chrome below follows
+    // the document scale (--t-label / --t-caption).
     label:   narrow ? 11   : 12.5,
-    region:  narrow ? 8.5  : 11,
-    axis:    narrow ? 10   : 12,
-    axisSub: narrow ? 8.5  : 11,
+    region:  narrow ? 9    : 10,
+    axis:    narrow ? 10   : 11.5,
+    axisSub: narrow ? 9    : 10,
     dotR:    narrow ? 5    : 6,
-    annot:   narrow ? 9    : 11,
+    annot:   narrow ? 9.5  : 11.5,
   };
 }
 
