@@ -416,7 +416,7 @@ footer.page {
 <header class="page">
   <p class="eyebrow">18.09.26</p>
   <h1>The Amortization Game</h1>
-  <p class="tagline">The boundary between what a model has learned to do in its weights and what it must still search over at runtime.</p>
+  <p class="tagline">Most domains can be formulated as a game. Which ones are worth searching, and what it takes to make them searchable.</p>
 </header>
 
 <div class="claim">
@@ -510,19 +510,13 @@ footer.page {
 
 <div class="prose">
 
-  <h2>Why externalize search?</h2>
+  <h2>Why externalize search</h2>
 
-  <p>The benefit of external search is not merely more inference-time compute. It converts otherwise invisible reasoning into a sequence of observable decisions: which branch to explore, what evidence to seek, when to abandon a hypothesis, and when to stop. Internal reasoning leaves us with a final answer. External search produces state-action-outcome traces. If humans can evaluate those decisions, the traces can train the next search policy.</p>
+  <p>External search is not just more inference-time compute. It turns invisible reasoning into observable decisions: which branch to explore, what evidence to seek, when to abandon a hypothesis, when to stop. Internal reasoning leaves you a final answer. External search leaves state-action-outcome traces, and if humans can evaluate those decisions, the traces can train the next search policy.</p>
 
-  <h2>How can a harness help weak verification?</h2>
+  <p>A harness cannot manufacture ground truth, but it can break an ungradable final judgment into locally testable ones. In Crux we may not know the right answer to a policy question, but we can test whether evidence supports a claim, whether a hinge is genuinely disputed, and whether changing it would alter the conclusion. The wager is that enough local feedback makes search productive even when the final answer stays unverifiable.</p>
 
-  <p>A harness cannot manufacture ground truth, but it can decompose an ungradable final judgment into more locally testable decisions. In Crux, we may not know the correct answer to a policy question, but we can test whether evidence supports a claim, whether a proposed hinge is genuinely disputed, and whether changing it would alter the conclusion. The wager is that enough reliable local feedback can make search productive even when the final answer remains unverifiable.</p>
-
-  <h2>The falsifiable claim</h2>
-
-  <p>External search should outperform a direct model call only when its intermediate evaluators can rank branches better than the model&rsquo;s implicit judgment. Otherwise, the harness adds ceremony rather than intelligence.</p>
-
-  <p>My first Crux ablation demonstrated exactly that: the single agent beat the more expensive search harness.</p>
+  <p>Which is falsifiable: external search should beat a direct model call only when its intermediate evaluators rank branches better than the model&rsquo;s implicit judgment. Otherwise the harness adds ceremony rather than intelligence. My first Crux ablation showed exactly that: the single agent beat the more expensive search harness.</p>
 
 </div>
 
