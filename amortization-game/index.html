@@ -6,7 +6,7 @@
 <title>The Amortization Game</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=Newsreader:ital,wght@1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -19,15 +19,17 @@
   --accent: #e8730f;
   --rule: rgba(0,0,0,0.12);
 
-  /* One family for all article text. The site wordmark in the nav keeps the
-     serif it uses on every other page. */
-  --f-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  /* Two families: Inter for everything you read, Space Grotesk for the four
+     lines that have to land. The nav wordmark keeps the serif it uses on
+     every other page of the site. */
+  --f-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --f-display: 'Space Grotesk', 'Inter', sans-serif;
 
   /* One size per kind of information. */
   --t-display: 34px;   /* page title */
   --t-lead:    19px;   /* caption, thesis, pull quote */
   --t-body:    16px;   /* running prose */
-  --t-small:   13.5px; /* secondary prose: toggles, tables, tooltips */
+  --t-small:   13.5px; /* tabular and figure text: tables, tooltips */
   --t-label:   11.5px; /* labels, legends, metadata */
   --t-caption: 10px;   /* notes under a figure */
 
@@ -96,16 +98,17 @@ header.page .eyebrow {
   margin-bottom: 10px;
 }
 header.page h1 {
+  font-family: var(--f-display);
   font-size: var(--t-display);
   font-weight: 600;
-  letter-spacing: -0.8px;
+  letter-spacing: -1px;
   margin-bottom: 8px;
 }
 header.page .tagline {
+  font-family: var(--f-display);
   font-size: var(--t-lead);
   color: var(--fg);
   font-weight: 500;
-  font-style: italic;
   max-width: 720px;
   margin-bottom: 10px;
 }
@@ -130,6 +133,7 @@ header.page .tagline {
 }
 .claim .label { margin-bottom: 12px; }
 .claim .statement {
+  font-family: var(--f-display);
   font-size: var(--t-lead);
   line-height: 1.45;
   max-width: 720px;
@@ -191,6 +195,7 @@ header.page .tagline {
 }
 
 .pullquote {
+  font-family: var(--f-display);
   font-size: var(--t-lead);
   font-weight: 500;
   line-height: 1.5;
@@ -215,7 +220,7 @@ details.inline-def > summary {
   cursor: pointer;
   user-select: none;
   padding: 11px 0;
-  font-size: var(--t-small);
+  font-size: var(--t-body);
   font-weight: 600;
   color: var(--fg);
   list-style: none;
@@ -226,7 +231,7 @@ details.inline-def[open] > summary::before { content: "▾ "; }
 details.inline-def[open] > summary { border-bottom: 1px solid var(--rule); }
 details.inline-def .def-body { padding: 14px 0 16px; }
 details.inline-def .def-body p {
-  font-size: var(--t-small);
+  font-size: var(--t-body);
   color: var(--fg);
   margin-bottom: 11px;
   line-height: 1.6;
@@ -236,7 +241,7 @@ details.inline-def .def-body strong { color: #000; font-weight: 600; }
 details.inline-def .def-body a { color: var(--accent); text-decoration: none; }
 details.inline-def .def-body a:hover { text-decoration: underline; }
 details.inline-def .def-body ul { padding-left: 20px; margin: 0 0 11px; }
-details.inline-def .def-body li { font-size: var(--t-small); margin-bottom: 6px; }
+details.inline-def .def-body li { font-size: var(--t-body); margin-bottom: 6px; }
 
 /* ── Map block ─────────────────────────────────────────────────────── */
 
@@ -298,7 +303,7 @@ details.table-view {
 details.table-view > summary {
   cursor: pointer; user-select: none;
   padding: 11px 0;
-  font-size: var(--t-small); font-weight: 600; color: var(--fg);
+  font-size: var(--t-body); font-weight: 600; color: var(--fg);
   list-style: none;
 }
 details.table-view > summary::-webkit-details-marker { display: none; }
