@@ -400,7 +400,7 @@ h1 {
 
       <h2>The future</h2>
       <p>Initially, agents will probably accelerate individual stages while preserving the existing ASIC flow. As the connections between representations improve, those bounded loops can begin to interact.</p>
-      <p>With those connections in place, an agent could change a microarchitectural choice, propagate it through synthesis and physical design, and trace the consequences back to the decision that caused them. Congestion could reshape the network topology. A memory-system choice could be judged not only by an abstract model, but by its downstream effects on area, wiring, timing, and energy.</p>
+      <p>Suppose an agent changes a cache because an architectural model predicts better performance. After synthesis and physical design, that same choice might increase wire length, congestion, or timing pressure. The agent could feed those downstream effects back into the architectural decision and reject a choice that only looked good in a silo.</p>
       <p>Search could then operate across boundaries that humans currently find it hard to cross. This enables the agent to learn policies for pruning the search space and discovering better chips.</p>
     </div>
 
