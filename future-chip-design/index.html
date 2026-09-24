@@ -89,7 +89,7 @@ h1 {
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: -0.3px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .disclaimer {
   font-size: 13px;
@@ -111,18 +111,17 @@ h1 {
   margin: 40px 0 14px;
   padding-top: 18px;
 }
-.prose h2:first-child { margin-top: 0; }
+.prose h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
 .prose p { margin-bottom: 15px; }
 .prose a {
   color: var(--accent);
-  text-decoration-color: rgba(232, 115, 15, 0.35);
-  text-underline-offset: 3px;
+  text-decoration: none;
 }
-.prose a:hover { text-decoration-color: var(--accent); }
+.prose a:hover { text-decoration: underline; }
 .prose ol {
   list-style: none;
   counter-reset: point;
-  margin: 4px 0 20px;
+  margin: 4px 0 18px;
 }
 .prose li {
   counter-increment: point;
