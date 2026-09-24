@@ -298,6 +298,54 @@ h1 {
   line-height: 1.45;
 }
 
+.market-landscape {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+}
+.market-landscape-title {
+  margin: 0 8px 10px;
+  color: var(--fg3);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.market-layer {
+  display: grid;
+  grid-template-columns: 76px 1.05fr 2fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 9px 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  border-left: 2px solid var(--fg3);
+}
+.market-layer.layer-evaluate { border-left-color: var(--loop-synthesis); }
+.market-layer.layer-loop { border-left-color: var(--accent); }
+.market-layer.layer-connect { border-left-color: var(--loop-micro); }
+.market-layer-label {
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.market-layer-copy {
+  color: var(--fg2);
+  font-size: 11px;
+  line-height: 1.4;
+}
+.market-layer-examples {
+  font-size: 11px;
+  line-height: 1.55;
+}
+.market-layer-examples a {
+  color: var(--fg2);
+  text-decoration: underline;
+  text-decoration-color: rgba(86, 86, 99, 0.3);
+  text-underline-offset: 2px;
+}
+
 .closing {
   max-width: 720px;
   margin-top: 36px;
@@ -359,6 +407,13 @@ h1 {
     display: inline;
     margin-right: 4px;
   }
+  .market-layer {
+    grid-template-columns: 72px 1fr;
+    gap: 3px 10px;
+    padding: 10px 4px;
+  }
+  .market-layer-label { grid-row: 1 / span 2; }
+  .market-layer-examples { line-height: 1.5; }
   .evaluation-map-note { margin-left: 4px; margin-right: 4px; }
 }
 </style>
@@ -553,7 +608,25 @@ h1 {
           <p class="evaluation-loop loop-limited"><span class="evaluation-mobile-label">Loop</span>Checks only</p>
           <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Very strong</strong>Too late and costly</p>
         </div>
-        <p class="evaluation-map-note">Representative efforts: <a href="https://www.bronco.ai/" target="_blank" rel="noopener noreferrer">Bronco AI</a> and <a href="https://chipagents.ai/blogs/closed-loop-autonomous-design" target="_blank" rel="noopener noreferrer">ChipAgents</a> begin around RTL and verification; <a href="https://agentrys.ai/research/composable-silicon" target="_blank" rel="noopener noreferrer">Agentrys</a> reports loops from specification through signoff; <a href="https://www.synopsys.com/webinars/optimal-ppa-targets-dso-ai.html" target="_blank" rel="noopener noreferrer">DSO.ai</a>, <a href="https://www.cadence.com/en_US/home/resources/white-papers/machine-learning-driven-full-flow-chip-design-automation-wp.html" target="_blank" rel="noopener noreferrer">Cerebrus</a>, and <a href="https://deepmind.google/blog/how-alphachip-transformed-computer-chip-design/" target="_blank" rel="noopener noreferrer">AlphaChip</a> close bounded back-end loops. Company-reported capabilities are not equivalent to broad production validation.</p>
+        <div class="market-landscape" aria-label="Representative AI chip design companies grouped by their role in the optimization stack.">
+          <p class="market-landscape-title">Three layers of the emerging AI design stack</p>
+          <div class="market-layer layer-evaluate">
+            <p class="market-layer-label">Evaluate</p>
+            <p class="market-layer-copy">Make feedback faster inside a stage</p>
+            <p class="market-layer-examples"><a href="https://www.silimate.com/" target="_blank" rel="noopener noreferrer">Silimate</a> &middot; <a href="https://www.synopsys.com/webinars/optimal-ppa-targets-dso-ai.html" target="_blank" rel="noopener noreferrer">Synopsys DSO.ai</a> &middot; <a href="https://www.cadence.com/en_US/home/resources/white-papers/machine-learning-driven-full-flow-chip-design-automation-wp.html" target="_blank" rel="noopener noreferrer">Cadence Cerebrus</a> &middot; <a href="https://deepmind.google/blog/how-alphachip-transformed-computer-chip-design/" target="_blank" rel="noopener noreferrer">Google AlphaChip</a></p>
+          </div>
+          <div class="market-layer layer-loop">
+            <p class="market-layer-label">Close</p>
+            <p class="market-layer-copy">Act on tool feedback in bounded loops</p>
+            <p class="market-layer-examples"><a href="https://www.bronco.ai/" target="_blank" rel="noopener noreferrer">Bronco AI</a> &middot; <a href="https://chipagents.ai/blogs/closed-loop-autonomous-design" target="_blank" rel="noopener noreferrer">ChipAgents</a> &middot; <a href="https://www.chipmind.ai/" target="_blank" rel="noopener noreferrer">Chipmind</a> &middot; <a href="https://www.sigmanticai.com/" target="_blank" rel="noopener noreferrer">SigmanticAI</a> &middot; <a href="https://newsroom.cadence.com/press-releases/press-release-details/2026/Cadence-Expands-ChipStack-AI-Super-Agent-with-a-New-Agent-for-RTL-Generation-and-Early-PPA-Optimization/default.aspx" target="_blank" rel="noopener noreferrer">Cadence ChipStack</a> &middot; <a href="https://www.siemens.com/en-us/products/ic/questa-one/" target="_blank" rel="noopener noreferrer">Siemens Questa One</a></p>
+          </div>
+          <div class="market-layer layer-connect">
+            <p class="market-layer-label">Connect</p>
+            <p class="market-layer-copy">Coordinate objectives across stages</p>
+            <p class="market-layer-examples"><a href="https://agentrys.ai/research/composable-silicon" target="_blank" rel="noopener noreferrer">Agentrys</a> &middot; <a href="https://www.ricursive.com/" target="_blank" rel="noopener noreferrer">Ricursive</a> &middot; <a href="https://www.rise-da.com/" target="_blank" rel="noopener noreferrer">Rise Design Automation</a> &middot; <a href="https://careteda.com/news/dac-2026/" target="_blank" rel="noopener noreferrer">CaretEDA</a></p>
+          </div>
+        </div>
+        <p class="evaluation-map-note">The categories describe each effort&rsquo;s center of gravity, not a hard boundary. Public evidence ranges from shipping tools to research demonstrations and stated product direction.</p>
       </figure>
 
       <h2>Before cross-stage search comes representation</h2>
