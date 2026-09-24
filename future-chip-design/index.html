@@ -366,15 +366,15 @@ h1 {
       <p>The abstraction has not disappeared. It has moved: details once hidden to make hardware easier for humans to program are exposed to machine search. Zartbot&rsquo;s reported 40-hour DeepSeek MLA run shows that search operating over these scheduling and memory-access decisions.</p>
 
       <h2>The first step will be bounded loops</h2>
-      <p>The near-term version of the future is much less dramatic than an autonomous agent producing a complete chip.</p>
-      <p>I believe it looks like engineers identifying bounded parts of the flow where three things exist:</p>
+      <p>The near-term opportunity is not an autonomous agent producing a complete chip. It is accelerating bounded loops within the existing design flow.</p>
+      <p>These loops are good candidates when three conditions hold:</p>
       <ol>
         <li>A design can be modified automatically</li>
         <li>There is a reliable reward function for evaluation</li>
         <li>Evaluation is fast enough to support repeated iteration</li>
       </ol>
-      <p>An agent could propose a change, run the relevant tools, inspect the result, and revise its proposal. This is the recursive loop where the agent uses its reasoning to iteratively prune a combinatorially complex search space.</p>
-      <p>This matters because today&rsquo;s chips are partly limited by how many useful iterations can be completed before tapeout. If an agent can run 10&times; more iterations and experiments overnight, engineers can search a larger design space.</p>
+      <p>Within such a loop, an agent can propose a change, run the relevant tools, evaluate the result, and revise its proposal. Repeating this process unattended increases the number of useful iterations engineers can complete before tapeout.</p>
+      <p>If an agent can run 10&times; more experiments overnight, it can explore a larger design space while leaving the rest of the flow intact.</p>
 
       <h2>The real bottleneck is evaluation</h2>
       <p>Any search procedure needs feedback about which candidates are promising. The reward function needs to be both fast and trustworthy.</p>
