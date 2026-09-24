@@ -21,6 +21,7 @@
   --navy: #1e2a4a;
   --rule: rgba(0, 0, 0, 0.12);
   --loop-rtl: #3a6fd8;
+  --loop-synthesis: #4b9489;
   --loop-micro: #9061c2;
   --loop-architecture: #ce567a;
 }
@@ -287,10 +288,11 @@ h1 {
         <p class="figure-intro">The nominal flow moves forward. Real design repeatedly sends information back upstream.</p>
       </figcaption>
       <div class="diagram-scroll">
-        <svg class="desktop-loop-diagram" viewBox="0 0 840 290" role="img" aria-label="The ASIC design flow surrounded by nested feedback loops: verification back to RTL, implementation back to RTL and microarchitecture, and tapeout back to architecture.">
+        <svg class="desktop-loop-diagram" viewBox="0 0 840 310" role="img" aria-label="The ASIC design flow surrounded by six nested feedback loops spanning verification, synthesis, floorplanning, physical design, microarchitecture, and architecture.">
           <defs>
             <marker id="desktop-flow-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--fg3)"/></marker>
             <marker id="desktop-rtl-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-rtl)"/></marker>
+            <marker id="desktop-synthesis-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-synthesis)"/></marker>
             <marker id="desktop-micro-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-micro)"/></marker>
             <marker id="desktop-architecture-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-architecture)"/></marker>
           </defs>
@@ -306,23 +308,30 @@ h1 {
           <rect class="stage-box" x="618" y="120" width="88" height="46" rx="6"/><text class="stage-label" x="662" y="140"><tspan x="662">Place &amp;</tspan><tspan x="662" dy="13">route</tspan></text>
           <rect class="stage-box" x="720" y="120" width="88" height="46" rx="6"/><text class="stage-label" x="764" y="147">Tapeout</text>
 
-          <path class="return-path" d="M356 120C356 88 254 88 254 118" stroke="var(--loop-rtl)" marker-end="url(#desktop-rtl-arrow)"/>
-          <text class="return-label" x="305" y="82" text-anchor="middle" fill="var(--loop-rtl)">functional bugs</text>
+          <path class="return-path" d="M356 120C356 96 254 96 254 118" stroke="var(--loop-rtl)" marker-end="url(#desktop-rtl-arrow)"/>
+          <text class="return-label" x="305" y="91" text-anchor="middle" fill="var(--loop-rtl)">functional bugs</text>
 
-          <path class="return-path" d="M662 120C662 45 254 45 254 118" stroke="var(--loop-rtl)" marker-end="url(#desktop-rtl-arrow)"/>
-          <text class="return-label" x="458" y="39" text-anchor="middle" fill="var(--loop-rtl)">power &amp; timing</text>
+          <path class="return-path" d="M458 120C458 69 254 69 254 118" stroke="var(--loop-rtl)" marker-end="url(#desktop-rtl-arrow)"/>
+          <text class="return-label" x="356" y="63" text-anchor="middle" fill="var(--loop-rtl)">area &amp; logic</text>
 
-          <path class="return-path" d="M662 166C662 221 152 221 152 168" stroke="var(--loop-micro)" marker-end="url(#desktop-micro-arrow)"/>
-          <text class="return-label" x="407" y="231" text-anchor="middle" fill="var(--loop-micro)">congestion, area &amp; network topology</text>
+          <path class="return-path" d="M662 120C662 36 254 36 254 118" stroke="var(--loop-rtl)" marker-end="url(#desktop-rtl-arrow)"/>
+          <text class="return-label" x="458" y="30" text-anchor="middle" fill="var(--loop-rtl)">power &amp; timing</text>
 
-          <path class="return-path" d="M764 166C764 272 50 272 50 168" stroke="var(--loop-architecture)" marker-end="url(#desktop-architecture-arrow)"/>
-          <text class="return-label" x="407" y="283" text-anchor="middle" fill="var(--loop-architecture)">market &amp; process constraints</text>
+          <path class="return-path" d="M560 166C560 194 458 194 458 168" stroke="var(--loop-synthesis)" marker-end="url(#desktop-synthesis-arrow)"/>
+          <text class="return-label" x="509" y="205" text-anchor="middle" fill="var(--loop-synthesis)">floorplan feasibility</text>
+
+          <path class="return-path" d="M662 166C662 238 152 238 152 168" stroke="var(--loop-micro)" marker-end="url(#desktop-micro-arrow)"/>
+          <text class="return-label" x="407" y="248" text-anchor="middle" fill="var(--loop-micro)">congestion, area &amp; network topology</text>
+
+          <path class="return-path" d="M764 166C764 289 50 289 50 168" stroke="var(--loop-architecture)" marker-end="url(#desktop-architecture-arrow)"/>
+          <text class="return-label" x="407" y="300" text-anchor="middle" fill="var(--loop-architecture)">market &amp; process constraints</text>
         </svg>
 
-        <svg class="mobile-loop-diagram" viewBox="0 0 320 350" role="img" aria-label="A compact vertical ASIC design flow surrounded by four nested feedback loops at increasing scales.">
+        <svg class="mobile-loop-diagram" viewBox="0 0 340 350" role="img" aria-label="A compact vertical ASIC design flow surrounded by six nested feedback loops at increasing scales.">
           <defs>
             <marker id="mobile-flow-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--fg3)"/></marker>
             <marker id="mobile-rtl-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-rtl)"/></marker>
+            <marker id="mobile-synthesis-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-synthesis)"/></marker>
             <marker id="mobile-micro-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-micro)"/></marker>
             <marker id="mobile-architecture-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-architecture)"/></marker>
           </defs>
@@ -338,17 +347,21 @@ h1 {
           <rect class="mobile-stage" x="6" y="260" width="144" height="30" rx="5"/><text class="mobile-stage-label" x="78" y="279">Place &amp; route</text>
           <rect class="mobile-stage" x="6" y="302" width="144" height="30" rx="5"/><text class="mobile-stage-label" x="78" y="321">Tapeout</text>
 
-          <path class="return-path" d="M150 149H180V107H152" stroke="var(--loop-rtl)" marker-end="url(#mobile-rtl-arrow)"/>
+          <path class="return-path" d="M150 149H176V107H152" stroke="var(--loop-rtl)" marker-end="url(#mobile-rtl-arrow)"/>
           <text class="return-label" x="157" y="128" fill="var(--loop-rtl)">bugs</text>
-          <path class="return-path" d="M150 275H214V107H152" stroke="var(--loop-rtl)" marker-end="url(#mobile-rtl-arrow)"/>
+          <path class="return-path" d="M150 191H198V107H152" stroke="var(--loop-rtl)" marker-end="url(#mobile-rtl-arrow)"/>
+          <text class="return-label" x="181" y="174" fill="var(--loop-rtl)">area / logic</text>
+          <path class="return-path" d="M150 233H216V191H152" stroke="var(--loop-synthesis)" marker-end="url(#mobile-synthesis-arrow)"/>
+          <text class="return-label" x="158" y="213" fill="var(--loop-synthesis)">floorplan</text>
+          <path class="return-path" d="M150 275H238V107H152" stroke="var(--loop-rtl)" marker-end="url(#mobile-rtl-arrow)"/>
           <text class="return-label" x="158" y="102" fill="var(--loop-rtl)">power / timing</text>
-          <path class="return-path" d="M150 275H254V65H152" stroke="var(--loop-micro)" marker-end="url(#mobile-micro-arrow)"/>
+          <path class="return-path" d="M150 275H280V65H152" stroke="var(--loop-micro)" marker-end="url(#mobile-micro-arrow)"/>
           <text class="return-label" x="158" y="60" fill="var(--loop-micro)">congestion / area</text>
-          <path class="return-path" d="M150 317H302V23H152" stroke="var(--loop-architecture)" marker-end="url(#mobile-architecture-arrow)"/>
+          <path class="return-path" d="M150 317H330V23H152" stroke="var(--loop-architecture)" marker-end="url(#mobile-architecture-arrow)"/>
           <text class="return-label" x="158" y="18" fill="var(--loop-architecture)">market / process</text>
         </svg>
       </div>
-      <p class="diagram-note">Local verification loops sit inside implementation loops, which sit inside broader architectural and process loops.</p>
+      <p class="diagram-note">Local verification and synthesis loops sit inside physical-design loops, which sit inside broader architectural and process loops.</p>
     </figure>
 
     <div class="prose">
