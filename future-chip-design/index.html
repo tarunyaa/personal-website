@@ -232,9 +232,9 @@ h1 {
 .evaluation-map .figure-intro { margin-bottom: 12px; }
 .evaluation-map-head {
   display: grid;
-  grid-template-columns: 1fr 1.45fr 1fr;
-  gap: 16px;
-  padding: 0 12px 8px;
+  grid-template-columns: 0.85fr 1.85fr 0.8fr 0.9fr;
+  gap: 12px;
+  padding: 0 8px 8px;
   color: var(--fg3);
   font-size: 10px;
   font-weight: 600;
@@ -243,53 +243,54 @@ h1 {
 }
 .evaluation-row {
   display: grid;
-  grid-template-columns: 1fr 1.45fr 1fr;
-  gap: 16px;
+  grid-template-columns: 0.85fr 1.85fr 0.8fr 0.9fr;
+  gap: 12px;
   align-items: center;
-  min-height: 66px;
-  padding: 10px 12px;
+  min-height: 58px;
+  padding: 9px 8px;
   border-top: 1px solid rgba(0, 0, 0, 0.07);
 }
 .evaluation-stage {
   color: var(--navy);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
 }
-.evaluation-action {
-  display: block;
-  margin-top: 2px;
-  color: var(--fg3);
-  font-size: 11px;
-  font-weight: 400;
-}
 .evaluation-signal {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   color: var(--fg2);
-  font-size: 12px;
-  line-height: 1.4;
-}
-.evaluation-signal::before {
-  content: '';
-  flex: 0 0 auto;
-  width: 22px;
-  height: 8px;
-  border-right: 1.5px solid var(--accent);
-  border-bottom: 1.5px solid var(--accent);
-  border-radius: 0 0 7px 0;
-  opacity: 0.7;
-}
-.evaluation-players {
   font-size: 11px;
-  line-height: 1.5;
+  line-height: 1.35;
 }
-.evaluation-players a {
+.evaluation-loop,
+.evaluation-quality {
+  color: var(--fg2);
+  font-size: 11px;
+  line-height: 1.35;
+}
+.evaluation-loop::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--fg3);
+  vertical-align: 1px;
+}
+.evaluation-loop.loop-yes::before { background: var(--loop-synthesis); }
+.evaluation-loop.loop-emerging::before { background: var(--accent); }
+.evaluation-loop.loop-limited::before { background: var(--loop-architecture); }
+.evaluation-quality strong {
+  display: block;
+  color: var(--fg2);
+  font-weight: 600;
+}
+.evaluation-map-note a {
   color: var(--fg2);
   text-decoration: underline;
   text-decoration-color: rgba(86, 86, 99, 0.3);
   text-underline-offset: 2px;
 }
+.evaluation-mobile-label { display: none; }
 .evaluation-map-note {
   margin: 10px 12px 0;
   color: var(--fg3);
@@ -336,14 +337,28 @@ h1 {
   }
   .evaluation-map-head { display: none; }
   .evaluation-row {
-    grid-template-columns: 0.9fr 1.4fr;
-    gap: 8px 14px;
+    grid-template-columns: 94px 1fr;
+    gap: 5px 12px;
     padding: 12px 4px;
   }
-  .evaluation-stage { grid-row: 1 / span 2; }
-  .evaluation-signal { font-size: 11.5px; }
-  .evaluation-signal::before { width: 16px; }
-  .evaluation-players { padding-left: 24px; }
+  .evaluation-stage { grid-row: 1 / span 3; }
+  .evaluation-signal,
+  .evaluation-loop,
+  .evaluation-quality { font-size: 11px; }
+  .evaluation-mobile-label {
+    display: inline-block;
+    min-width: 48px;
+    margin-right: 4px;
+    color: var(--fg3);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .evaluation-quality strong {
+    display: inline;
+    margin-right: 4px;
+  }
   .evaluation-map-note { margin-left: 4px; margin-right: 4px; }
 }
 </style>
@@ -481,35 +496,64 @@ h1 {
 
       <figure class="evaluation-map" aria-labelledby="evaluation-map-title">
         <figcaption>
-          <p class="figure-label" id="evaluation-map-title">Where bounded loops can close today</p>
-          <p class="figure-intro">Each loop needs something an agent can change and feedback it can measure.</p>
+          <p class="figure-label" id="evaluation-map-title">The uneven landscape of evaluation</p>
+          <p class="figure-intro">Every stage produces feedback, but not every signal is fast, faithful, or enclosed in an automated loop.</p>
         </figcaption>
         <div class="evaluation-map-head" aria-hidden="true">
-          <span>Part of the flow</span>
-          <span>Feedback signal</span>
-          <span>Representative efforts</span>
+          <span>Stage</span>
+          <span>Available proxy or reward</span>
+          <span>Loop today</span>
+          <span>Fidelity to silicon</span>
         </div>
         <div class="evaluation-row">
-          <p class="evaluation-stage">Verification<span class="evaluation-action">Tests and regressions</span></p>
-          <p class="evaluation-signal">Pass / fail, coverage, root cause</p>
-          <p class="evaluation-players"><a href="https://www.cadence.com/en_US/home/tools/system-design-and-verification/ai-driven-verification.html" target="_blank" rel="noopener noreferrer">Cadence Verisium</a><br><a href="https://www.synopsys.com/ai/ai-powered-eda.html" target="_blank" rel="noopener noreferrer">Synopsys VSO.ai</a></p>
+          <p class="evaluation-stage">Architecture</p>
+          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Workload latency, throughput, energy and TCO models</p>
+          <p class="evaluation-loop loop-limited"><span class="evaluation-mobile-label">Loop</span>Mostly human</p>
+          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Weak</strong>Far from silicon</p>
         </div>
         <div class="evaluation-row">
-          <p class="evaluation-stage">RTL to GDS<span class="evaluation-action">Constraints and tool recipes</span></p>
-          <p class="evaluation-signal">Power, performance, area</p>
-          <p class="evaluation-players"><a href="https://www.synopsys.com/webinars/optimal-ppa-targets-dso-ai.html" target="_blank" rel="noopener noreferrer">Synopsys DSO.ai</a><br><a href="https://www.cadence.com/en_US/home/tools/digital-design-and-signoff/soc-implementation-and-floorplanning/cadence-cerebrus-ai-studio.html" target="_blank" rel="noopener noreferrer">Cadence Cerebrus</a></p>
+          <p class="evaluation-stage">Microarchitecture</p>
+          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Cycles, IPC, cache misses, bandwidth and estimated PPA</p>
+          <p class="evaluation-loop loop-emerging"><span class="evaluation-mobile-label">Loop</span>Emerging</p>
+          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Mixed</strong>Model-dependent</p>
         </div>
         <div class="evaluation-row">
-          <p class="evaluation-stage">Floorplanning<span class="evaluation-action">Shape and macro placement</span></p>
-          <p class="evaluation-signal">Wirelength, congestion, timing</p>
-          <p class="evaluation-players"><a href="https://deepmind.google/blog/how-alphachip-transformed-computer-chip-design/" target="_blank" rel="noopener noreferrer">Google DeepMind AlphaChip</a><br><a href="https://www.cadence.com/en_US/home/resources/white-papers/machine-learning-driven-full-flow-chip-design-automation-wp.html" target="_blank" rel="noopener noreferrer">Cadence Cerebrus</a></p>
+          <p class="evaluation-stage">RTL</p>
+          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Lint, compile, unit simulation, formal checks and early PPA</p>
+          <p class="evaluation-loop loop-emerging"><span class="evaluation-mobile-label">Loop</span>Emerging</p>
+          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Mixed</strong>Local correctness</p>
         </div>
         <div class="evaluation-row">
-          <p class="evaluation-stage">Kernel mapping<span class="evaluation-action">Placement, tiling, scheduling</span></p>
-          <p class="evaluation-signal">Latency, throughput, energy</p>
-          <p class="evaluation-players"><a href="https://openai.com/index/jalapeno-first-results/" target="_blank" rel="noopener noreferrer">OpenAI Jalape&ntilde;o + Codex</a></p>
+          <p class="evaluation-stage">Verification</p>
+          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Pass / fail, assertions, coverage and formal proofs</p>
+          <p class="evaluation-loop loop-yes"><span class="evaluation-mobile-label">Loop</span>Yes</p>
+          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Strong</strong>Only for tested properties</p>
         </div>
-        <p class="evaluation-map-note">These signals are not equally trustworthy. Coverage is not bug-free silicon, and early PPA estimates are not final signoff. Representative examples, not an exhaustive market map.</p>
+        <div class="evaluation-row">
+          <p class="evaluation-stage">Synthesis</p>
+          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Timing slack, area, power and equivalence</p>
+          <p class="evaluation-loop loop-yes"><span class="evaluation-mobile-label">Loop</span>Yes</p>
+          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Good</strong>Still pre-layout</p>
+        </div>
+        <div class="evaluation-row">
+          <p class="evaluation-stage">Floorplanning</p>
+          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Wirelength, density, congestion and early timing</p>
+          <p class="evaluation-loop loop-yes"><span class="evaluation-mobile-label">Loop</span>Yes</p>
+          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Mixed</strong>Proxy-heavy</p>
+        </div>
+        <div class="evaluation-row">
+          <p class="evaluation-stage">Place &amp; route</p>
+          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Routed timing, power, IR drop, DRC and routability</p>
+          <p class="evaluation-loop loop-yes"><span class="evaluation-mobile-label">Loop</span>Yes, but slow</p>
+          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Strong</strong>Near-final geometry</p>
+        </div>
+        <div class="evaluation-row">
+          <p class="evaluation-stage">Signoff / tapeout</p>
+          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>STA, DRC / LVS, EM / IR and manufacturability</p>
+          <p class="evaluation-loop loop-limited"><span class="evaluation-mobile-label">Loop</span>Checks only</p>
+          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Very strong</strong>Too late and costly</p>
+        </div>
+        <p class="evaluation-map-note">Representative efforts: <a href="https://www.bronco.ai/" target="_blank" rel="noopener noreferrer">Bronco AI</a> and <a href="https://chipagents.ai/blogs/closed-loop-autonomous-design" target="_blank" rel="noopener noreferrer">ChipAgents</a> begin around RTL and verification; <a href="https://agentrys.ai/research/composable-silicon" target="_blank" rel="noopener noreferrer">Agentrys</a> reports loops from specification through signoff; <a href="https://www.synopsys.com/webinars/optimal-ppa-targets-dso-ai.html" target="_blank" rel="noopener noreferrer">DSO.ai</a>, <a href="https://www.cadence.com/en_US/home/resources/white-papers/machine-learning-driven-full-flow-chip-design-automation-wp.html" target="_blank" rel="noopener noreferrer">Cerebrus</a>, and <a href="https://deepmind.google/blog/how-alphachip-transformed-computer-chip-design/" target="_blank" rel="noopener noreferrer">AlphaChip</a> close bounded back-end loops. Company-reported capabilities are not equivalent to broad production validation.</p>
       </figure>
 
       <h2>Before cross-stage search comes representation</h2>
