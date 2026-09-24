@@ -162,95 +162,57 @@ h1 {
   font-size: 14px;
 }
 .diagram-scroll {
-  max-width: 780px;
-  overflow-x: auto;
-  padding: 2px 2px 10px;
-  scrollbar-color: var(--rule) transparent;
+  max-width: 840px;
+  padding: 2px 0 8px;
 }
-.loop-diagram {
-  min-width: 700px;
-  display: grid;
-  grid-template-columns: repeat(8, minmax(68px, 1fr));
-  column-gap: 8px;
-  row-gap: 8px;
-  align-items: center;
+.desktop-loop-diagram {
+  display: block;
+  width: 100%;
+  height: auto;
 }
-.stage {
-  min-height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  border: 1px solid var(--rule);
-  border-radius: 7px;
-  background: var(--bg2);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.3;
-  text-align: center;
-  position: relative;
-}
-.stage:not(:nth-child(8))::after {
-  content: '\2192';
-  position: absolute;
-  right: -14px;
-  color: var(--fg3);
-  font-weight: 400;
-}
-.feedback {
-  height: 27px;
-  position: relative;
-  border-bottom: 2px solid currentColor;
-  border-left: 2px solid currentColor;
-  border-right: 2px solid currentColor;
-  border-radius: 0 0 7px 7px;
-  opacity: 0.9;
-}
-.feedback::before {
-  content: '\2191';
-  position: absolute;
-  left: -6px;
-  top: -13px;
-  font-size: 16px;
-  font-weight: 600;
-}
-.feedback span {
-  position: absolute;
-  right: 8px;
-  bottom: 3px;
-  padding-left: 7px;
-  background: var(--bg);
-  font-size: 11px;
-  line-height: 1.2;
-}
-.feedback.rtl { grid-column: 4 / 7; color: var(--loop-rtl); }
-.feedback.micro { grid-column: 2 / 8; color: var(--loop-micro); }
-.feedback.architecture { grid-column: 1 / 9; color: var(--loop-architecture); }
-.mobile-loop-diagram { display: none; }
+.desktop-loop-diagram .stage-box,
 .mobile-loop-diagram .mobile-stage {
   fill: var(--bg2);
   stroke: var(--rule);
 }
+.desktop-loop-diagram .stage-label,
 .mobile-loop-diagram .mobile-stage-label {
   fill: var(--fg);
   font-family: 'Inter', sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 500;
   text-anchor: middle;
 }
+.desktop-loop-diagram .flow-path,
 .mobile-loop-diagram .flow-path {
   fill: none;
   stroke: var(--fg3);
-  stroke-width: 1;
+  stroke-width: 1.15;
 }
+.desktop-loop-diagram .return-path,
 .mobile-loop-diagram .return-path {
   fill: none;
-  stroke-width: 1.5;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  opacity: 0.92;
 }
+.desktop-loop-diagram .return-label,
 .mobile-loop-diagram .return-label {
   font-family: 'Inter', sans-serif;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 500;
+  paint-order: stroke;
+  stroke: var(--bg);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+.mobile-loop-diagram { display: none; }
+.mobile-loop-diagram .mobile-stage-label {
+  font-size: 10px;
+}
+.mobile-loop-diagram .return-label {
+  font-size: 8.5px;
+  stroke-width: 4px;
 }
 .diagram-note {
   margin-top: 8px;
@@ -286,8 +248,8 @@ h1 {
   #wrapper { padding: 84px 20px 80px; }
   h1 { font-size: 29px; }
   .design-figure { margin-top: 30px; }
-  .diagram-scroll { overflow: visible; padding: 0; }
-  .loop-diagram { display: none; }
+  .diagram-scroll { padding: 0; }
+  .desktop-loop-diagram { display: none; }
   .mobile-loop-diagram {
     display: block;
     width: 100%;
@@ -325,55 +287,68 @@ h1 {
         <p class="figure-intro">The nominal flow moves forward. Real design repeatedly sends information back upstream.</p>
       </figcaption>
       <div class="diagram-scroll">
-        <div class="loop-diagram" role="img" aria-label="The ASIC design flow from architecture through tapeout, with feedback loops from verification and physical design back to RTL, microarchitecture, and architecture.">
-          <div class="stage">Architecture</div>
-          <div class="stage">Microarchitecture</div>
-          <div class="stage">RTL</div>
-          <div class="stage">Verification</div>
-          <div class="stage">Synthesis</div>
-          <div class="stage">Floorplanning</div>
-          <div class="stage">Place &amp;<br>route</div>
-          <div class="stage">Tapeout</div>
-          <div class="feedback rtl"><span>power &amp; timing</span></div>
-          <div class="feedback micro"><span>congestion, area &amp; network topology</span></div>
-          <div class="feedback architecture"><span>market &amp; process constraints</span></div>
-        </div>
-        <svg class="mobile-loop-diagram" viewBox="0 0 300 342" role="img" aria-label="A compact vertical ASIC design flow with feedback arcs from implementation back to RTL, microarchitecture, and architecture.">
+        <svg class="desktop-loop-diagram" viewBox="0 0 840 290" role="img" aria-label="The ASIC design flow surrounded by nested feedback loops: verification back to RTL, implementation back to RTL and microarchitecture, and tapeout back to architecture.">
           <defs>
-            <marker id="flow-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--fg3)"/></marker>
-            <marker id="rtl-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-rtl)"/></marker>
-            <marker id="micro-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-micro)"/></marker>
-            <marker id="architecture-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-architecture)"/></marker>
+            <marker id="desktop-flow-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--fg3)"/></marker>
+            <marker id="desktop-rtl-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-rtl)"/></marker>
+            <marker id="desktop-micro-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-micro)"/></marker>
+            <marker id="desktop-architecture-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-architecture)"/></marker>
           </defs>
 
-          <path class="flow-path" d="M85 38V49 M85 80V91 M85 122V133 M85 164V175 M85 206V217 M85 248V259 M85 290V301" marker-end="url(#flow-arrow)"/>
+          <path class="flow-path" d="M94 143H108 M196 143H210 M298 143H312 M400 143H414 M502 143H516 M604 143H618 M706 143H720" marker-end="url(#desktop-flow-arrow)"/>
 
-          <rect class="mobile-stage" x="10" y="8" width="150" height="30" rx="5"/>
-          <text class="mobile-stage-label" x="85" y="27">Architecture</text>
-          <rect class="mobile-stage" x="10" y="50" width="150" height="30" rx="5"/>
-          <text class="mobile-stage-label" x="85" y="69">Microarchitecture</text>
-          <rect class="mobile-stage" x="10" y="92" width="150" height="30" rx="5"/>
-          <text class="mobile-stage-label" x="85" y="111">RTL</text>
-          <rect class="mobile-stage" x="10" y="134" width="150" height="30" rx="5"/>
-          <text class="mobile-stage-label" x="85" y="153">Verification</text>
-          <rect class="mobile-stage" x="10" y="176" width="150" height="30" rx="5"/>
-          <text class="mobile-stage-label" x="85" y="195">Synthesis</text>
-          <rect class="mobile-stage" x="10" y="218" width="150" height="30" rx="5"/>
-          <text class="mobile-stage-label" x="85" y="237">Floorplanning</text>
-          <rect class="mobile-stage" x="10" y="260" width="150" height="30" rx="5"/>
-          <text class="mobile-stage-label" x="85" y="279">Place &amp; route</text>
-          <rect class="mobile-stage" x="10" y="302" width="150" height="30" rx="5"/>
-          <text class="mobile-stage-label" x="85" y="321">Tapeout</text>
+          <rect class="stage-box" x="6" y="120" width="88" height="46" rx="6"/><text class="stage-label" x="50" y="147">Architecture</text>
+          <rect class="stage-box" x="108" y="120" width="88" height="46" rx="6"/><text class="stage-label" x="152" y="147">Microarchitecture</text>
+          <rect class="stage-box" x="210" y="120" width="88" height="46" rx="6"/><text class="stage-label" x="254" y="147">RTL</text>
+          <rect class="stage-box" x="312" y="120" width="88" height="46" rx="6"/><text class="stage-label" x="356" y="147">Verification</text>
+          <rect class="stage-box" x="414" y="120" width="88" height="46" rx="6"/><text class="stage-label" x="458" y="147">Synthesis</text>
+          <rect class="stage-box" x="516" y="120" width="88" height="46" rx="6"/><text class="stage-label" x="560" y="147">Floorplanning</text>
+          <rect class="stage-box" x="618" y="120" width="88" height="46" rx="6"/><text class="stage-label" x="662" y="140"><tspan x="662">Place &amp;</tspan><tspan x="662" dy="13">route</tspan></text>
+          <rect class="stage-box" x="720" y="120" width="88" height="46" rx="6"/><text class="stage-label" x="764" y="147">Tapeout</text>
 
-          <path class="return-path" d="M160 275H205V107H162" stroke="var(--loop-rtl)" marker-end="url(#rtl-arrow)"/>
-          <text class="return-label" x="167" y="102" fill="var(--loop-rtl)">power / timing</text>
-          <path class="return-path" d="M160 233H242V65H162" stroke="var(--loop-micro)" marker-end="url(#micro-arrow)"/>
-          <text class="return-label" x="167" y="60" fill="var(--loop-micro)">congestion / area</text>
-          <path class="return-path" d="M160 317H279V23H162" stroke="var(--loop-architecture)" marker-end="url(#architecture-arrow)"/>
-          <text class="return-label" x="167" y="18" fill="var(--loop-architecture)">market / process</text>
+          <path class="return-path" d="M356 120C356 88 254 88 254 118" stroke="var(--loop-rtl)" marker-end="url(#desktop-rtl-arrow)"/>
+          <text class="return-label" x="305" y="82" text-anchor="middle" fill="var(--loop-rtl)">functional bugs</text>
+
+          <path class="return-path" d="M662 120C662 45 254 45 254 118" stroke="var(--loop-rtl)" marker-end="url(#desktop-rtl-arrow)"/>
+          <text class="return-label" x="458" y="39" text-anchor="middle" fill="var(--loop-rtl)">power &amp; timing</text>
+
+          <path class="return-path" d="M662 166C662 221 152 221 152 168" stroke="var(--loop-micro)" marker-end="url(#desktop-micro-arrow)"/>
+          <text class="return-label" x="407" y="231" text-anchor="middle" fill="var(--loop-micro)">congestion, area &amp; network topology</text>
+
+          <path class="return-path" d="M764 166C764 272 50 272 50 168" stroke="var(--loop-architecture)" marker-end="url(#desktop-architecture-arrow)"/>
+          <text class="return-label" x="407" y="283" text-anchor="middle" fill="var(--loop-architecture)">market &amp; process constraints</text>
+        </svg>
+
+        <svg class="mobile-loop-diagram" viewBox="0 0 320 350" role="img" aria-label="A compact vertical ASIC design flow surrounded by four nested feedback loops at increasing scales.">
+          <defs>
+            <marker id="mobile-flow-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--fg3)"/></marker>
+            <marker id="mobile-rtl-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-rtl)"/></marker>
+            <marker id="mobile-micro-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-micro)"/></marker>
+            <marker id="mobile-architecture-arrow" viewBox="0 0 6 6" refX="5" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--loop-architecture)"/></marker>
+          </defs>
+
+          <path class="flow-path" d="M78 38V49 M78 80V91 M78 122V133 M78 164V175 M78 206V217 M78 248V259 M78 290V301" marker-end="url(#mobile-flow-arrow)"/>
+
+          <rect class="mobile-stage" x="6" y="8" width="144" height="30" rx="5"/><text class="mobile-stage-label" x="78" y="27">Architecture</text>
+          <rect class="mobile-stage" x="6" y="50" width="144" height="30" rx="5"/><text class="mobile-stage-label" x="78" y="69">Microarchitecture</text>
+          <rect class="mobile-stage" x="6" y="92" width="144" height="30" rx="5"/><text class="mobile-stage-label" x="78" y="111">RTL</text>
+          <rect class="mobile-stage" x="6" y="134" width="144" height="30" rx="5"/><text class="mobile-stage-label" x="78" y="153">Verification</text>
+          <rect class="mobile-stage" x="6" y="176" width="144" height="30" rx="5"/><text class="mobile-stage-label" x="78" y="195">Synthesis</text>
+          <rect class="mobile-stage" x="6" y="218" width="144" height="30" rx="5"/><text class="mobile-stage-label" x="78" y="237">Floorplanning</text>
+          <rect class="mobile-stage" x="6" y="260" width="144" height="30" rx="5"/><text class="mobile-stage-label" x="78" y="279">Place &amp; route</text>
+          <rect class="mobile-stage" x="6" y="302" width="144" height="30" rx="5"/><text class="mobile-stage-label" x="78" y="321">Tapeout</text>
+
+          <path class="return-path" d="M150 149H180V107H152" stroke="var(--loop-rtl)" marker-end="url(#mobile-rtl-arrow)"/>
+          <text class="return-label" x="157" y="128" fill="var(--loop-rtl)">bugs</text>
+          <path class="return-path" d="M150 275H214V107H152" stroke="var(--loop-rtl)" marker-end="url(#mobile-rtl-arrow)"/>
+          <text class="return-label" x="158" y="102" fill="var(--loop-rtl)">power / timing</text>
+          <path class="return-path" d="M150 275H254V65H152" stroke="var(--loop-micro)" marker-end="url(#mobile-micro-arrow)"/>
+          <text class="return-label" x="158" y="60" fill="var(--loop-micro)">congestion / area</text>
+          <path class="return-path" d="M150 317H302V23H152" stroke="var(--loop-architecture)" marker-end="url(#mobile-architecture-arrow)"/>
+          <text class="return-label" x="158" y="18" fill="var(--loop-architecture)">market / process</text>
         </svg>
       </div>
-      <p class="diagram-note">The loops widen as implementation details propagate farther upstream.</p>
+      <p class="diagram-note">Local verification loops sit inside implementation loops, which sit inside broader architectural and process loops.</p>
     </figure>
 
     <div class="prose">
