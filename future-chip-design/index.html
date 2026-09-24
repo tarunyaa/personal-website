@@ -359,7 +359,7 @@ h1 {
       </ol>
 
       <h2>Chip design is heavily abstracted</h2>
-      <p>Humans make chip design tractable by dividing it into stages, as seen in the ASIC design flow. Organizations are built around these stages because no one person can reason about the entire chip at once.</p>
+      <p>Humans make chip design tractable by dividing it into stages. Organizations are built around these stages because no one person can reason about the entire chip at once.</p>
       <p>Conway&rsquo;s law suggests that products tend to mirror the organizations that produce them. As a result, today&rsquo;s chips are highly hierarchical and optimized against fixed bandwidth and latency contracts.</p>
       <p>AI removes the need for abstractions built for human comprehension. It can instead operate over representations designed for machine search.</p>
       <p>Jalape&ntilde;o offers an early example of one agentic kernel-optimization loop. <a href="https://openai.com/index/jalapeno-first-results/" target="_blank" rel="noopener noreferrer">OpenAI describes</a> AI optimizing how work is mapped, placed, scheduled, and coordinated; <a href="https://zartbot.github.io/blog/arch/jalapeno/en.html" target="_blank" rel="noopener noreferrer">Zartbot makes the loop concrete</a>: generate a kernel candidate, run it on a simulator or silicon, then revise placement, pipelining, prefetching, and communication. Zartbot documents a 40-hour DeepSeek MLA optimization run, and OpenAI reports that selected Codex-generated GPT-OSS implementations ran 1.5&ndash;1.8&times; faster than expert-written versions.</p>
