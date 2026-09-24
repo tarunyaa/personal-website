@@ -401,7 +401,7 @@ h1 {
       <h2>The future</h2>
       <p>Initially, agents will probably accelerate individual stages while preserving the existing ASIC flow. As the connections between representations improve, those bounded loops can begin to interact.</p>
       <p>Suppose an agent changes a cache because an architectural model predicts better performance. After synthesis and physical design, that same choice might increase wire length, congestion, or timing pressure. The agent could feed those downstream effects back into the architectural decision and reject a choice that only looked good in a silo.</p>
-      <p>Search could then operate across boundaries that humans currently find it hard to cross. This enables the agent to learn policies for pruning the search space and discovering better chips.</p>
+      <p>Search could then operate across boundaries that humans currently find difficult or expensive to cross. Over time, the results of that search could also become training data. Rather than rediscovering the same tradeoffs on every design, reinforcement learning could train policies that prioritize more promising regions of the design space, pruning weak candidates earlier and making future search more efficient.</p>
     </div>
 
     <p class="closing">If AI lowers the cost of crossing boundaries, which boundaries in today&rsquo;s ASIC flow still need to exist?</p>
