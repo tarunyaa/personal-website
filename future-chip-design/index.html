@@ -189,7 +189,7 @@ h1 {
   text-align: center;
   position: relative;
 }
-.stage:not(:last-of-type)::after {
+.stage:not(:nth-child(8))::after {
   content: '\2192';
   position: absolute;
   right: -17px;
@@ -259,6 +259,53 @@ h1 {
   #wrapper { padding: 84px 20px 80px; }
   h1 { font-size: 29px; }
   .design-figure { margin-top: 30px; }
+  .diagram-scroll { overflow: visible; padding: 2px 0 8px; }
+  .loop-diagram {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .stage {
+    width: 100%;
+    min-height: 48px;
+  }
+  .stage:not(:nth-child(8))::after {
+    content: '\2193';
+    right: auto;
+    bottom: -19px;
+    z-index: 1;
+  }
+  .feedback,
+  .feedback.rtl,
+  .feedback.micro,
+  .feedback.architecture {
+    width: 100%;
+    height: auto;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    border: 0;
+    border-left: 3px solid currentColor;
+    border-radius: 0;
+    background: var(--bg2);
+  }
+  .feedback.rtl { margin-top: 6px; }
+  .feedback::before {
+    content: '\21b0';
+    position: static;
+    flex: 0 0 auto;
+    margin-right: 8px;
+    font-size: 16px;
+    line-height: 1;
+  }
+  .feedback span {
+    position: static;
+    padding: 0;
+    background: transparent;
+    font-size: 11px;
+  }
 }
 </style>
 </head>
@@ -286,7 +333,7 @@ h1 {
     <figure class="design-figure" aria-labelledby="loop-title">
       <figcaption>
         <p class="figure-label" id="loop-title">The ASIC design loop</p>
-        <p class="figure-intro">The nominal flow moves right. Real design repeatedly sends information back upstream.</p>
+        <p class="figure-intro">The nominal flow moves forward. Real design repeatedly sends information back upstream.</p>
       </figcaption>
       <div class="diagram-scroll">
         <div class="loop-diagram" role="img" aria-label="The ASIC design flow from architecture through tapeout, with feedback loops from verification and physical design back to RTL, microarchitecture, and architecture.">
@@ -298,12 +345,12 @@ h1 {
           <div class="stage">Floorplanning</div>
           <div class="stage">Place &amp;<br>route</div>
           <div class="stage">Tapeout</div>
-          <div class="feedback rtl"><span>bugs, power, timing</span></div>
-          <div class="feedback micro"><span>area, congestion, wiring</span></div>
-          <div class="feedback architecture"><span>system tradeoffs &amp; requirements</span></div>
+          <div class="feedback rtl"><span>back to RTL &middot; bugs, power, timing</span></div>
+          <div class="feedback micro"><span>back to microarchitecture &middot; area, congestion, wiring</span></div>
+          <div class="feedback architecture"><span>back to architecture &middot; system tradeoffs &amp; requirements</span></div>
         </div>
       </div>
-      <p class="diagram-note">Scroll horizontally to see the full loop on smaller screens.</p>
+      <p class="diagram-note">The loops widen as implementation details propagate farther upstream.</p>
     </figure>
 
     <div class="prose">
