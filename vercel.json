@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/future-chip-design",
+      "destination": "/future-chip-design/index.html"
+    },
+    {
       "source": "/the-frontier-labs-real-business-model",
       "destination": "/knowledge-jobs/index.html"
     },
