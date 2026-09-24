@@ -366,32 +366,32 @@ h1 {
       <p>The abstraction has not disappeared. It has moved: details once hidden to make hardware easier for humans to program are exposed to machine search. Zartbot&rsquo;s reported 40-hour DeepSeek MLA run shows that search operating over these scheduling and memory-access decisions.</p>
 
       <h2>The first step will be bounded loops</h2>
-      <p>The near-term opportunity is not an autonomous agent producing a complete chip. It is accelerating bounded loops within the existing design flow.</p>
-      <p>These loops are good candidates when three conditions hold:</p>
+      <p>The near-term version of the future is much less dramatic than an autonomous agent producing a complete chip.</p>
+      <p>I think it starts with engineers identifying bounded parts of the flow where three things are true:</p>
       <ol>
-        <li>A design can be modified automatically</li>
-        <li>There is a reliable reward function for evaluation</li>
-        <li>Evaluation is fast enough to support repeated iteration</li>
+        <li>The system can make valid design changes automatically</li>
+        <li>The quality of those changes can be evaluated reliably</li>
+        <li>Evaluation is cheap and fast enough to repeat many times</li>
       </ol>
-      <p>Within such a loop, an agent can propose a change, run the relevant tools, evaluate the result, and revise its proposal. Repeating this process unattended increases the number of useful iterations engineers can complete before tapeout.</p>
-      <p>If an agent can run 10&times; more experiments overnight, it can explore a larger design space while leaving the rest of the flow intact.</p>
+      <p>When those conditions hold, an agent can close the loop: propose &rarr; evaluate &rarr; diagnose &rarr; revise. It does not need to search the entire design space because the results of previous attempts can guide which candidates are worth trying next.</p>
+      <p>This matters because today&rsquo;s chips are partly constrained by how many useful iterations engineers can complete before tapeout. Automating some of those loops could let engineers explore more alternatives within the same design schedule.</p>
 
-      <h2>The real bottleneck is evaluation</h2>
-      <p>Any search procedure needs feedback about which candidates are promising. The reward function needs to be both fast and trustworthy.</p>
-      <p>The issue with physical design is that conventional EDA flows can be slow. So, we either need better tools or proxy rewards: intermediate estimates of timing, power, congestion, and other constraints that can guide search. However, these proxies need to be representative of the final objective, which is tricky.</p>
+      <h2>A bottleneck is evaluation</h2>
+      <p>Closing the loop is easy conceptually. Getting useful feedback at chip-design timescales is hard. Any search procedure needs fast, trustworthy evidence about which candidates are promising.</p>
+      <p>Conventional EDA flows can be slow. Better tools or proxy metrics, such as intermediate estimates of timing, power, and congestion, could guide search. However, those proxies need to represent the final objective accurately, which is tricky.</p>
 
-      <h2>Before search comes representation</h2>
-      <p>Evaluation alone isn&rsquo;t enough. The agent must understand what it&rsquo;s searching for.</p>
-      <p>Since chip design is distributed across stages of the ASIC design flow, each stage has its own vocabulary or ontology. What&rsquo;s lacking is a unified, machine-usable representation that connects product-level goals to microarchitecture, RTL, physical implementation, and verification. This makes it difficult to run loops across stages.</p>
-      <p>In the short run, as a result, a lot of the work to enable AI in chip design will look unglamorous: documenting flows, constructing ontologies, and defining constraints.</p>
+      <h2>Before cross-stage search comes representation</h2>
+      <p>Fast evaluation can close a loop within one stage. Connecting loops across stages requires something else: the agent needs to understand how a decision in one representation propagates into another.</p>
+      <p>Each stage of the ASIC design flow has its own vocabulary and representation. What&rsquo;s lacking is not necessarily one universal ontology, but machine-usable connections between product goals, microarchitecture, RTL, physical implementation, and verification.</p>
+      <p>In the short run, much of the work to enable AI in chip design will look unglamorous: documenting flows, structuring tool outputs, mapping dependencies, and defining constraints.</p>
 
       <h2>The future</h2>
-      <p>Initially, agents will probably accelerate individual stages while preserving the existing ASIC flow. However, once the ontologies are built, there is a possibility that we can cross the boundaries and connect the loops.</p>
+      <p>Initially, agents will probably accelerate individual stages while preserving the existing ASIC flow. As the connections between representations improve, those bounded loops can begin to interact.</p>
       <p>An agent changes a microarchitectural choice, observes its effect after synthesis and physical design, then uses that information to revise the architecture. A placement decision feeds back into the network topology. A memory-system decision is evaluated not only through an abstract model, but through its downstream effects on area, wiring, and energy.</p>
       <p>Search could then operate across boundaries that humans currently find it hard to cross. This enables the agent to learn policies for pruning the search space and discovering better chips.</p>
     </div>
 
-    <p class="closing">The future of chip design might be a loop that enables shorter tapeouts and better chips.</p>
+    <p class="closing">If AI lowers the cost of crossing boundaries, which boundaries in today&rsquo;s ASIC flow still need to exist?</p>
   </article>
 
   <div class="post-footer">
