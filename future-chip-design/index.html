@@ -334,9 +334,9 @@ h1 {
           <div class="stage">Floorplanning</div>
           <div class="stage">Place &amp;<br>route</div>
           <div class="stage">Tapeout</div>
-          <div class="feedback rtl"><span>back to RTL &middot; bugs, power, timing</span></div>
-          <div class="feedback micro"><span>back to microarchitecture &middot; area, congestion, wiring</span></div>
-          <div class="feedback architecture"><span>back to architecture &middot; system tradeoffs &amp; requirements</span></div>
+          <div class="feedback rtl"><span>power &amp; timing</span></div>
+          <div class="feedback micro"><span>congestion, area &amp; network topology</span></div>
+          <div class="feedback architecture"><span>market &amp; process constraints</span></div>
         </div>
         <svg class="mobile-loop-diagram" viewBox="0 0 300 342" role="img" aria-label="A compact vertical ASIC design flow with feedback arcs from implementation back to RTL, microarchitecture, and architecture.">
           <defs>
@@ -366,19 +366,18 @@ h1 {
           <text class="mobile-stage-label" x="85" y="321">Tapeout</text>
 
           <path class="return-path" d="M160 275H205V107H162" stroke="var(--loop-rtl)" marker-end="url(#rtl-arrow)"/>
-          <text class="return-label" x="167" y="102" fill="var(--loop-rtl)">RTL loop</text>
+          <text class="return-label" x="167" y="102" fill="var(--loop-rtl)">power / timing</text>
           <path class="return-path" d="M160 233H242V65H162" stroke="var(--loop-micro)" marker-end="url(#micro-arrow)"/>
-          <text class="return-label" x="167" y="60" fill="var(--loop-micro)">microarchitecture loop</text>
+          <text class="return-label" x="167" y="60" fill="var(--loop-micro)">congestion / area</text>
           <path class="return-path" d="M160 317H279V23H162" stroke="var(--loop-architecture)" marker-end="url(#architecture-arrow)"/>
-          <text class="return-label" x="167" y="18" fill="var(--loop-architecture)">architecture loop</text>
+          <text class="return-label" x="167" y="18" fill="var(--loop-architecture)">market / process</text>
         </svg>
       </div>
       <p class="diagram-note">The loops widen as implementation details propagate farther upstream.</p>
     </figure>
 
     <div class="prose">
-      <p>Congestion discovered during physical design can force changes to the microarchitecture. Power problems mandate RTL changes. Area pressure can overturn an earlier network decision. Requirements from the market and TSMC get defined as frontier chips on the newest technology node get built.</p>
-      <p>This loopy nature of chip design is a corollary of:</p>
+      <p>Two things make these loops unavoidable:</p>
       <ol>
         <li>The combinatorial complexity of a multi-objective optimization problem</li>
         <li>Asymmetric information about constraints and objectives</li>
@@ -387,8 +386,8 @@ h1 {
       <h2>Chip design is heavily abstracted</h2>
       <p>Humans make chip design tractable by dividing it into stages, as seen in the ASIC design flow. Organizations are built around these stages because no one person can reason about the entire chip at once.</p>
       <p>Conway&rsquo;s law suggests that products tend to mirror the organizations that produce them. As a result, today&rsquo;s chips are highly hierarchical and optimized against fixed bandwidth and latency contracts.</p>
-      <p>AI doesn&rsquo;t eliminate the need for abstraction. But it enables the removal of some abstractions, or even the creation of abstractions built for machine search rather than human comprehension.</p>
-      <p>Jalape&ntilde;o offers an early example. Rather than a human-first abstraction like NVIDIA&rsquo;s <a href="https://docs.nvidia.com/cuda/cutile-python/" target="_blank" rel="noopener noreferrer">cuTile</a>, it exposes local tensors, communication, and synchronization so agents can run roughly eight-hour overnight searches over mapping, placement, and scheduling; <a href="https://zartbot.github.io/blog/arch/jalapeno/en.html" target="_blank" rel="noopener noreferrer">Zartbot describes</a> a broader two-month tuning window once the model architecture is frozen. OpenAI reports that <a href="https://openai.com/index/jalapeno-first-results/" target="_blank" rel="noopener noreferrer">Codex-generated implementations</a> for selected GPT-OSS blocks ran 1.5&ndash;1.8&times; faster than existing expert-written versions, showing what a small bounded loop built for machine optimization can deliver.</p>
+      <p>AI removes the need for abstractions built for human comprehension. It can instead operate over representations designed for machine search.</p>
+      <p>Jalape&ntilde;o offers an early example of one agentic kernel-optimization loop. <a href="https://openai.com/index/jalapeno-first-results/" target="_blank" rel="noopener noreferrer">OpenAI describes</a> AI optimizing how work is mapped, placed, scheduled, and coordinated; <a href="https://zartbot.github.io/blog/arch/jalapeno/en.html" target="_blank" rel="noopener noreferrer">Zartbot makes the loop concrete</a>: generate a kernel candidate, run it on a simulator or silicon, then revise placement, pipelining, prefetching, and communication. Zartbot documents a 40-hour DeepSeek MLA optimization run, and OpenAI reports that selected Codex-generated GPT-OSS implementations ran 1.5&ndash;1.8&times; faster than expert-written versions.</p>
 
       <h2>The first step will be bounded loops</h2>
       <p>The near-term version of the future is much less dramatic than an autonomous agent producing a complete chip.</p>
