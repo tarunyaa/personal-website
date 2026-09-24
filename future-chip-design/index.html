@@ -399,7 +399,7 @@ h1 {
 
       <h2>The future</h2>
       <p>Initially, agents will probably accelerate individual stages while preserving the existing ASIC flow. As the connections between representations improve, those bounded loops can begin to interact.</p>
-      <p>Suppose an agent changes a cache because an architectural model predicts better performance. After synthesis and physical design, that same choice might increase wire length, congestion, or timing pressure. The agent could feed those downstream effects back into the architectural decision and reject a choice that only looked good in a silo.</p>
+      <p>Suppose we want to build a chip with a particular memory hierarchy. Synthesis and early physical design can provide quick feedback on the area and wiring costs it creates. An agent could use that feedback to revise the hierarchy, then run the loop again.</p>
       <p>Search could then operate across boundaries that humans currently find difficult or expensive to cross. Over time, the results of that search could also become training data. Rather than rediscovering the same tradeoffs on every design, reinforcement learning could train policies that prioritize more promising regions of the design space, pruning weak candidates earlier and making future search more efficient.</p>
     </div>
 
