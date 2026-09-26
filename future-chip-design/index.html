@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="A speculative map of how AI agents could turn chip design into a faster, broader search across nested design loops.">
-<title>Mapping Out the Future of Chip Design | Stream of Taru</title>
+<meta name="description" content="Why chip design is a multi-objective search problem, and how AI could make its loops faster and broader.">
+<title>Chip Design is a Loop, Not a Flow | Stream of Taru</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
@@ -221,131 +221,6 @@ h1 {
   font-size: 11px;
 }
 
-.evaluation-map {
-  margin: 25px 0 8px;
-  padding: 18px 0 14px;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-}
-.evaluation-map p { margin-bottom: 0; }
-.evaluation-map .figure-label { margin-bottom: 8px; }
-.evaluation-map .figure-intro { margin-bottom: 12px; }
-.evaluation-map-head {
-  display: grid;
-  grid-template-columns: 0.85fr 1.85fr 0.8fr 0.9fr;
-  gap: 12px;
-  padding: 0 8px 8px;
-  color: var(--fg3);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.evaluation-row {
-  display: grid;
-  grid-template-columns: 0.85fr 1.85fr 0.8fr 0.9fr;
-  gap: 12px;
-  align-items: center;
-  min-height: 58px;
-  padding: 9px 8px;
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
-}
-.evaluation-stage {
-  color: var(--navy);
-  font-size: 12px;
-  font-weight: 600;
-}
-.evaluation-signal {
-  color: var(--fg2);
-  font-size: 11px;
-  line-height: 1.35;
-}
-.evaluation-loop,
-.evaluation-quality {
-  color: var(--fg2);
-  font-size: 11px;
-  line-height: 1.35;
-}
-.evaluation-loop::before {
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin-right: 6px;
-  border-radius: 50%;
-  background: var(--fg3);
-  vertical-align: 1px;
-}
-.evaluation-loop.loop-yes::before { background: var(--loop-synthesis); }
-.evaluation-loop.loop-emerging::before { background: var(--accent); }
-.evaluation-loop.loop-limited::before { background: var(--loop-architecture); }
-.evaluation-quality strong {
-  display: block;
-  color: var(--fg2);
-  font-weight: 600;
-}
-.evaluation-map-note a {
-  color: var(--fg2);
-  text-decoration: underline;
-  text-decoration-color: rgba(86, 86, 99, 0.3);
-  text-underline-offset: 2px;
-}
-.evaluation-mobile-label { display: none; }
-.evaluation-map-note {
-  margin: 10px 12px 0;
-  color: var(--fg3);
-  font-size: 11px;
-  line-height: 1.45;
-}
-
-.market-landscape {
-  margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px solid var(--rule);
-}
-.market-landscape-title {
-  margin: 0 8px 10px;
-  color: var(--fg3);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-.market-layer {
-  display: grid;
-  grid-template-columns: 76px 1.05fr 2fr;
-  gap: 12px;
-  align-items: baseline;
-  padding: 9px 8px;
-  border-top: 1px solid rgba(0, 0, 0, 0.07);
-  border-left: 2px solid var(--fg3);
-}
-.market-layer.layer-evaluate { border-left-color: var(--loop-synthesis); }
-.market-layer.layer-loop { border-left-color: var(--accent); }
-.market-layer.layer-connect { border-left-color: var(--loop-micro); }
-.market-layer-label {
-  color: var(--navy);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-.market-layer-copy {
-  color: var(--fg2);
-  font-size: 11px;
-  line-height: 1.4;
-}
-.market-layer-examples {
-  font-size: 11px;
-  line-height: 1.55;
-}
-.market-layer-examples a {
-  color: var(--fg2);
-  text-decoration: underline;
-  text-decoration-color: rgba(86, 86, 99, 0.3);
-  text-underline-offset: 2px;
-}
-
 .closing {
   max-width: 720px;
   margin-top: 36px;
@@ -356,6 +231,13 @@ h1 {
   font-size: 19px;
   font-weight: 500;
   line-height: 1.5;
+}
+.article-disclaimer {
+  max-width: 720px;
+  margin-top: 28px;
+  color: var(--fg3);
+  font-size: 12px;
+  font-style: italic;
 }
 
 .post-footer {
@@ -384,38 +266,6 @@ h1 {
     height: auto;
     margin: 0 auto;
   }
-  .evaluation-map-head { display: none; }
-  .evaluation-row {
-    grid-template-columns: 94px 1fr;
-    gap: 5px 12px;
-    padding: 12px 4px;
-  }
-  .evaluation-stage { grid-row: 1 / span 3; }
-  .evaluation-signal,
-  .evaluation-loop,
-  .evaluation-quality { font-size: 11px; }
-  .evaluation-mobile-label {
-    display: inline-block;
-    min-width: 48px;
-    margin-right: 4px;
-    color: var(--fg3);
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .evaluation-quality strong {
-    display: inline;
-    margin-right: 4px;
-  }
-  .market-layer {
-    grid-template-columns: 72px 1fr;
-    gap: 3px 10px;
-    padding: 10px 4px;
-  }
-  .market-layer-label { grid-row: 1 / span 2; }
-  .market-layer-examples { line-height: 1.5; }
-  .evaluation-map-note { margin-left: 4px; margin-right: 4px; }
 }
 </style>
 </head>
@@ -427,17 +277,23 @@ h1 {
 
 <main id="wrapper">
   <header class="page">
-    <p class="eyebrow">23.09.26 &nbsp;&middot;&nbsp; 5 min read</p>
-    <h1>Mapping Out the Future of Chip Design</h1>
-    <p class="disclaimer">* purely speculative</p>
+    <p class="eyebrow">25.09.26 &nbsp;&middot;&nbsp; 7 min read</p>
+    <h1>Chip Design is a Loop, Not a Flow</h1>
   </header>
 
   <article>
     <div class="prose">
-      <h2>Chip design is a loop, not a flow</h2>
       <p>When I was preparing for my NVIDIA interviews, I memorized the ASIC design flow.</p>
-      <p>Architecture. Microarchitecture. RTL. Verification. Synthesis. Floorplanning. Place and route. Tapeout.</p>
-      <p>The diagram is misleading, though. Chip design doesn&rsquo;t flow linearly from stage one to eight. It&rsquo;s a highly iterative process. In fact, chip design is more like a collection of nested loops.</p>
+      <p>Architecture. Microarchitecture. RTL. Verification. Synthesis. Floorplan. Place and route. Tapeout.</p>
+      <p>It&rsquo;s a good mental model. But it misses something. Chip design isn&rsquo;t a sequence of steps. It&rsquo;s more like a massive search problem.</p>
+      <p>Fundamentally, chip design translates mathematical capabilities and SLAs down to silicon. But silicon imposes physical constraints: reticle area limit, memory shoreline availability, routing density, thermal limits, and foundry design rules.</p>
+      <p>This means that chip designers need to make numerous choices across different axes. Each choice interacts non-linearly with another making the decision space very combinatorially complex. The challenge is to search this space for designs that make right tradeoffs across performance, energy, area efficiency, and latency.</p>
+      <p>Seen this way, chip design is fundamentally a multi-objective search problem.</p>
+
+      <h2>How have humans dealt with this so far</h2>
+      <p>Humans make this search space tractable by decomposing it into levels of abstractions. Organizations are built around these abstractions because no one person can reason about the entire chip at once.</p>
+      <p>These abstractions enable specialization. RTL engineers focus on the behavior and implementation of a block, physical design teams hyperfixate on placement and routing, and network architects reason about topology. Each team searches a smaller, more manageable part of the overall design space and finds their own local minima.</p>
+      <p>But these subspaces aren&rsquo;t independent. A local minima might mean a maxima elsewhere. Today, chip designers deal with this by inserting loops into bounded parts of the ASIC design flow.</p>
     </div>
 
     <figure class="design-figure" aria-labelledby="loop-title">
@@ -523,125 +379,42 @@ h1 {
     </figure>
 
     <div class="prose">
-      <p>Two properties of chip design make these loops unavoidable:</p>
-      <ol>
-        <li>The combinatorial complexity of a multi-objective optimization problem</li>
-        <li>Asymmetric information about constraints and objectives caused by technology-node and market changes</li>
-      </ol>
+      <p>Engineers propose a design, evaluate its downstream consequences, and revisit earlier decisions when necessary. The constraint is how many of these loops can be completed before tapeout.</p>
+      <p>Each loop consumes engineering time. As a result, we can only do a finite number of loops and teams can only explore a small fraction of the design space before committing to silicon.</p>
 
-      <h2>Chip design is heavily abstracted</h2>
-      <p>Humans make chip design tractable by dividing it into stages. Organizations are built around these stages because no one person can reason about the entire chip at once.</p>
-      <p>Conway&rsquo;s law suggests that products tend to mirror the organizations that produce them. As a result, today&rsquo;s chips are highly hierarchical and optimized against fixed bandwidth and latency contracts.</p>
-      <p>AI removes the need for abstractions made for human comprehension.</p>
-      <p>Jalape&ntilde;o offers an early example. In <a href="https://zartbot.github.io/blog/arch/jalapeno/en.html" target="_blank" rel="noopener noreferrer">Zartbot&rsquo;s analysis</a>, it removes a layer of CUDA&rsquo;s abstraction: instead of hardware deciding which SM receives a thread block, compile time makes physical placement explicit. That exposes spatial mapping, tiling, and prefetching to AI search. Zartbot reports a 40-hour DeepSeek MLA kernel-search run that reached 88.9% of theoretical peak, while <a href="https://openai.com/index/jalapeno-first-results/" target="_blank" rel="noopener noreferrer">OpenAI reports</a> that selected AI-generated GPT-OSS blocks ran 1.5&ndash;1.8&times; faster than expert-written implementations.</p>
+      <h2>AI changes the economics of search</h2>
+      <p>AI changes the search process in two ways: it can make each iteration cheaper, and it can expand the portion of the design space we can practically search at once.</p>
+      <p>The first is straightforward. Today, many loops are bottlenecked on engineering time: proposing a change, running tools, interpreting results, and deciding what to do next. An AI agent can run overnight and use reasoning to do the same thing. This means we can run more loops within the same tapeout schedule.</p>
+      <p>The second implication is more interesting. AI may make some abstraction boundaries cheaper to cross. Abstractions exist to enable human comprehension. But they also determine which variables are exposed to optimization and which ones are treated as fixed. If AI can reason below and across these levels of abstractions, hidden variables become exposed.</p>
+      <p>Jalape&ntilde;o offers an early software-side example of this idea. The mapping of matrix tiles to compute cores is normally abstracted away. According to <a href="https://zartbot.github.io/blog/arch/jalapeno/en.html" target="_blank" rel="noopener noreferrer">Zartbot&rsquo;s analysis</a>, OpenAI exposed spatial mapping as a variable via the compiler and made AI search over it. In a 40-hour optimization run on a DeepSeek MLA kernel, the implementation progressed from a functionally correct baseline to 88.9% of the kernel&rsquo;s theoretical hardware peak.</p>
+      <p>This is how I interpret <a href="https://x.com/casper_hansen_/status/2101337016093065481" target="_blank" rel="noopener noreferrer">Jeff Dean&rsquo;s argument</a> about the future of chip design. He describes replacing part of today&rsquo;s 12-18 month design process with automated search.</p>
+      <p>The idea isn&rsquo;t that AI enumerates every chip or that abstractions disappear. It&rsquo;s that faster test-time search, combined with feedback that crosses abstraction boundaries, could build better chips faster.</p>
 
-      <h2>The first step will be bounded loops</h2>
-      <p>The near-term version of the future is much less dramatic than an autonomous agent producing a complete chip.</p>
-      <p>I think it starts with engineers identifying bounded parts along the ASIC design flow where three things are true:</p>
+      <h2>Bottleneck 1: Representation &amp; Formalization</h2>
+      <p>Searching across abstraction levels requires an agent to understand how a decision made in one representation propagates to another. Unfortunately, each stage of the ASIC design flow has its own representation. Product requirements may be expressed in terms of latency or throughput, microarchitecture in terms of dataflow and RTL in terms of timing paths.</p>
+      <p>What&rsquo;s lacking is a representation or ontology across these stages. This gap probably exists because of decades of specialized tooling and organizational inertia. Only recently have frontier AI chips needed to meet rigorous, end-to-end data center SLAs.</p>
+      <p>And more than representation, what enables rigorous search is formalization. A formal specification says, in a mathematically precise language, what must be true. If representation can be developed that captures equivalence across the different axes of chip design, search becomes much more effective as it&rsquo;s correct by construction.</p>
+      <p>AlphaProof is a good analogy. It was able to achieve the silver medal in the IMO in 2024 precisely because DeepMind formulated math problems in Lean. But there was a crucial prerequisite: human experts manually formalized the problems before AlphaProof attempted them.</p>
+      <p>I foresee that this is going to be the work that faces chip design: documenting flows, standardizing tool outputs, and formalizing representations across layers of abstractions.</p>
+
+      <h2>Bottleneck 2: Evaluation</h2>
+      <p>Any search procedure needs fast, trustworthy feedback or rewards about which candidates are promising. The problem is that conventional EDA flows can be slow. This means that proxy rewards are all the more imperative. However, these proxies need to represent the final objective accurately, which is tricky.</p>
+      <p>Consider physical design. An early placement can cheaply estimate wirelength and congestion. But it doesn&rsquo;t yet know the final routes or parasitics. Although you can argue that you don&rsquo;t need to know this to plan out the overall network of the chip, it would be crucial in choosing the microarchitecture of a block.</p>
+      <p>So the challenge here is to not only build cheap evaluators but to determine which evaluator is sufficiently accurate for each decision in the search space and which combination of evaluator-decision pairs enable high fidelity results.</p>
+
+      <h2>The Future</h2>
+      <p>The near-term version of the future is much less dramatic than an autonomous agent producing a complete chip. I think it starts with engineers identifying bounded parts along the ASIC design flow where three things are true:</p>
       <ol>
         <li>The system can make valid design changes automatically</li>
         <li>The quality of those changes can be evaluated reliably</li>
         <li>Evaluation is cheap and fast enough to repeat many times</li>
       </ol>
-      <p>When those conditions hold, an agent can close the loop: propose &rarr; evaluate &rarr; diagnose &rarr; revise. Using reasoning and feedback from previous attempts, it prunes the search space at test-time, much like a human engineer.</p>
-      <p>This matters because today&rsquo;s chips are partly constrained by how many useful iterations engineers can complete before tapeout. Automating some of those loops could let engineers explore more alternatives within the same design schedule.</p>
-
-      <h2>A bottleneck is evaluation</h2>
-      <p>Closing the loop is easy conceptually. Getting useful feedback can be hard. Any search procedure needs fast, trustworthy evidence about which candidates are promising.</p>
-      <p>Conventional EDA flows can be slow. Faster tools or proxy metrics, such as intermediate estimates of timing, power, and congestion, could guide search. However, those proxies need to represent the final objective accurately, which is tricky.</p>
-
-      <figure class="evaluation-map" aria-labelledby="evaluation-map-title">
-        <figcaption>
-          <p class="figure-label" id="evaluation-map-title">The uneven landscape of evaluation</p>
-          <p class="figure-intro">Every stage produces feedback, but not every signal is fast, faithful, or enclosed in an automated loop.</p>
-        </figcaption>
-        <div class="evaluation-map-head" aria-hidden="true">
-          <span>Stage</span>
-          <span>Available proxy or reward</span>
-          <span>Loop today</span>
-          <span>Fidelity to silicon</span>
-        </div>
-        <div class="evaluation-row">
-          <p class="evaluation-stage">Architecture</p>
-          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Workload latency, throughput, energy and TCO models</p>
-          <p class="evaluation-loop loop-limited"><span class="evaluation-mobile-label">Loop</span>Mostly human</p>
-          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Weak</strong>Far from silicon</p>
-        </div>
-        <div class="evaluation-row">
-          <p class="evaluation-stage">Microarchitecture</p>
-          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Cycles, IPC, cache misses, bandwidth and estimated PPA</p>
-          <p class="evaluation-loop loop-emerging"><span class="evaluation-mobile-label">Loop</span>Emerging</p>
-          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Mixed</strong>Model-dependent</p>
-        </div>
-        <div class="evaluation-row">
-          <p class="evaluation-stage">RTL</p>
-          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Lint, compile, unit simulation, formal checks and early PPA</p>
-          <p class="evaluation-loop loop-emerging"><span class="evaluation-mobile-label">Loop</span>Emerging</p>
-          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Mixed</strong>Local correctness</p>
-        </div>
-        <div class="evaluation-row">
-          <p class="evaluation-stage">Verification</p>
-          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Pass / fail, assertions, coverage and formal proofs</p>
-          <p class="evaluation-loop loop-yes"><span class="evaluation-mobile-label">Loop</span>Yes</p>
-          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Strong</strong>Only for tested properties</p>
-        </div>
-        <div class="evaluation-row">
-          <p class="evaluation-stage">Synthesis</p>
-          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Timing slack, area, power and equivalence</p>
-          <p class="evaluation-loop loop-yes"><span class="evaluation-mobile-label">Loop</span>Yes</p>
-          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Good</strong>Still pre-layout</p>
-        </div>
-        <div class="evaluation-row">
-          <p class="evaluation-stage">Floorplanning</p>
-          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Wirelength, density, congestion and early timing</p>
-          <p class="evaluation-loop loop-yes"><span class="evaluation-mobile-label">Loop</span>Yes</p>
-          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Mixed</strong>Proxy-heavy</p>
-        </div>
-        <div class="evaluation-row">
-          <p class="evaluation-stage">Place &amp; route</p>
-          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>Routed timing, power, IR drop, DRC and routability</p>
-          <p class="evaluation-loop loop-yes"><span class="evaluation-mobile-label">Loop</span>Yes, but slow</p>
-          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Strong</strong>Near-final geometry</p>
-        </div>
-        <div class="evaluation-row">
-          <p class="evaluation-stage">Signoff / tapeout</p>
-          <p class="evaluation-signal"><span class="evaluation-mobile-label">Reward</span>STA, DRC / LVS, EM / IR and manufacturability</p>
-          <p class="evaluation-loop loop-limited"><span class="evaluation-mobile-label">Loop</span>Checks only</p>
-          <p class="evaluation-quality"><span class="evaluation-mobile-label">Fidelity</span><strong>Very strong</strong>Too late and costly</p>
-        </div>
-        <div class="market-landscape" aria-label="Representative AI chip design companies grouped by their role in the optimization stack.">
-          <p class="market-landscape-title">Three layers of the emerging AI design stack</p>
-          <div class="market-layer layer-evaluate">
-            <p class="market-layer-label">Evaluate</p>
-            <p class="market-layer-copy">Make feedback faster inside a stage</p>
-            <p class="market-layer-examples"><a href="https://www.silimate.com/" target="_blank" rel="noopener noreferrer">Silimate</a> &middot; <a href="https://www.synopsys.com/webinars/optimal-ppa-targets-dso-ai.html" target="_blank" rel="noopener noreferrer">Synopsys DSO.ai</a> &middot; <a href="https://www.cadence.com/en_US/home/resources/white-papers/machine-learning-driven-full-flow-chip-design-automation-wp.html" target="_blank" rel="noopener noreferrer">Cadence Cerebrus</a> &middot; <a href="https://deepmind.google/blog/how-alphachip-transformed-computer-chip-design/" target="_blank" rel="noopener noreferrer">Google AlphaChip</a></p>
-          </div>
-          <div class="market-layer layer-loop">
-            <p class="market-layer-label">Close</p>
-            <p class="market-layer-copy">Act on tool feedback in bounded loops</p>
-            <p class="market-layer-examples"><a href="https://www.bronco.ai/" target="_blank" rel="noopener noreferrer">Bronco AI</a> &middot; <a href="https://chipagents.ai/blogs/closed-loop-autonomous-design" target="_blank" rel="noopener noreferrer">ChipAgents</a> &middot; <a href="https://www.chipmind.ai/" target="_blank" rel="noopener noreferrer">Chipmind</a> &middot; <a href="https://www.sigmanticai.com/" target="_blank" rel="noopener noreferrer">SigmanticAI</a> &middot; <a href="https://newsroom.cadence.com/press-releases/press-release-details/2026/Cadence-Expands-ChipStack-AI-Super-Agent-with-a-New-Agent-for-RTL-Generation-and-Early-PPA-Optimization/default.aspx" target="_blank" rel="noopener noreferrer">Cadence ChipStack</a> &middot; <a href="https://www.siemens.com/en-us/products/ic/questa-one/" target="_blank" rel="noopener noreferrer">Siemens Questa One</a></p>
-          </div>
-          <div class="market-layer layer-connect">
-            <p class="market-layer-label">Connect</p>
-            <p class="market-layer-copy">Coordinate objectives across stages</p>
-            <p class="market-layer-examples"><a href="https://agentrys.ai/research/composable-silicon" target="_blank" rel="noopener noreferrer">Agentrys</a> &middot; <a href="https://www.ricursive.com/" target="_blank" rel="noopener noreferrer">Ricursive</a> &middot; <a href="https://www.rise-da.com/" target="_blank" rel="noopener noreferrer">Rise Design Automation</a> &middot; <a href="https://careteda.com/news/dac-2026/" target="_blank" rel="noopener noreferrer">CaretEDA</a></p>
-          </div>
-        </div>
-        <p class="evaluation-map-note">The categories describe each effort&rsquo;s center of gravity, not a hard boundary. Public evidence ranges from shipping tools to research demonstrations and stated product direction.</p>
-      </figure>
-
-      <h2>Before cross-stage search comes representation</h2>
-      <p>Fast evaluation can close a loop between two stages. Connecting loops across stages requires something else: the agent needs to understand how a decision in one representation propagates into another.</p>
-      <p>Each stage of the ASIC design flow has its own vocabulary and representation. What&rsquo;s lacking is a machine-usable ontology across product goals, microarchitecture, RTL, physical implementation, and verification. This gap probably exists because of decades of specialized tooling and organizational inertia. Only recently have frontier AI chips needed to meet rigorous, end-to-end data center SLAs.</p>
-      <p>In the short run, much of the work to enable AI in chip design will look unglamorous: documenting flows, structuring tool outputs, mapping dependencies, and defining constraints.</p>
-
-      <h2>The future</h2>
-      <p>Initially, agents will probably accelerate individual stages while preserving the existing ASIC flow. As the connections between representations improve, those bounded loops can begin to interact.</p>
-      <p>Suppose we want to build a chip with a particular memory hierarchy. Synthesis and early physical design can provide quick feedback on the area and wiring costs it creates. An agent could use that feedback to revise the hierarchy, then run the loop again.</p>
-      <p>Search could then operate across boundaries that humans currently find difficult or expensive to cross. Over time, the results of that test-time search could become training data. Rather than rediscovering the same tradeoffs, RL can train policies to make search more efficient.</p>
+      <p>When these conditions hold, AI can search this bounded space faster than humans. Eventually, as representations become better connected, these bounded loops can begin to interact and we can search across a wider search space.</p>
+      <p>Search could then operate across boundaries that humans currently find difficult or expensive to cross. And over time, the results of test-time search could become training data. Rather than rediscovering the same tradeoffs, RL can train policies to make future search more efficient.</p>
     </div>
 
-    <p class="closing">If AI lowers the cost of crossing boundaries, which boundaries in today&rsquo;s ASIC flow still need to exist?<br><br>Could crossing them enable shorter tapeout cycles and hardware designed around specific models?</p>
+    <p class="closing">So, the future of chip design might be less about replacing the flow and more about creating search loops across it. This can enable shorter tapeouts and chips that are better specialized to the models and workloads they ultimately run.</p>
+    <p class="article-disclaimer">The views and opinions expressed in this article are my own and do not represent those of my employer.</p>
   </article>
 
   <div class="post-footer">
