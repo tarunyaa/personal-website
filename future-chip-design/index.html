@@ -124,12 +124,6 @@ h1 {
 }
 .prose h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
 .prose p { margin-bottom: 17px; }
-.lede {
-  color: var(--navy);
-  font-family: 'Newsreader', Georgia, serif;
-  font-size: 20px;
-  line-height: 1.5;
-}
 .flow-sequence {
   padding: 11px 14px;
   border-left: 2px solid var(--accent);
@@ -292,7 +286,6 @@ h1 {
   h1 { font-size: 29px; }
   header.page { margin-bottom: 36px; }
   .dek { font-size: 17px; }
-  .lede,
   .thesis { font-size: 19px; }
   .flow-sequence {
     padding: 10px 12px;
@@ -331,7 +324,7 @@ h1 {
 
   <article>
     <div class="prose">
-      <p class="lede">When I was preparing for my NVIDIA interviews, I memorized the ASIC design flow.</p>
+      <p>When I was preparing for my NVIDIA interviews, I memorized the ASIC design flow.</p>
       <p class="flow-sequence">Architecture. Microarchitecture. RTL. Verification. Synthesis. Floorplan. Place and route. Tapeout.</p>
       <p>It&rsquo;s a good mental model. But it misses something. Chip design isn&rsquo;t a sequence of steps. It&rsquo;s more like a massive search problem.</p>
       <p>Fundamentally, chip design translates mathematical capabilities and SLAs down to silicon. But silicon imposes physical constraints: reticle area limit, memory shoreline availability, routing density, thermal limits, and foundry design rules.</p>
