@@ -77,7 +77,7 @@ body {
   padding: 88px 28px 120px;
 }
 
-header.page { max-width: 720px; margin-bottom: 30px; }
+header.page { max-width: 720px; margin-bottom: 42px; }
 .eyebrow {
   font-size: 12px;
   color: var(--fg3);
@@ -90,7 +90,14 @@ h1 {
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: -0.3px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+}
+.dek {
+  max-width: 650px;
+  color: var(--fg2);
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 19px;
+  line-height: 1.45;
 }
 .disclaimer {
   font-size: 13px;
@@ -98,7 +105,10 @@ h1 {
   font-style: italic;
 }
 
-.prose { max-width: 720px; }
+.prose {
+  max-width: 720px;
+  line-height: 1.68;
+}
 .prose h2,
 .figure-label {
   color: var(--accent);
@@ -109,11 +119,34 @@ h1 {
 }
 .prose h2 {
   border-top: 1px solid var(--rule);
-  margin: 40px 0 14px;
-  padding-top: 18px;
+  margin: 46px 0 16px;
+  padding-top: 20px;
 }
 .prose h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
-.prose p { margin-bottom: 15px; }
+.prose p { margin-bottom: 17px; }
+.lede {
+  color: var(--navy);
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 20px;
+  line-height: 1.5;
+}
+.flow-sequence {
+  padding: 11px 14px;
+  border-left: 2px solid var(--accent);
+  background: var(--bg2);
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.55;
+}
+.thesis {
+  margin: 24px 0 23px;
+  color: var(--navy);
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 20px;
+  line-height: 1.45;
+}
 .prose a {
   color: var(--accent);
   text-decoration: none;
@@ -223,21 +256,22 @@ h1 {
 
 .closing {
   max-width: 720px;
-  margin-top: 36px;
-  padding: 18px 0;
+  margin-top: 42px;
+  padding: 22px 0;
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
   color: var(--accent);
-  font-size: 19px;
-  font-weight: 500;
-  line-height: 1.5;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 21px;
+  line-height: 1.48;
 }
 .article-disclaimer {
   max-width: 720px;
-  margin-top: 28px;
+  margin-top: 22px;
   color: var(--fg3);
   font-size: 12px;
   font-style: italic;
+  line-height: 1.5;
 }
 
 .post-footer {
@@ -256,6 +290,15 @@ h1 {
   .site-nav { padding: 0 20px; }
   #wrapper { padding: 84px 20px 80px; }
   h1 { font-size: 29px; }
+  header.page { margin-bottom: 36px; }
+  .dek { font-size: 17px; }
+  .lede,
+  .thesis { font-size: 19px; }
+  .flow-sequence {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .closing { font-size: 20px; }
   .design-figure { margin-top: 30px; }
   .diagram-scroll { padding: 0; }
   .desktop-loop-diagram { display: none; }
@@ -279,16 +322,17 @@ h1 {
   <header class="page">
     <p class="eyebrow">25.09.26 &nbsp;&middot;&nbsp; 7 min read</p>
     <h1>Chip Design is a Loop, Not a Flow</h1>
+    <p class="dek">How AI could make the search for better silicon faster, broader, and more connected.</p>
   </header>
 
   <article>
     <div class="prose">
-      <p>When I was preparing for my NVIDIA interviews, I memorized the ASIC design flow.</p>
-      <p>Architecture. Microarchitecture. RTL. Verification. Synthesis. Floorplan. Place and route. Tapeout.</p>
+      <p class="lede">When I was preparing for my NVIDIA interviews, I memorized the ASIC design flow.</p>
+      <p class="flow-sequence">Architecture. Microarchitecture. RTL. Verification. Synthesis. Floorplan. Place and route. Tapeout.</p>
       <p>It&rsquo;s a good mental model. But it misses something. Chip design isn&rsquo;t a sequence of steps. It&rsquo;s more like a massive search problem.</p>
       <p>Fundamentally, chip design translates mathematical capabilities and SLAs down to silicon. But silicon imposes physical constraints: reticle area limit, memory shoreline availability, routing density, thermal limits, and foundry design rules.</p>
       <p>This means that chip designers need to make numerous choices across different axes. Each choice interacts non-linearly with another making the decision space very combinatorially complex. The challenge is to search this space for designs that make right tradeoffs across performance, energy, area efficiency, and latency.</p>
-      <p>Seen this way, chip design is fundamentally a multi-objective search problem.</p>
+      <p class="thesis">Seen this way, chip design is fundamentally a multi-objective search problem.</p>
 
       <h2>How have humans dealt with this so far</h2>
       <p>Humans make this search space tractable by decomposing it into levels of abstractions. Organizations are built around these abstractions because no one person can reason about the entire chip at once.</p>
