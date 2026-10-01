@@ -1,5 +1,14 @@
 {
+  "functions": {
+    "api/briefs.js": {
+      "includeFiles": "private-data/**"
+    }
+  },
   "rewrites": [
+    {
+      "source": "/briefs",
+      "destination": "/briefs/index.html"
+    },
     {
       "source": "/future-chip-design",
       "destination": "/future-chip-design/index.html"

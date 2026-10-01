@@ -1,0 +1,4 @@
+# Private brief plaintext must never enter the public website repository.
+briefs-drafts/
+*.brief.md
+.DS_Store

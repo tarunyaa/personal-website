@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>Private Briefs — Stream of Taru</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --paper: #faf9f6;
+      --ink: #22201d;
+      --muted: #77716a;
+      --faint: #aaa39a;
+      --line: #e5e0d8;
+      --panel: #f1eee8;
+      --accent: #9a4f2d;
+    }
+    html { color-scheme: light; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: var(--accent); text-underline-offset: 3px; }
+    .shell { min-height: 100vh; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 34px;
+      border-bottom: 1px solid rgba(229,224,216,.8);
+      background: rgba(250,249,246,.9);
+      backdrop-filter: blur(14px);
+    }
+    .brand {
+      color: var(--ink);
+      text-decoration: none;
+      font-family: Newsreader, Georgia, serif;
+      font-size: 18px;
+      font-style: italic;
+    }
+    .top-actions { display: flex; align-items: center; gap: 18px; }
+    .top-actions span { color: var(--faint); font-size: 11px; }
+    .top-actions button, .top-actions a {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      text-decoration: none;
+    }
+    .layout {
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 250px minmax(0, 720px);
+      justify-content: center;
+      gap: 64px;
+      padding: 64px 0 100px;
+    }
+    .archive { position: sticky; top: 90px; align-self: start; max-height: calc(100vh - 120px); overflow: auto; }
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--faint);
+      font: 400 10px/1.4 "JetBrains Mono", monospace;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .day { margin-bottom: 25px; }
+    .day-label {
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-family: Newsreader, Georgia, serif;
+      font-size: 16px;
+    }
+    .brief-link {
+      width: 100%;
+      display: block;
+      padding: 6px 0 6px 12px;
+      border: 0;
+      border-left: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      font-size: 12px;
+    }
+    .brief-link:hover, .brief-link.active { color: var(--accent); border-left-color: var(--accent); }
+    .reader { min-width: 0; }
+    .reader-header { margin-bottom: 42px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+    .reader-kind {
+      color: var(--accent);
+      font: 400 10px/1.4 "JetBrains Mono", monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 650px;
+      margin: 11px 0 8px;
+      font: 400 clamp(34px, 5vw, 52px)/1.08 Newsreader, Georgia, serif;
+      letter-spacing: -.025em;
+    }
+    .reader-date { color: var(--muted); font-size: 12px; }
+    .prose { font-family: Newsreader, Georgia, serif; font-size: 19px; line-height: 1.76; }
+    .prose h2 { margin: 58px 0 16px; font: 500 29px/1.2 Newsreader, Georgia, serif; letter-spacing: -.012em; }
+    .prose h3 { margin: 38px 0 10px; font: 600 21px/1.35 Newsreader, Georgia, serif; }
+    .prose p { margin: 0 0 22px; }
+    .prose ul, .prose ol { margin: 0 0 24px; padding-left: 25px; }
+    .prose li { margin: 7px 0; }
+    .prose blockquote { margin: 30px 0; padding: 5px 0 5px 22px; border-left: 2px solid var(--accent); color: #4e4943; font-style: italic; }
+    .prose code { padding: 2px 5px; background: var(--panel); border-radius: 3px; font: 13px "JetBrains Mono", monospace; }
+    .prose pre { overflow: auto; margin: 28px 0; padding: 20px; background: #24221f; color: #f4f0e8; border-radius: 6px; }
+    .prose pre code { padding: 0; background: transparent; color: inherit; line-height: 1.6; }
+    .empty { color: var(--muted); font-family: Newsreader, Georgia, serif; font-size: 21px; }
+    .login-wrap { min-height: calc(100vh - 58px); display: grid; place-items: center; padding: 40px 24px; }
+    .login { width: min(420px, 100%); }
+    .login h1 { font-size: 42px; }
+    .login p { color: var(--muted); font-family: Newsreader, Georgia, serif; font-size: 18px; }
+    .login form { display: flex; gap: 8px; margin-top: 28px; }
+    .login input { min-width: 0; flex: 1; padding: 12px 13px; border: 1px solid var(--line); border-radius: 5px; background: #fff; color: var(--ink); }
+    .login button { padding: 12px 16px; border: 1px solid var(--ink); border-radius: 5px; background: var(--ink); color: #fff; }
+    .error { min-height: 22px; margin-top: 12px; color: #a3382e; font-size: 12px; }
+    .hidden { display: none !important; }
+    @media (max-width: 780px) {
+      .topbar { padding: 0 18px; }
+      .layout { width: min(100% - 36px, 720px); display: block; padding-top: 28px; }
+      .archive { position: static; max-height: none; display: flex; gap: 20px; overflow-x: auto; margin-bottom: 44px; padding-bottom: 14px; }
+      .archive > .eyebrow { display: none; }
+      .day { min-width: 135px; margin: 0; }
+      .prose { font-size: 18px; }
+      .prose h2 { margin-top: 46px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="/">Stream of Taru</a>
+      <div class="top-actions">
+        <span id="private-label">private reading room</span>
+        <button id="logout" class="hidden" type="button">lock</button>
+      </div>
+    </header>
+
+    <main id="login-view" class="login-wrap hidden">
+      <section class="login">
+        <p class="eyebrow">for Tarunyaa</p>
+        <h1>Your daily trail of ideas.</h1>
+        <p>Morning curiosity briefs and midday bookmark seminars, organized as a private archive.</p>
+        <form id="login-form">
+          <input id="password" type="password" autocomplete="current-password" placeholder="Password" minlength="6" required autofocus>
+          <button type="submit">Enter</button>
+        </form>
+        <div class="error" id="login-error" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <main id="app-view" class="layout hidden">
+      <aside class="archive" id="archive"><p class="eyebrow">Archive</p></aside>
+      <article class="reader" id="reader">
+        <p class="empty">Choose a brief from the archive.</p>
+      </article>
+    </main>
+  </div>
+
+  <script>
+    const loginView = document.getElementById('login-view');
+    const appView = document.getElementById('app-view');
+    const archive = document.getElementById('archive');
+    const reader = document.getElementById('reader');
+    const logout = document.getElementById('logout');
+    let manifest = [];
+
+    const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+    })[char]);
+
+    function inline(text) {
+      return escapeHtml(text)
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+        .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    }
+
+    function markdown(source) {
+      source = source
+        .replace(/<heartbeat>[\s\S]*?<\/heartbeat>/g, '')
+        .replace(/^:::writing[^\n]*\n|^:::\s*$/gm, '');
+      const lines = source.split(/\r?\n/);
+      const out = [];
+      let list = null;
+      let quote = [];
+      let code = [];
+      let inCode = false;
+      const closeList = () => { if (list) { out.push(`</${list}>`); list = null; } };
+      const closeQuote = () => { if (quote.length) { out.push(`<blockquote>${inline(quote.join(' '))}</blockquote>`); quote = []; } };
+
+      for (const line of lines) {
+        if (line.startsWith('```')) {
+          closeList(); closeQuote();
+          if (inCode) { out.push(`<pre><code>${escapeHtml(code.join('\n'))}</code></pre>`); code = []; }
+          inCode = !inCode;
+          continue;
+        }
+        if (inCode) { code.push(line); continue; }
+        if (/^>\s?/.test(line)) { closeList(); quote.push(line.replace(/^>\s?/, '')); continue; }
+        closeQuote();
+        const heading = line.match(/^(#{2,3})\s+(.+)/);
+        if (heading) { closeList(); const level = heading[1].length; out.push(`<h${level}>${inline(heading[2])}</h${level}>`); continue; }
+        const unordered = line.match(/^[-*]\s+(.+)/);
+        const ordered = line.match(/^\d+\.\s+(.+)/);
+        if (unordered || ordered) {
+          const next = unordered ? 'ul' : 'ol';
+          if (list !== next) { closeList(); out.push(`<${next}>`); list = next; }
+          out.push(`<li>${inline((unordered || ordered)[1])}</li>`);
+          continue;
+        }
+        closeList();
+        if (!line.trim() || /^#\s+/.test(line)) continue;
+        out.push(`<p>${inline(line)}</p>`);
+      }
+      closeList(); closeQuote();
+      return out.join('');
+    }
+
+    async function api(options = {}) {
+      const response = await fetch('/api/briefs' + (options.slug ? `?slug=${encodeURIComponent(options.slug)}` : ''), {
+        method: options.method || 'GET',
+        headers: options.body ? { 'Content-Type': 'application/json' } : {},
+        body: options.body ? JSON.stringify(options.body) : undefined
+      });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) throw Object.assign(new Error(body.error || 'Something went wrong.'), { status: response.status });
+      return body;
+    }
+
+    function showLogin() {
+      appView.classList.add('hidden');
+      loginView.classList.remove('hidden');
+      logout.classList.add('hidden');
+    }
+
+    function formatDay(date) {
+      return new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'long', day: 'numeric' })
+        .format(new Date(`${date}T12:00:00`));
+    }
+
+    function drawArchive() {
+      archive.querySelectorAll('.day').forEach(node => node.remove());
+      const groups = manifest.reduce((map, item) => {
+        (map[item.date] ||= []).push(item);
+        return map;
+      }, {});
+      Object.entries(groups).sort(([a], [b]) => b.localeCompare(a)).forEach(([date, items]) => {
+        const day = document.createElement('section');
+        day.className = 'day';
+        day.innerHTML = `<div class="day-label">${escapeHtml(formatDay(date))}</div>`;
+        items.sort((a, b) => a.type.localeCompare(b.type)).forEach(item => {
+          const button = document.createElement('button');
+          button.className = 'brief-link';
+          button.dataset.slug = item.slug;
+          button.textContent = item.type === 'morning' ? 'morning curiosity' : 'bookmark seminar';
+          button.addEventListener('click', () => openBrief(item.slug));
+          day.appendChild(button);
+        });
+        archive.appendChild(day);
+      });
+    }
+
+    async function openBrief(slug) {
+      reader.innerHTML = '<p class="empty">Opening…</p>';
+      document.querySelectorAll('.brief-link').forEach(node => node.classList.toggle('active', node.dataset.slug === slug));
+      try {
+        const brief = await api({ slug });
+        reader.innerHTML = `
+          <header class="reader-header">
+            <div class="reader-kind">${escapeHtml(brief.type === 'morning' ? 'morning curiosity' : 'bookmark seminar')}</div>
+            <h1>${escapeHtml(brief.title)}</h1>
+            <div class="reader-date">${escapeHtml(formatDay(brief.date))}</div>
+          </header>
+          <div class="prose">${markdown(brief.markdown)}</div>`;
+        history.replaceState(null, '', `#${slug}`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (error) {
+        if (error.status === 401) return showLogin();
+        reader.innerHTML = `<p class="empty">${escapeHtml(error.message)}</p>`;
+      }
+    }
+
+    async function boot() {
+      try {
+        const data = await api();
+        manifest = data.briefs || [];
+        loginView.classList.add('hidden');
+        appView.classList.remove('hidden');
+        logout.classList.remove('hidden');
+        drawArchive();
+        const requested = location.hash.slice(1);
+        const initial = manifest.find(item => item.slug === requested)?.slug || manifest[0]?.slug;
+        if (initial) openBrief(initial);
+      } catch (error) {
+        if (error.status === 401 || error.status === 503) showLogin();
+        else {
+          showLogin();
+          document.getElementById('login-error').textContent = error.message;
+        }
+      }
+    }
+
+    document.getElementById('login-form').addEventListener('submit', async event => {
+      event.preventDefault();
+      const errorNode = document.getElementById('login-error');
+      errorNode.textContent = '';
+      try {
+        await api({ method: 'POST', body: { password: document.getElementById('password').value } });
+        document.getElementById('password').value = '';
+        await boot();
+      } catch (error) {
+        errorNode.textContent = error.message;
+      }
+    });
+
+    logout.addEventListener('click', async () => {
+      await api({ method: 'DELETE' }).catch(() => {});
+      location.hash = '';
+      showLogin();
+    });
+
+    boot();
+  </script>
+</body>
+</html>
