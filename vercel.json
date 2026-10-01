@@ -10,6 +10,10 @@
       "destination": "/briefs/index.html"
     },
     {
+      "source": "/private-reading-room",
+      "destination": "/briefs/index.html"
+    },
+    {
       "source": "/future-chip-design",
       "destination": "/future-chip-design/index.html"
     },
