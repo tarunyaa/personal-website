@@ -268,7 +268,7 @@
             navBack.href = '/private-reading-room'; navBack.innerHTML = '&larr; private reading room';
             try {
                 const item = await api({ slug });
-                const articleMarkdown = item.markdown.replace(/^##\s+[^\n]+\n+/, '');
+                const articleMarkdown = item.markdown.replace(/^#{1,2}\s+[^\n]+\n+/, '');
                 const minutes = Math.max(1, Math.round(articleMarkdown.trim().split(/\s+/).length / 220));
                 reader.innerHTML = `<div class="post-meta"><span class="post-date">${escapeHtml(dateLabel(item.date))}</span><span class="post-tag">${escapeHtml(item.type)}</span><span class="post-read-time">${minutes} min read</span></div><h1>${escapeHtml(item.title)}</h1><div class="post-content">${markdown(articleMarkdown)}</div><div class="post-footer"><a href="/private-reading-room">&larr; back to private reading room</a></div>`;
                 window.scrollTo(0, 0);
