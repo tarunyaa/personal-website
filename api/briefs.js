@@ -6,6 +6,7 @@ const COOKIE_NAME = 'taru_briefs_key';
 const DATA_ROOT = path.join(process.cwd(), 'private-data');
 const AUTH_PATH = path.join(DATA_ROOT, 'auth.json');
 const BRIEFS_ROOT = path.join(DATA_ROOT, 'briefs');
+const ARTIFACTS_ROOT = path.join(DATA_ROOT, 'artifacts');
 
 function send(res, status, body) {
   res.statusCode = status;
@@ -130,13 +131,15 @@ module.exports = async function handler(req, res) {
   if (!key) return send(res, 401, { error: 'Sign in to read private briefs.' });
 
   const slug = String(req.query?.slug || 'manifest');
-  if (!/^(manifest|\d{4}-\d{2}-\d{2}-(morning|midday))$/.test(slug)) {
+  if (!/^(manifest|the-backside|\d{4}-\d{2}-\d{2}-(morning|midday))$/.test(slug)) {
     return send(res, 400, { error: 'Invalid brief identifier.' });
   }
 
   const filePath = slug === 'manifest'
     ? path.join(BRIEFS_ROOT, 'manifest.enc.json')
-    : path.join(BRIEFS_ROOT, `${slug}.enc.json`);
+    : slug === 'the-backside'
+      ? path.join(ARTIFACTS_ROOT, `${slug}.enc.json`)
+      : path.join(BRIEFS_ROOT, `${slug}.enc.json`);
 
   if (!fs.existsSync(filePath)) return send(res, 404, { error: 'Brief not found.' });
 

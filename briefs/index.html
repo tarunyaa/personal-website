@@ -252,8 +252,9 @@
             archiveList.innerHTML = '';
             manifest.forEach(item => {
                 const row = document.createElement('div'); row.className = 'writing-item';
-                const kind = item.type === 'morning' ? 'morning' : 'midday';
-                row.innerHTML = `<span class="writing-date">${escapeHtml(dateLabel(item.date))}</span><span class="writing-title"><a href="#${escapeHtml(item.slug)}">${escapeHtml(item.title)}</a></span><span class="writing-kind">${kind}</span>`;
+                const kind = item.type;
+                const href = item.type === 'interactive' ? `/private-reading-room/${encodeURIComponent(item.slug)}` : `#${escapeHtml(item.slug)}`;
+                row.innerHTML = `<span class="writing-date">${escapeHtml(dateLabel(item.date))}</span><span class="writing-title"><a href="${href}">${escapeHtml(item.title)}</a></span><span class="writing-kind">${escapeHtml(kind)}</span>`;
                 archiveList.appendChild(row);
             });
         }
@@ -268,6 +269,9 @@
             navBack.href = '/private-reading-room'; navBack.innerHTML = '&larr; private reading room';
             try {
                 const item = await api({ slug });
+                if (item.type === 'interactive' && item.html) {
+                    document.open(); document.write(item.html); document.close(); return;
+                }
                 const articleMarkdown = item.markdown.replace(/^#{1,2}\s+[^\n]+\n+/, '');
                 const minutes = Math.max(1, Math.round(articleMarkdown.trim().split(/\s+/).length / 220));
                 reader.innerHTML = `<div class="post-meta"><span class="post-date">${escapeHtml(dateLabel(item.date))}</span><span class="post-tag">${escapeHtml(item.type)}</span><span class="post-read-time">${minutes} min read</span></div><h1>${escapeHtml(item.title)}</h1><div class="post-content">${markdown(articleMarkdown)}</div><div class="post-footer"><a href="/private-reading-room">&larr; back to private reading room</a></div>`;
@@ -281,7 +285,11 @@
             showOnly(loginView); logout.classList.add('hidden'); navBack.href = '/';
             navBack.innerHTML = '&larr; back home'; document.getElementById('login-error').textContent = message;
         }
-        async function route() { const slug = location.hash.slice(1); if (slug) await openReading(slug); else showArchive(false); }
+        async function route() {
+            const pathSlug = location.pathname.replace(/^\/private-reading-room\/?/, '').split('/')[0];
+            const slug = pathSlug || location.hash.slice(1);
+            if (slug) await openReading(slug); else showArchive(false);
+        }
         async function boot() {
             try {
                 const data = await api(); manifest = data.briefs || []; drawArchive();

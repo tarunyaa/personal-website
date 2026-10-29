@@ -14,12 +14,12 @@
       "destination": "/briefs/index.html"
     },
     {
-      "source": "/future-chip-design",
-      "destination": "/future-chip-design/index.html"
+      "source": "/private-reading-room/:path*",
+      "destination": "/briefs/index.html"
     },
     {
-      "source": "/the-backside",
-      "destination": "/the-backside/index.html"
+      "source": "/future-chip-design",
+      "destination": "/future-chip-design/index.html"
     },
     {
       "source": "/the-frontier-labs-real-business-model",
