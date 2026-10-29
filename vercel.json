@@ -30,6 +30,10 @@
       "destination": "/amortization-game/index.html"
     },
     {
+      "source": "/the-amortization-game-i",
+      "destination": "/amortization-game-i/index.html"
+    },
+    {
       "source": "/the-amortization-frontier",
       "destination": "/amortization-game/index.html"
     }
