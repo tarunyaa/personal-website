@@ -387,7 +387,7 @@ footer.page {
 
     <p>But the interesting question is not simply how much of each a domain requires.</p>
 
-    <div class="pullquote">Can successful deliberation eventually become intuition?</div>
+    <div class="pullquote">Can reasoning eventually be compressed into intuition?</div>
 
     <h2>Search and amortization</h2>
 
@@ -678,6 +678,7 @@ function drawPlot(container) {
   svg.appendChild(svgEl('desc', {}, 'Horizontal position is policy sufficiency. Vertical position is search leverage. Larger points indicate higher distillability.'));
 
   const plot = svgEl('g', {transform: 'translate(' + margin.left + ',' + margin.top + ')'});
+  svg.appendChild(plot);
   [40,60,80].forEach(value => {
     plot.appendChild(svgEl('line', {class:'grid-line', x1:x(value), x2:x(value), y1:0, y2:plotHeight}));
     plot.appendChild(svgEl('line', {class:'grid-line', x1:0, x2:plotWidth, y1:y(value), y2:y(value)}));
