@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Amortization Game</title>
+<meta name="description" content="How much intelligence can be compressed into intuition, and how much must be reconstructed through search?">
+<title>The Amortization Game II: Can Taste Be Learned?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Newsreader:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -18,25 +19,16 @@
   --fg3: #8a8a98;
   --accent: #e8730f;
   --rule: rgba(0,0,0,0.12);
-
-  /* Same structure as the Frontier Labs piece: the serif is reserved for the
-     page title and the nav wordmark, Inter carries everything else. */
-  --f-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --plot: #3a6fd8;
+  --f-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --f-display: 'Newsreader', Georgia, serif;
-
-  /* One size per kind of information. */
-  --t-display: 32px; /* page title */
-  --t-section: 19px; /* pull quote */
-  --t-lead:    17px; /* caption, thesis statement */
-  --t-body:    16px; /* running prose */
-  --t-small:   13px; /* toggle controls, tables, secondary text */
-  --t-label:   12px; /* legends, metadata, footer */
-  --t-caption: 11px; /* notes under a figure */
-
-  /* Regime colors: validated for CVD separation against this surface. */
-  --r-amortize: #2f9e7a;
-  --r-search:   #3a6fd8;
-  --r-hard:     #c04a8f;
+  --t-display: 32px;
+  --t-section: 19px;
+  --t-lead: 17px;
+  --t-body: 16px;
+  --t-small: 13px;
+  --t-label: 12px;
+  --t-caption: 11px;
 }
 
 body {
@@ -44,13 +36,14 @@ body {
   color: var(--fg);
   font-family: var(--f-sans);
   font-size: var(--t-body);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-/* Site nav header (matches the rest of the personal site) */
 .site-nav {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   height: 54px;
   padding: 0 48px;
@@ -62,24 +55,23 @@ body {
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--rule);
 }
+
 .site-nav .nav-name {
-  font-family: 'Newsreader', Georgia, serif;
-  font-weight: 400;
+  font-family: var(--f-display);
   font-size: 17px;
   font-style: italic;
   color: #1e2a4a;
   letter-spacing: -0.3px;
   text-decoration: none;
 }
+
 .site-nav .nav-back {
-  font-size: 13px;
+  font-size: var(--t-small);
   color: var(--fg2);
-  letter-spacing: 0.2px;
   text-decoration: none;
-  transition: color 0.25s;
 }
+
 .site-nav .nav-back:hover { color: #1e2a4a; }
-@media (max-width: 620px) { .site-nav { padding: 0 20px; } }
 
 #wrapper {
   max-width: 980px;
@@ -87,8 +79,6 @@ body {
   margin: 0 auto;
   padding: 86px 28px 120px;
 }
-
-/* ── Header ────────────────────────────────────────────────────────── */
 
 header.page { margin-bottom: 30px; }
 header.page .eyebrow {
@@ -101,7 +91,9 @@ header.page h1 {
   font-family: var(--f-display);
   font-size: var(--t-display);
   font-weight: 400;
+  line-height: 1.18;
   letter-spacing: -0.3px;
+  max-width: 760px;
   margin-bottom: 8px;
 }
 header.page .tagline {
@@ -110,20 +102,19 @@ header.page .tagline {
   font-weight: 500;
   font-style: italic;
   max-width: 720px;
-  margin-bottom: 10px;
 }
-/* ── The claim block ───────────────────────────────────────────────── */
 
 .claim {
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
   padding: 18px 0 16px;
   margin: 24px 0 26px;
+  max-width: 720px;
 }
-/* One orange uppercase style for every heading and label on the page. */
+
 .claim .label,
-.map-header h3,
 .prose h2,
+.map-header h2,
 .closing-label {
   font-size: var(--t-small);
   font-weight: 600;
@@ -131,32 +122,12 @@ header.page .tagline {
   letter-spacing: 0.08em;
   color: var(--accent);
 }
-.claim .label { margin-bottom: 12px; }
+
+.claim .label { margin-bottom: 10px; }
 .claim .statement {
   font-size: var(--t-lead);
-  line-height: 1.5;
-  max-width: 720px;
-  margin-bottom: 10px;
+  line-height: 1.55;
 }
-/* A single compact line, not two cards. */
-.claim .formula {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 2px 9px;
-}
-.claim .term-name {
-  font-size: var(--t-body);
-  font-weight: 600;
-  color: var(--fg);
-}
-.claim .times {
-  font-size: var(--t-body);
-  color: var(--accent);
-  font-weight: 500;
-}
-
-/* ── Prose ─────────────────────────────────────────────────────────── */
 
 .prose { max-width: 720px; }
 .prose h2 {
@@ -164,237 +135,195 @@ header.page .tagline {
   padding-top: 18px;
   border-top: 1px solid var(--rule);
 }
-.prose h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
-.prose p { margin-bottom: 15px; font-size: var(--t-body); }
+.prose h2:first-child { border-top: none; padding-top: 0; }
+.prose p { margin-bottom: 15px; }
 .prose strong { color: #000; font-weight: 600; }
 .prose em { font-style: italic; }
 .prose a { color: var(--accent); text-decoration: none; }
 .prose a:hover { text-decoration: underline; }
-
-.prose ol { margin: 4px 0 18px; padding-left: 0; list-style: none; counter-reset: step; }
-.prose ol li {
-  counter-increment: step;
-  position: relative;
-  padding-left: 34px;
-  margin-bottom: 10px;
-  font-size: var(--t-body);
-}
-.prose ol li::before {
-  content: counter(step);
-  position: absolute;
-  left: 0; top: 1px;
-  width: 22px; height: 22px;
-  border-radius: 50%;
-  background: var(--bg2);
-  border: 1px solid var(--rule);
-  font-size: var(--t-label);
-  font-weight: 600;
-  color: var(--accent);
-  display: flex; align-items: center; justify-content: center;
-}
+.prose ul, .prose ol { margin: 4px 0 18px 22px; }
+.prose li { margin-bottom: 9px; padding-left: 4px; }
 
 .pullquote {
   font-size: var(--t-section);
   font-weight: 500;
   line-height: 1.5;
-  color: var(--fg);
   border-left: 3px solid var(--accent);
   padding: 4px 0 4px 20px;
   margin: 26px 0;
-  max-width: 700px;
 }
 
-/* ── Inline definition toggles ─────────────────────────────────────── */
-
-details.inline-def {
-  margin: 14px 0;
+.loop {
+  max-width: 720px;
+  margin: 26px 0;
+  padding: 18px;
+  background: var(--bg2);
   border: 1px solid var(--rule);
   border-radius: 8px;
-  background: var(--bg2);
-  padding: 0 14px;
-  max-width: 720px;
 }
-details.inline-def > summary {
-  cursor: pointer;
-  user-select: none;
-  padding: 11px 0;
+.loop-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
   font-size: var(--t-small);
   font-weight: 600;
-  color: var(--fg);
-  list-style: none;
 }
-details.inline-def > summary::-webkit-details-marker { display: none; }
-details.inline-def > summary::before { content: "▸ "; color: var(--accent); }
-details.inline-def[open] > summary::before { content: "▾ "; }
-details.inline-def[open] > summary { border-bottom: 1px solid var(--rule); }
-details.inline-def .def-body { padding: 14px 0 16px; }
-details.inline-def .def-body p {
-  font-size: var(--t-body);
-  color: var(--fg);
-  margin-bottom: 11px;
-  line-height: 1.6;
+.loop-step {
+  padding: 7px 10px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 5px;
 }
-details.inline-def .def-body p:last-child { margin-bottom: 0; }
-details.inline-def .def-body strong { color: #000; font-weight: 600; }
-details.inline-def .def-body a { color: var(--accent); text-decoration: none; }
-details.inline-def .def-body a:hover { text-decoration: underline; }
-details.inline-def .def-body ul { padding-left: 20px; margin: 0 0 11px; }
-details.inline-def .def-body li { font-size: var(--t-body); margin-bottom: 6px; }
+.loop-arrow { color: var(--accent); }
+.loop-caption {
+  margin-top: 11px;
+  color: var(--fg2);
+  font-size: var(--t-small);
+}
 
-/* ── Map block ─────────────────────────────────────────────────────── */
+.profile-list {
+  list-style: none;
+  margin-left: 0 !important;
+  counter-reset: profile;
+}
+.profile-list li {
+  counter-increment: profile;
+  position: relative;
+  padding-left: 36px;
+  margin-bottom: 14px;
+}
+.profile-list li::before {
+  content: counter(profile);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  color: var(--accent);
+  font-size: var(--t-label);
+  font-weight: 600;
+}
 
 .map-block {
-  margin: 44px 0 16px;
-  padding: 22px 0 24px;
+  margin: 48px 0 20px;
+  padding: 24px 0 28px;
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
 }
 .map-header { margin-bottom: 14px; }
-.map-header h3 { margin-bottom: 8px; }
-.map-header p {
-  font-size: var(--t-body);
-  color: var(--fg);
-  max-width: 720px;
-}
-
-.legend {
+.map-header h2 { margin-bottom: 8px; }
+.map-header p { max-width: 720px; }
+.size-legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 18px;
-  margin-bottom: 12px;
-  font-size: var(--t-label);
-}
-.legend-item {
-  display: flex;
   align-items: center;
-  gap: 7px;
-  color: var(--fg2);
-}
-.legend-swatch {
-  width: 11px; height: 11px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.legend-item b { color: var(--fg); font-weight: 600; }
-
-#chart { display: block; width: 100%; height: auto; }
-#chart text { font-family: var(--f-sans); }
-#chart .dot-group { cursor: pointer; }
-
-.map-note {
-  margin-top: 12px;
-  font-size: var(--t-caption);
-  line-height: 1.55;
-  color: var(--fg3);
-  font-style: italic;
-  max-width: 700px;
-}
-
-/* Table view (accessibility fallback + the full original columns) */
-details.table-view {
-  margin: 14px 0 0;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  background: var(--bg2);
-  padding: 0 14px;
-}
-details.table-view > summary {
-  cursor: pointer; user-select: none;
-  padding: 11px 0;
-  font-size: var(--t-small); font-weight: 600; color: var(--fg);
-  list-style: none;
-}
-details.table-view > summary::-webkit-details-marker { display: none; }
-details.table-view > summary::before { content: "▸ "; color: var(--accent); }
-details.table-view[open] > summary::before { content: "▾ "; }
-details.table-view[open] > summary { border-bottom: 1px solid var(--rule); }
-.table-scroll { overflow-x: auto; padding: 14px 0 16px; }
-table.domains {
-  border-collapse: collapse;
-  width: 100%;
-  min-width: 720px;
-  font-size: var(--t-small);
-}
-table.domains th {
-  text-align: left;
-  font-weight: 600;
+  gap: 14px;
   color: var(--fg2);
   font-size: var(--t-label);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0 14px 8px 0;
-  border-bottom: 1px solid var(--rule);
-  white-space: nowrap;
+  margin: 14px 0 12px;
 }
-table.domains td {
-  padding: 9px 14px 9px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
-  color: var(--fg2);
-  vertical-align: top;
-}
-table.domains td:first-child { color: var(--fg); font-weight: 600; white-space: nowrap; }
-table.domains tr:last-child td { border-bottom: none; }
-table.domains .dot {
+.legend-dot {
   display: inline-block;
-  width: 8px; height: 8px;
   border-radius: 50%;
-  margin-right: 7px;
-  vertical-align: 0px;
+  background: var(--plot);
+  opacity: 0.82;
+  vertical-align: middle;
+  margin-right: 5px;
 }
-
-/* ── Tooltip ───────────────────────────────────────────────────────── */
+.legend-dot.small { width: 9px; height: 9px; }
+.legend-dot.large { width: 17px; height: 17px; }
+.facet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.facet h3 {
+  font-size: var(--t-small);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.plot { min-height: 345px; width: 100%; }
+.plot svg { width: 100%; display: block; overflow: visible; }
+.map-note {
+  color: var(--fg3);
+  font-size: var(--t-caption);
+  margin-top: 12px;
+  max-width: 760px;
+}
+.plot-frame, .grid-line, .axis-line {
+  stroke: var(--rule);
+  fill: none;
+  stroke-width: 1;
+}
+.grid-line { opacity: 0.6; }
+.axis-label, .tick-label, .point-label {
+  fill: var(--fg);
+  font-family: var(--f-sans);
+  font-size: 10.5px;
+}
+.tick-label { fill: var(--fg3); }
+.point-label { font-weight: 500; }
+.domain-point {
+  fill: var(--plot);
+  opacity: 0.82;
+  outline: none;
+}
+.domain-point:hover, .domain-point:focus {
+  opacity: 1;
+  stroke: var(--fg);
+  stroke-width: 2;
+}
 
 #tooltip {
   position: fixed;
+  z-index: 200;
+  max-width: 280px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: 7px;
+  background: rgba(252,252,252,0.98);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+  font-size: var(--t-label);
+  line-height: 1.45;
   pointer-events: none;
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.14);
-  border-radius: 8px;
-  padding: 11px 13px;
-  font-size: var(--t-small);
-  line-height: 1.5;
-  max-width: 300px;
   opacity: 0;
   transition: opacity 0.12s;
-  z-index: 200;
-  box-shadow: 0 8px 28px rgba(0,0,0,0.18);
 }
-#tooltip.visible { opacity: 1; }
-#tooltip .tt-title {
-  font-weight: 600; font-size: var(--t-small); color: var(--fg);
-  margin-bottom: 7px;
-}
-#tooltip .tt-grid {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 3px 12px;
-  font-size: var(--t-label);
-}
-#tooltip .tt-grid .k { color: var(--fg3); white-space: nowrap; }
-#tooltip .tt-grid .v { color: var(--fg); }
-#tooltip .tt-arch {
-  margin-top: 8px; padding-top: 7px;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  font-size: var(--t-label); color: var(--fg);
-}
-#tooltip .tt-arch b { font-weight: 600; }
+#tooltip strong { font-weight: 600; }
+#tooltip .metrics { color: var(--fg2); }
 
-/* ── Closing toggles ───────────────────────────────────────────────── */
-
-.closing { margin-top: 44px; }
-.closing-label {
-  margin-bottom: 14px;
-  padding-top: 18px;
-  border-top: 1px solid var(--rule);
+.table-view { margin-top: 18px; }
+.table-view summary {
+  cursor: pointer;
+  color: var(--fg2);
+  font-size: var(--t-small);
+  font-weight: 600;
 }
+.table-scroll { overflow-x: auto; margin-top: 12px; }
+table.domains { width: 100%; border-collapse: collapse; font-size: var(--t-label); }
+table.domains th, table.domains td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+table.domains th { color: var(--fg2); font-weight: 600; }
+table.domains td.num { text-align: right; white-space: nowrap; }
 
 .disclaimer-foot {
   max-width: 720px;
   margin-top: 44px;
   padding-top: 18px;
   border-top: 1px solid var(--rule);
-  font-size: var(--t-small);
   color: var(--fg3);
+  font-size: var(--t-small);
   font-style: italic;
 }
 
@@ -402,9 +331,23 @@ footer.page {
   max-width: 980px;
   margin: 0 auto;
   padding: 28px;
-  font-size: var(--t-label);
-  color: var(--fg3);
   border-top: 1px solid var(--rule);
+  color: var(--fg3);
+  font-size: var(--t-label);
+}
+
+@media (max-width: 760px) {
+  .facet-grid { grid-template-columns: 1fr; gap: 28px; }
+  .plot { min-height: 310px; }
+}
+
+@media (max-width: 620px) {
+  .site-nav { padding: 0 20px; }
+  #wrapper { padding: 80px 20px 90px; }
+  header.page h1 { font-size: 29px; }
+  .loop-row { align-items: stretch; }
+  .loop-step { flex: 1 1 42%; text-align: center; }
+  .loop-arrow { display: none; }
 }
 </style>
 </head>
@@ -415,456 +358,392 @@ footer.page {
   <a href="/index.html#writing" class="nav-back">&larr; back to writing</a>
 </nav>
 
-<div id="wrapper">
+<main id="wrapper">
+  <header class="page">
+    <p class="eyebrow">29.10.26</p>
+    <h1>The Amortization Game II: Can Taste Be Learned?</h1>
+    <p class="tagline">How much intelligence can be compressed into intuition, and how much must be reconstructed through search?</p>
+  </header>
 
-<header class="page">
-  <p class="eyebrow">18.09.26</p>
-  <h1>The Amortization Game</h1>
-  <p class="tagline">The boundary between what a model has learned to do in its weights and what it must still search over at runtime.</p>
-</header>
-
-<div class="claim">
-  <p class="label">Hypothesis</p>
-  <p class="statement">The optimal train/test-time allocation is a property of the domain, and can be predicted from,</p>
-  <div class="formula">
-    <span class="term-name">Combinatorial search complexity</span>
-    <span class="times">&times;</span>
-    <span class="term-name">Verification advantage</span>
-  </div>
-</div>
-
-<div class="prose">
-
-  <details class="inline-def">
-    <summary>Definitions</summary>
-    <div class="def-body">
-      <p><strong>Combinatorial search complexity:</strong> What the trained policy can&rsquo;t already resolve.</p>
-      <p><strong>Verification advantage:</strong> How cheaply candidates can be evaluated.</p>
-    </div>
-  </details>
-
-  <h2>Premise</h2>
-
-  <p>Most domains can be formulated as a &lsquo;game&rsquo;.</p>
-
-  <h2>Hypothesis</h2>
-
-  <p>Harnesses can change that split. They are not just tool integrations. They can make a domain externally searchable by exposing state, actions, and feedback.</p>
-
-  <h2>Two domains I work on</h2>
-
-  <p>I arrived at this through two domains I work on: chip design and debate.</p>
-
-  <p><strong>Chip design</strong> has an enormous combinatorial structure but strong verifiers: routing, timing, congestion, etc. At NVIDIA, the issue was that there was no ontology to build this search structure. Once I built that, I was able to let my agent rip overnight and produce usable floorplans for my team.</p>
-
-  <p><strong>Debate</strong> has a similarly large search space but much weaker verification: for open-ended research questions, truth is often delayed, expensive, or contested rather than immediately checkable. With <a href="https://cruxai.dev/" target="_blank">Crux</a>, I&rsquo;m externalizing the search over competing arguments to identify the smallest disagreement that changes the conclusion, and collecting the human judgments that could eventually teach models better research taste.</p>
-
-  <h2>So. For every domain</h2>
-
-  <ol>
-    <li>Can you formulate it as a &lsquo;game&rsquo;?</li>
-    <li>What is search space size and verifier availability</li>
-    <li>Let it rip: self play and make it better</li>
-  </ol>
-
-  <p>We need to get to letting it rip. And this is the amortization frontier I&rsquo;m interested in.</p>
-
-  <div class="pullquote">
-    Can we make search productive in weakly verifiable domains and then amortize what it discovers back into the policy?
+  <div class="claim">
+    <p class="label">Hypothesis</p>
+    <p class="statement">The most capable systems will repeatedly move computation between intuition and search. A policy guides search, search produces experience, and experience builds a better policy.</p>
   </div>
 
-</div>
+  <article class="prose">
+    <h2>The missing intuition</h2>
 
-<!-- ═══════════════════════════════════════════════════════════════════
-     THE MAP
-═══════════════════════════════════════════════════════════════════ -->
-<div class="map-block">
-  <div class="map-header">
-    <h3>Where domains sit</h3>
-    <p>Domains placed by how much search the trained policy can&rsquo;t absorb against how cheaply a candidate can be judged. Verification here means <em>as your harness realizes it</em>. Color is the architecture the two terms predict.</p>
-  </div>
+    <p>You can understand a great deal of physics and still fail to solve a particular physics problem.</p>
 
-  <div class="legend" id="legend"></div>
+    <p>You may know the relevant equations. You may follow the solution once someone shows it to you. But you did not notice the right symmetry, choose the right approximation, or represent the problem in the right way.</p>
 
-  <div class="chart-frame">
-    <svg id="chart" viewBox="0 0 920 600" role="img" aria-label="Scatter plot of domains by residual search complexity against verification advantage. A table version follows below."></svg>
-  </div>
+    <p>What was missing?</p>
 
+    <p>It may not have been knowledge. It may have been taste: the ability to recognize which direction is promising before you have fully explored it.</p>
 
-  <p class="map-note">Hover or tap any dot for the detail. Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</p>
+    <p>This makes me think the boundary between System 1 and System 2 is more important than I initially realized.</p>
 
-  <details class="table-view">
-    <summary>Read it as a table</summary>
-    <div class="table-scroll">
-      <table class="domains">
-        <thead>
-          <tr>
-            <th>Domain</th>
-            <th>Residual search</th>
-            <th>Verification advantage</th>
-            <th>Feedback</th>
-            <th>Expected architecture</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
+    <p>System 1 is fast and intuitive. System 2 is slow and deliberative. For models, the closest equivalents might be an amortized policy stored in the weights and computation performed through search at runtime.</p>
+
+    <p>But the interesting question is not simply how much of each a domain requires.</p>
+
+    <div class="pullquote">Can successful deliberation eventually become intuition?</div>
+
+    <h2>Search and amortization</h2>
+
+    <p>Suppose a model encounters a difficult problem.</p>
+
+    <p>Its weights provide an initial policy: a prior over plausible actions, representations, and answers. A harness then lets it search by trying alternatives, running tools, collecting evidence, and inspecting consequences. An evaluator helps it decide which branches were useful.</p>
+
+    <p>If those decisions and outcomes are recorded, they can become training data. Some of the work that previously required runtime search might then be compressed into the next version of the policy.</p>
+
+    <div class="loop" aria-label="The amortization loop">
+      <div class="loop-row">
+        <span class="loop-step">Policy prior</span>
+        <span class="loop-arrow">&rarr;</span>
+        <span class="loop-step">Runtime search</span>
+        <span class="loop-arrow">&rarr;</span>
+        <span class="loop-step">Evaluation</span>
+        <span class="loop-arrow">&rarr;</span>
+        <span class="loop-step">Traces</span>
+        <span class="loop-arrow">&rarr;</span>
+        <span class="loop-step">Improved policy</span>
+      </div>
+      <p class="loop-caption">Search discovers useful structure. Training amortizes some of that structure into the policy. The improved policy then guides the next search.</p>
     </div>
-  </details>
-</div>
 
-<div class="prose">
+    <p>AlphaGo-like systems are a canonical example. A policy narrows the space of plausible moves, while tree search examines their consequences. Search remains useful because the game tree is too large to absorb completely into a fixed policy. But the policy makes search much more productive than exploring from scratch.</p>
 
-  <h2>Why externalize search</h2>
+    <p>This suggests one interpretation of intuition:</p>
 
-  <p>External search is not just more inference-time compute. It turns invisible reasoning into observable decisions: which branch to explore, what evidence to seek, when to abandon a hypothesis, when to stop. Internal reasoning leaves you a final answer. External search leaves state-action-outcome traces, and if humans can evaluate those decisions, the traces can train the next search policy.</p>
+    <div class="pullquote">System 1 may be the reusable residue of previous System 2 computation.</div>
 
-  <p>A harness cannot manufacture ground truth, but it can break an ungradable final judgment into locally testable ones.</p>
+    <p>I do not think this is literally true of every intuition. But it is a useful model of how a capable system might move computation between training time and test time.</p>
 
-  <p>We couldn&rsquo;t externalize search into the LLM because ordinary language completion is mostly amortized into the model. External search adds little because plausible continuations are easy to generate but difficult to verify against a cheap objective. Search becomes useful only when language generation is embedded in a verifiable task, such as coding, retrieval, or factual question answering.</p>
+    <h2>A domain does not have one fixed ratio</h2>
 
-</div>
+    <p>I initially wanted to describe a domain by its ratio of System 1 to System 2 thinking.</p>
 
-<div class="closing">
-  <p class="closing-label">Things I&rsquo;m thinking about</p>
+    <p>But that ratio is not fixed.</p>
 
-  <details class="inline-def">
-    <summary>Jev</summary>
-    <div class="def-body">
-      <p>The recent release of <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev" target="_blank">Jev</a> has confirmed my suspicions.</p>
-      <p>Jev doesn&rsquo;t generate text. You give it state and a bounded set of typed questions, and it returns decisions with calibrated probabilities. It was trained with reinforcement learning for calibrated decisions, which optimizes for honest probabilities rather than for outputs a human would rate highly. The demos are an agent playing Doom in real time and one navigating Wikipedia across thousands of link choices per step.</p>
-      <p>It makes the decision problem explicit, which is the interface search needs.</p>
+    <p>It depends on the particular task, the capability of the policy, the available tools, the compute budget, and the quality of the feedback. What requires extensive search today may become nearly automatic after training. A new or unusual task can push the same system back toward deliberation.</p>
+
+    <p>It is more useful to give each task an <strong>amortization profile</strong> with four properties.</p>
+
+    <ol class="profile-list">
+      <li><strong>Policy sufficiency:</strong> How far can the learned policy get without explicit search?</li>
+      <li><strong>Search leverage:</strong> How much does additional runtime computation improve the result?</li>
+      <li><strong>Evaluator quality:</strong> Can the system recognize improvement when it finds it?</li>
+      <li><strong>Distillability:</strong> Can successful search be compressed into a policy and reused?</li>
+    </ol>
+
+    <p>A search trace is only valuable for training if it reveals something generalizable. Sometimes it teaches a reusable strategy. Sometimes it records a solution that works only for one instance. Sometimes the trace is not a faithful account of why the decision succeeded at all.</p>
+
+    <p>These variables are not inherent constants of an entire field. Physics is too broad. Solving an olympiad problem, fitting an experimental model, and choosing a frontier research direction occupy very different places.</p>
+  </article>
+
+  <section class="map-block" aria-labelledby="map-title">
+    <div class="map-header">
+      <h2 id="map-title">Where domains might sit</h2>
+      <p>Horizontal position represents how far an amortized policy can get on its own. Vertical position represents how much runtime search can still add. The panels separate domains by evaluator strength, while point size represents how readily successful search might be distilled into the next policy.</p>
     </div>
-  </details>
 
-  <details class="inline-def">
-    <summary>Humans&amp;</summary>
-    <div class="def-body">
-      <p><a href="https://persimmon.humansand.ai/blog/persimmon.html" target="_blank">Persimmon</a> is closer to the weak-verification regime. There is no single correct human response, so Humans&amp; trains against an adaptive discriminator and evaluates whether behavior matches the distribution of real human interactions over time.</p>
-      <p>The analogous question for Crux is: what evaluator could distinguish genuine research taste?</p>
+    <div class="size-legend" aria-label="Point size legend">
+      <span><span class="legend-dot small"></span>Lower distillability</span>
+      <span><span class="legend-dot large"></span>Higher distillability</span>
     </div>
-  </details>
 
-  <details class="inline-def">
-    <summary>AlphaGo</summary>
-    <div class="def-body">
-      <p>The closest, most popular analogue is AlphaGo: training compresses search into a policy network but at inference time, the system still performs MCTS because the search space is so large.</p>
+    <div class="facet-grid">
+      <section class="facet">
+        <h3>Strong evaluators</h3>
+        <div class="plot" data-group="Strong"></div>
+      </section>
+      <section class="facet">
+        <h3>Mixed evaluators</h3>
+        <div class="plot" data-group="Mixed"></div>
+      </section>
+      <section class="facet">
+        <h3>Weak or delayed evaluators</h3>
+        <div class="plot" data-group="Weak or delayed"></div>
+      </section>
     </div>
-  </details>
 
-  <details class="inline-def">
-    <summary>Motivation</summary>
-    <div class="def-body">
-      <p>I work on AI for GPU floorplans, alongside building Crux. Both projects make me ask whether the bottleneck is the model or the environment we give it.</p>
-      <p>The Bitter Lesson makes me wary of hand-built ontologies. Are we encoding an expert&rsquo;s preferred answers, or providing a representation in which search and learning can discover better ones? That is the tension I want to investigate.</p>
-    </div>
-  </details>
-</div>
+    <p class="map-note">Positions are my judgments, not measurements. The useful part is not the exact coordinate. It is how the geometry changes what kind of system we should build. Hover, focus, or tap a point for the reasoning behind its placement.</p>
 
-<p class="disclaimer-foot">The views and opinions expressed in this article are my own and do not represent those of my employer.</p>
+    <details class="table-view">
+      <summary>Read the hypotheses as a table</summary>
+      <div class="table-scroll">
+        <table class="domains">
+          <thead>
+            <tr>
+              <th>Domain</th>
+              <th>Evaluator</th>
+              <th>Policy</th>
+              <th>Search</th>
+              <th>Distillability</th>
+            </tr>
+          </thead>
+          <tbody id="domain-table"></tbody>
+        </table>
+      </div>
+    </details>
+  </section>
 
-</div>
+  <article class="prose">
+    <h2>Taste acts before verification</h2>
 
-<div id="tooltip" role="tooltip">
-  <div class="tt-title"></div>
-  <div class="tt-grid"></div>
-  <div class="tt-arch"></div>
-</div>
+    <p>A verifier judges a candidate after it exists. Taste influences which candidates are generated in the first place.</p>
+
+    <p>Taste can mean:</p>
+
+    <ul>
+      <li>choosing a useful representation;</li>
+      <li>noticing the assumption worth questioning;</li>
+      <li>selecting which evidence to gather;</li>
+      <li>recognizing an analogy that may transfer;</li>
+      <li>abandoning a technically valid but unimportant direction;</li>
+      <li>deciding when further search is unlikely to help.</li>
+    </ul>
+
+    <p>This is why generating more reasoning traces does not automatically produce better judgment.</p>
+
+    <p>A polished trace may be a rationalization written after the important intuitive leap. It may omit rejected alternatives, uncertainty, and failed experiments. It may show the successful path without exposing why that path was selected over thousands of plausible ones.</p>
+
+    <p>If we want to learn taste, the valuable data may not be the final chain of reasoning. It may be the trajectory surrounding it:</p>
+
+    <ul>
+      <li>What alternatives were available?</li>
+      <li>Which one did the expert inspect first?</li>
+      <li>What did they reject?</li>
+      <li>Which observation changed their direction?</li>
+      <li>When did they decide to stop?</li>
+      <li>Did the judgment remain valuable after more evidence arrived?</li>
+    </ul>
+
+    <div class="pullquote">A trace of conclusions teaches less than a trace of decisions under uncertainty.</div>
+
+    <h2>Human teachability is not model distillability</h2>
+
+    <p>A skill being difficult for humans to learn does not mean it cannot be amortized into a model. A skill humans acquire intuitively does not mean a model can recover it from text.</p>
+
+    <p>Humans develop judgment through practice, embodiment, imitation, social feedback, and repeated exposure to consequences. Much of this learning is difficult to articulate. Experts may make excellent decisions without being able to produce a faithful explanation of how they made them.</p>
+
+    <p>Models encounter a different learning environment. They may identify statistical regularities across more examples than a human could experience, while lacking feedback that humans receive naturally from interacting with the world.</p>
+
+    <p>This gives us at least three separate questions:</p>
+
+    <ol>
+      <li>Can the judgment be learned?</li>
+      <li>Can an expert explain or demonstrate the judgment?</li>
+      <li>Can the learning system observe the feedback that made it useful?</li>
+    </ol>
+
+    <p>Physics makes the distinction visible. A student can memorize equations without developing physical intuition. An experienced physicist may recognize the right approximation immediately but struggle to explain the years of examples that produced that recognition. A frontier researcher may possess excellent taste and still pursue a hypothesis that turns out to be wrong because the feedback is sparse and delayed.</p>
+
+    <p>The problem is not simply transferring a reasoning trace. It is reconstructing the learning environment that created the judgment.</p>
+
+    <h2>Harnesses change the amortization profile</h2>
+
+    <p>A task's position on the map is not permanent.</p>
+
+    <p>A harness can expose state, actions, and feedback that were previously hidden. It can turn an opaque final answer into a sequence of inspectable decisions. It can make tools available, preserve failed branches, and connect intermediate choices to later outcomes.</p>
+
+    <p>This can improve search leverage because the system can explore the domain more deliberately. It can improve evaluator quality by breaking one ungradable judgment into smaller, locally testable decisions. It can improve distillability by recording state, action, and outcome traces rather than only final answers.</p>
+
+    <p>But a harness cannot manufacture ground truth.</p>
+
+    <p>It may expose the wrong state, reward the wrong behavior, or formalize an expert's current ontology so rigidly that the system cannot discover a better one. Making a domain searchable is itself a design decision about what counts as an action and what counts as progress.</p>
+
+    <p>This is the tension I see in both chip design and debate.</p>
+
+    <p>Chip design contains many strong local evaluators, but they operate at different stages and levels of fidelity. A candidate can improve an early proxy while degrading the final system. The opportunity is to connect bounded search loops without pretending that any single metric captures the whole chip.</p>
+
+    <p>Debate has the opposite problem. Producing alternative arguments is easy. Evaluating whether a discussion discovered something true, or merely generated more persuasive language, is much harder.</p>
+
+    <p>With <a href="https://cruxai.dev/" target="_blank" rel="noopener">Crux</a>, the question I am interested in is not simply whether agents can search across arguments. It is whether the search process can expose the judgments required to distinguish a productive disagreement from an endless one.</p>
+
+    <h2>The weak-verification frontier</h2>
+
+    <p>In strongly verifiable domains, the amortization loop is relatively legible:</p>
+
+    <div class="pullquote">Search more. Evaluate outcomes. Train on the useful trajectories. Search better.</div>
+
+    <p>In weakly verifiable domains, every step becomes questionable.</p>
+
+    <p>Did the evaluator reward truth or persuasiveness? Did the successful trajectory contain a reusable insight or benefit from luck? Did training capture better judgment or merely teach the policy to imitate the evaluator's preferences?</p>
+
+    <p>This may be the boundary of the amortization game.</p>
+
+    <p>The hardest domains are not necessarily those with the largest search spaces. They may be those in which we cannot tell which parts of a successful search deserve to become intuition.</p>
+
+    <p>The central question is therefore no longer only:</p>
+
+    <div class="pullquote">How much should a system learn during training, and how much should it search at runtime?</div>
+
+    <p>It is also:</p>
+
+    <div class="pullquote">Which discoveries can be safely amortized, and what evidence would tell us that the resulting intuition is genuine taste rather than compressed evaluator bias?</div>
+
+    <p>Perhaps intelligence is not located in either System 1 or System 2.</p>
+
+    <p>Perhaps it is the ability to move computation between them: to use intuition to guide search, search to produce experience, and experience to build better intuition, without losing the capacity to search again when that intuition stops working.</p>
+  </article>
+
+  <p class="disclaimer-foot">The views and opinions expressed in this article are my own and do not represent those of my employer.</p>
+</main>
+
+<div id="tooltip" role="tooltip" aria-hidden="true"></div>
 
 <footer class="page">&copy; 2026 Taru Sivakumar</footer>
 
 <script>
-// ── Regimes ───────────────────────────────────────────────────────────
-
-const REGIMES = {
-  amortize: { color: "#2f9e7a", label: "Amortize into weights",   note: "no residual search worth running" },
-  search:   { color: "#3a6fd8", label: "Policy + search loop",    note: "verification is cheap enough to loop on" },
-  hard:     { color: "#c04a8f", label: "The hard regime",         note: "huge space, no oracle, the frontier" },
-};
-
-// x = verification advantage (0–100), y = residual search complexity (0–100).
-// `anchor` places the label relative to the dot so nothing collides.
 const DOMAINS = [
-  { name: "Ordinary language completion", nAnchor: "right", short: "Language completion", x: 20, y: 26, r: "amortize", anchor: "right",
-    search: "Low–medium", verify: "Low", feedback: "Low",
-    arch: "Mostly amortized model" },
-  { name: "Image recognition", nAnchor: "above", short: "Image recognition", x: 62, y: 10, r: "amortize", anchor: "above",
-    search: "Low", verify: "High-ish", feedback: "N/A",
-    arch: "Almost entirely amortized" },
-  { name: "Robotics", nAnchor: "below", short: "Robotics", x: 40, y: 58, r: "search", anchor: "left",
-    search: "High", verify: "Medium/low", feedback: "Rich but expensive",
-    arch: "Learned policy + model/planning" },
-  { name: "Web agent tasks", nAnchor: "below", short: "Web agents", x: 56, y: 53, r: "search", anchor: "below",
-    search: "High", verify: "Medium", feedback: "Environment feedback",
-    arch: "Harnessed sequential agent" },
-  { name: "Competitive programming", nAnchor: "left", short: "Competitive prog.", x: 78, y: 60, r: "search", anchor: "below",
-    search: "High", verify: "High", feedback: "Tests / compiler",
-    arch: "Agent + sampling/search + execution" },
-  { name: "Chess / Go", nAnchor: "left", short: "Chess / Go", x: 93, y: 70, r: "search", anchor: "left",
-    search: "Very high", verify: "Extremely high", feedback: "Dense",
-    arch: "Policy/value network + search" },
-  { name: "SAT / constraint solving", nAnchor: "left", short: "SAT / constraints", x: 96, y: 84, r: "search", anchor: "left",
-    search: "Extreme", verify: "Extreme", feedback: "Dense",
-    arch: "Search + learned heuristics" },
-  { name: "Formal theorem proving", nAnchor: "left", short: "Theorem proving", x: 84, y: 90, r: "search", anchor: "left",
-    search: "Extreme", verify: "Extreme", feedback: "Very dense",
-    arch: "Policy + proof search + formal verifier" },
-  { name: "Chip placement / routing", nAnchor: "below", short: "Chip place / route", x: 66, y: 78, r: "search", anchor: "below",
-    search: "Extreme", verify: "High", feedback: "Dense simulators / objectives",
-    arch: "Learned heuristics + optimization/search",
-    ghost: 24, ghostLabel: "before the ontology" },
-  { name: "Open-ended scientific reasoning", nAnchor: "right", short: "Open-ended science", x: 12, y: 90, r: "hard", anchor: "right",
-    search: "Extreme", verify: "Often low", feedback: "Sparse",
-    arch: "Hard regime, no known good answer" },
-  { name: "Debate / scalable oversight", nAnchor: "below", short: "Debate / oversight", x: 16, y: 66, r: "hard", anchor: "below",
-    search: "Extreme", verify: "Direct verifier poor", feedback: "Manufactured verification signal",
-    arch: "Multi-agent protocol + judge",
-    target: 50, targetLabel: "Crux (in progress)" },
+  {name:'Fact retrieval', group:'Strong', policy:88, search:28, distill:90, note:'Most recurring structure can be absorbed. Retrieval and checking handle the residue.'},
+  {name:'Chess', group:'Strong', policy:72, search:86, distill:88, note:'A strong policy narrows the tree, while exact rules make search outcomes reusable.'},
+  {name:'Go', group:'Strong', policy:66, search:93, distill:86, note:'Policy priors and tree search remain complementary even at high capability.'},
+  {name:'Theorem proving', group:'Strong', policy:52, search:88, distill:76, note:'Proof checking is strong. Useful proof-search patterns can often be learned.'},
+  {name:'Competitive coding', group:'Strong', policy:61, search:76, distill:80, note:'Tests provide feedback, though hidden requirements make the evaluator imperfect.'},
+  {name:'Software debugging', group:'Mixed', policy:58, search:82, distill:72, note:'Search helps substantially, but tests rarely capture the full intended behavior.'},
+  {name:'Chip floorplanning', group:'Mixed', policy:48, search:91, distill:68, note:'Many candidates can be scored, but proxy metrics may diverge from downstream outcomes.'},
+  {name:'Physics problems', group:'Mixed', policy:64, search:75, distill:69, note:'Learned intuition helps choose representations. Derivations and checks reward search.'},
+  {name:'Medical diagnosis', group:'Mixed', policy:73, search:61, distill:58, note:'Pattern recognition matters, but feedback can be delayed, partial, and confounded.'},
+  {name:'Experimental science', group:'Mixed', policy:45, search:78, distill:52, note:'Search can propose experiments, while cost and noisy evidence limit the feedback loop.'},
+  {name:'Frontier physics', group:'Weak or delayed', policy:34, search:88, distill:37, note:'The right representation may matter more than exhaustive search, and truth arrives slowly.'},
+  {name:'Open research', group:'Weak or delayed', policy:41, search:86, distill:34, note:'Branching is valuable, but importance and truth may remain contested for years.'},
+  {name:'Debate', group:'Weak or delayed', policy:57, search:80, distill:46, note:'Arguments are easy to generate. Distinguishing insight from persuasion is much harder.'},
+  {name:'Legal strategy', group:'Weak or delayed', policy:68, search:69, distill:51, note:'Precedent supports learned priors, but outcomes depend on institutions and adversaries.'},
+  {name:'Essay editing', group:'Weak or delayed', policy:79, search:47, distill:63, note:'Much craft becomes intuitive, while evaluation remains audience and purpose dependent.'},
+  {name:'Product taste', group:'Weak or delayed', policy:75, search:58, distill:38, note:'Fast judgment may be valuable, but success is delayed and reasoning traces can mislead.'}
 ];
 
-// ── Rendering ─────────────────────────────────────────────────────────
-// The chart re-lays-out to whatever width it is given, so it always fits
-// its container exactly: no clipping, no horizontal scroll. Below ~620px
-// it switches to numbered dots with a key underneath, because direct
-// labels cannot fit without colliding.
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const tooltip = document.getElementById('tooltip');
 
-const SVG_NS = "http://www.w3.org/2000/svg";
-function el(tag, attrs, text) {
-  const n = document.createElementNS(SVG_NS, tag);
-  for (const k in attrs) n.setAttribute(k, attrs[k]);
-  if (text != null) n.textContent = text;
-  return n;
+function svgEl(tag, attrs, text) {
+  const node = document.createElementNS(SVG_NS, tag);
+  Object.entries(attrs || {}).forEach(([key, value]) => node.setAttribute(key, value));
+  if (text != null) node.textContent = text;
+  return node;
 }
 
-const svg     = document.getElementById("chart");
-const frame   = document.querySelector(".chart-frame");
-const tooltip = document.getElementById("tooltip");
-
-function layoutFor(W) {
-  const narrow = W < 620;
-  return {
-    narrow, W,
-    H: narrow ? Math.round(Math.min(560, Math.max(380, W * 1.25))) : 600,
-    M: narrow ? { top: 20, right: 26, bottom: 48, left: 40 }
-              : { top: 34, right: 44, bottom: 78, left: 96 },
-    // Data labels are sized to the plot geometry; the chrome below follows
-    // the document scale (--t-label / --t-caption).
-    label:   narrow ? 11   : 12.5,
-    region:  narrow ? 9    : 11,
-    axis:    narrow ? 10   : 12,
-    axisSub: narrow ? 9    : 11,
-    dotR:    narrow ? 5    : 6,
-    annot:   narrow ? 9.5  : 11,
-  };
-}
-
-const ANCHOR_POS = {
-  right: o => ({ dx:  o, dy: 3.5, a: "start"  }),
-  left:  o => ({ dx: -o, dy: 3.5, a: "end"    }),
-  above: o => ({ dx: 0,  dy: -o,  a: "middle" }),
-  below: o => ({ dx: 0,  dy: o + 7, a: "middle" }),
+const labelOffsets = {
+  'Fact retrieval':[8,-10], 'Chess':[8,17], 'Go':[-8,-11], 'Theorem proving':[8,-10], 'Competitive coding':[-8,18],
+  'Software debugging':[8,-10], 'Chip floorplanning':[8,17], 'Physics problems':[-8,-11], 'Medical diagnosis':[8,17], 'Experimental science':[8,-10],
+  'Frontier physics':[8,-10], 'Open research':[8,18], 'Debate':[8,-10], 'Legal strategy':[8,18], 'Essay editing':[-8,-10], 'Product taste':[-8,18]
 };
 
-function render() {
-  const avail = frame.clientWidth || 920;
-  const L = layoutFor(Math.max(260, avail));
-  const { W, H, M, narrow } = L;
-  const PW = W - M.left - M.right;
-  const PH = H - M.top - M.bottom;
-  const px = v => M.left + (v / 100) * PW;
-  const py = v => M.top + ((100 - v) / 100) * PH;
-
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  while (svg.firstChild) svg.removeChild(svg.firstChild);
-
-  // Arrow markers.
-  const defs = el("defs");
-  for (const [id, op] of [["arrowSolid", 1], ["arrowGhost", 0.55]]) {
-    const m = el("marker", {
-      id, viewBox: "0 0 10 10", refX: 8, refY: 5,
-      markerWidth: 6, markerHeight: 6, orient: "auto-start-reverse",
-    });
-    m.appendChild(el("path", { d: "M 0 0 L 10 5 L 0 10 z", fill: "#e8730f", opacity: op }));
-    defs.appendChild(m);
-  }
-  svg.appendChild(defs);
-
-  // Plot frame and quadrant guides.
-  svg.appendChild(el("rect", {
-    x: M.left, y: M.top, width: PW, height: PH,
-    fill: "#fbfbfc", stroke: "rgba(0,0,0,0.10)", rx: 6,
-  }));
-  svg.appendChild(el("line", {
-    x1: px(50), y1: M.top, x2: px(50), y2: M.top + PH,
-    stroke: "rgba(0,0,0,0.09)", "stroke-dasharray": "3 5",
-  }));
-  svg.appendChild(el("line", {
-    x1: M.left, y1: py(50), x2: M.left + PW, y2: py(50),
-    stroke: "rgba(0,0,0,0.09)", "stroke-dasharray": "3 5",
-  }));
-
-  const pad = narrow ? 8 : 18;
-  for (const r of [
-    { t: "THE HARD REGIME", x: M.left + pad,      y: M.top + (narrow ? 14 : 24), a: "start" },
-    { t: "POLICY + SEARCH", x: M.left + PW - pad, y: M.top + (narrow ? 14 : 24), a: "end"   },
-    { t: "AMORTIZE",        x: M.left + pad,      y: M.top + PH - (narrow ? 9 : 16), a: "start" },
-  ]) {
-    svg.appendChild(el("text", {
-      x: r.x, y: r.y, "text-anchor": r.a,
-      "font-size": L.region, "font-weight": 600, "letter-spacing": "0.1em",
-      fill: "rgba(0,0,0,0.16)",
-    }, r.t));
-  }
-
-  // Axes.
-  svg.appendChild(el("text", {
-    x: M.left + PW / 2, y: H - (narrow ? 22 : 34), "text-anchor": "middle",
-    "font-size": L.axis, "font-weight": 600, fill: "#565663", "letter-spacing": "0.04em",
-  }, narrow ? "VERIFICATION ADVANTAGE →" : "VERIFICATION ADVANTAGE →"));
-  svg.appendChild(el("text", {
-    x: M.left + PW / 2, y: H - (narrow ? 9 : 16), "text-anchor": "middle",
-    "font-size": L.axisSub, fill: "#8a8a98",
-  }, narrow ? "how cheaply a candidate can be judged" : "how cheaply your harness can judge a candidate"));
-
-  const yMid = M.top + PH / 2;
-  const yx = narrow ? 12 : 26;
-  svg.appendChild(el("text", {
-    x: yx, y: yMid, "text-anchor": "middle",
-    "font-size": L.axis, "font-weight": 600, fill: "#565663", "letter-spacing": "0.04em",
-    transform: `rotate(-90, ${yx}, ${yMid})`,
-  }, narrow ? "RESIDUAL SEARCH →" : "RESIDUAL SEARCH COMPLEXITY →"));
-  if (!narrow) {
-    svg.appendChild(el("text", {
-      x: 44, y: yMid, "text-anchor": "middle",
-      "font-size": L.axisSub, fill: "#8a8a98",
-      transform: `rotate(-90, 44, ${yMid})`,
-    }, "what the policy can’t already resolve"));
-  }
-
-  // Harness arrows, drawn under the dots.
-  for (const d of DOMAINS) {
-    if (d.ghost != null) {
-      svg.appendChild(el("circle", {
-        cx: px(d.ghost), cy: py(d.y), r: L.dotR,
-        fill: "none", stroke: "#e8730f", "stroke-width": 1.5,
-        "stroke-dasharray": "2 2", opacity: 0.6,
-      }));
-      svg.appendChild(el("line", {
-        x1: px(d.ghost) + L.dotR + 4, y1: py(d.y), x2: px(d.x) - L.dotR - 6, y2: py(d.y),
-        stroke: "#e8730f", "stroke-width": 2, "marker-end": "url(#arrowSolid)",
-      }));
-      svg.appendChild(el("text", {
-        x: (px(d.ghost) + px(d.x)) / 2, y: py(d.y) - (narrow ? 7 : 14), "text-anchor": "middle",
-        "font-size": L.annot, "font-style": "italic", fill: "#e8730f",
-      }, narrow ? "ontology" : "before the ontology"));
-    }
-    if (d.target != null) {
-      svg.appendChild(el("line", {
-        x1: px(d.x) + L.dotR + 6, y1: py(d.y), x2: px(d.target) - L.dotR - 4, y2: py(d.y),
-        stroke: "#e8730f", "stroke-width": 2, "stroke-dasharray": "5 4",
-        "marker-end": "url(#arrowGhost)", opacity: 0.85,
-      }));
-      svg.appendChild(el("circle", {
-        cx: px(d.target), cy: py(d.y), r: L.dotR,
-        fill: "none", stroke: "#e8730f", "stroke-width": 1.5,
-        "stroke-dasharray": "2 2", opacity: 0.6,
-      }));
-      svg.appendChild(el("text", {
-        x: (px(d.x) + px(d.target)) / 2, y: py(d.y) - (narrow ? 7 : 15), "text-anchor": "middle",
-        "font-size": L.annot, "font-style": "italic", fill: "#e8730f",
-      }, narrow ? "Crux" : "Crux (in progress)"));
-    }
-  }
-
-  // Dots, plus their label (wide) or index number (narrow).
-  for (const d of DOMAINS) {
-    const color = REGIMES[d.r].color;
-    const cx = px(d.x), cy = py(d.y);
-    const g = el("g", { class: "dot-group", tabindex: "0" });
-
-    g.appendChild(el("circle", { cx, cy, r: L.dotR + 2, fill: "#fbfbfc" }));
-    g.appendChild(el("circle", { cx, cy, r: L.dotR, fill: color }));
-
-    const pos = ANCHOR_POS[narrow ? (d.nAnchor || d.anchor) : d.anchor](narrow ? 9 : 13);
-    g.appendChild(el("text", {
-      x: cx + pos.dx, y: cy + pos.dy, "text-anchor": pos.a,
-      "font-size": L.label, "font-weight": 500, fill: "#1a1a22",
-    }, narrow ? (d.short || d.name) : d.name));
-
-    const hit = el("circle", { cx, cy, r: 16, fill: "transparent" });
-    g.appendChild(hit);
-
-    const show = (ev) => {
-      tooltip.querySelector(".tt-title").textContent = d.name;
-      tooltip.querySelector(".tt-grid").innerHTML =
-        `<div class="k">Residual search</div><div class="v">${d.search}</div>` +
-        `<div class="k">Verification</div><div class="v">${d.verify}</div>` +
-        `<div class="k">Feedback</div><div class="v">${d.feedback}</div>`;
-      tooltip.querySelector(".tt-arch").innerHTML =
-        `<b>Expected architecture:</b> ${d.arch}` + (d.note ? `<br>${d.note}` : "");
-      tooltip.classList.add("visible");
-      move(ev);
-    };
-    const move = (ev) => {
-      const r = tooltip.getBoundingClientRect();
-      let x = (ev.clientX ?? 0) + 16;
-      let y = (ev.clientY ?? 0) + 16;
-      if (x + r.width  > window.innerWidth  - 12) x = Math.max(8, ev.clientX - r.width - 16);
-      if (y + r.height > window.innerHeight - 12) y = Math.max(8, ev.clientY - r.height - 16);
-      tooltip.style.left = x + "px";
-      tooltip.style.top  = y + "px";
-    };
-    const hide = () => tooltip.classList.remove("visible");
-
-    g.addEventListener("mouseenter", show);
-    g.addEventListener("mousemove", move);
-    g.addEventListener("mouseleave", hide);
-    g.addEventListener("focus", () => {
-      const b = hit.getBoundingClientRect();
-      show({ clientX: b.left + b.width / 2, clientY: b.top });
-    });
-    g.addEventListener("blur", hide);
-    // Touch/pen: tap to pin. Stop it reaching the document dismiss handler.
-    g.addEventListener("pointerup", (ev) => {
-      if (ev.pointerType === "mouse") return;
-      ev.stopPropagation();
-      show(ev);
-    });
-
-    svg.appendChild(g);
-  }
-
+function scale(value, domainMin, domainMax, rangeMin, rangeMax) {
+  return rangeMin + ((value - domainMin) / (domainMax - domainMin)) * (rangeMax - rangeMin);
 }
 
-render();
-document.addEventListener("pointerup", () => tooltip.classList.remove("visible"));
+function showTooltip(event, domain) {
+  tooltip.innerHTML = '<strong>' + domain.name + '</strong><br>' +
+    '<span class="metrics">Policy ' + domain.policy + ' · Search ' + domain.search + ' · Distillability ' + domain.distill + '</span><br>' +
+    domain.note;
+  tooltip.style.opacity = '1';
+  tooltip.setAttribute('aria-hidden', 'false');
+  const box = tooltip.getBoundingClientRect();
+  let left = event.clientX + 14;
+  let top = event.clientY + 14;
+  if (left + box.width > window.innerWidth - 8) left = event.clientX - box.width - 14;
+  if (top + box.height > window.innerHeight - 8) top = event.clientY - box.height - 14;
+  tooltip.style.left = Math.max(8, left) + 'px';
+  tooltip.style.top = Math.max(8, top) + 'px';
+}
 
-let resizeTimer;
-window.addEventListener("resize", () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(render, 120);
+function hideTooltip() {
+  tooltip.style.opacity = '0';
+  tooltip.setAttribute('aria-hidden', 'true');
+}
+
+function drawPlot(container) {
+  container.innerHTML = '';
+  const group = container.dataset.group;
+  const rows = DOMAINS.filter(domain => domain.group === group);
+  const width = Math.max(280, container.clientWidth || 300);
+  const height = width < 420 ? 330 : 350;
+  const margin = {top: 20, right: 18, bottom: 58, left: 56};
+  const plotWidth = width - margin.left - margin.right;
+  const plotHeight = height - margin.top - margin.bottom;
+  const x = value => scale(value, 20, 100, 0, plotWidth);
+  const y = value => scale(value, 20, 100, plotHeight, 0);
+  const radius = value => scale(Math.sqrt(value), Math.sqrt(30), Math.sqrt(95), 6, 13);
+
+  const svg = svgEl('svg', {
+    viewBox: '0 0 ' + width + ' ' + height,
+    role: 'img',
+    'aria-label': group + ' evaluator domains plotted by policy sufficiency, search leverage, and distillability.'
+  });
+  svg.appendChild(svgEl('title', {}, group + ' evaluators'));
+  svg.appendChild(svgEl('desc', {}, 'Horizontal position is policy sufficiency. Vertical position is search leverage. Larger points indicate higher distillability.'));
+
+  const plot = svgEl('g', {transform: 'translate(' + margin.left + ',' + margin.top + ')'});
+  [40,60,80].forEach(value => {
+    plot.appendChild(svgEl('line', {class:'grid-line', x1:x(value), x2:x(value), y1:0, y2:plotHeight}));
+    plot.appendChild(svgEl('line', {class:'grid-line', x1:0, x2:plotWidth, y1:y(value), y2:y(value)}));
+  });
+  plot.appendChild(svgEl('rect', {class:'plot-frame', x:0, y:0, width:plotWidth, height:plotHeight}));
+
+  [20,40,60,80,100].forEach(value => {
+    plot.appendChild(svgEl('text', {class:'tick-label', x:x(value), y:plotHeight + 18, 'text-anchor':'middle'}, value));
+    plot.appendChild(svgEl('text', {class:'tick-label', x:-9, y:y(value) + 4, 'text-anchor':'end'}, value));
+  });
+
+  svg.appendChild(svgEl('text', {
+    class:'axis-label', x:margin.left + plotWidth / 2, y:height - 10, 'text-anchor':'middle'
+  }, 'Policy sufficiency'));
+  svg.appendChild(svgEl('text', {
+    class:'axis-label', transform:'translate(15,' + (margin.top + plotHeight / 2) + ') rotate(-90)', 'text-anchor':'middle'
+  }, 'Search leverage'));
+
+  rows.forEach(domain => {
+    const point = svgEl('circle', {
+      class:'domain-point', cx:x(domain.policy), cy:y(domain.search), r:radius(domain.distill), tabindex:'0',
+      'aria-label':domain.name + '. Policy sufficiency ' + domain.policy + ', search leverage ' + domain.search + ', distillability ' + domain.distill + '. ' + domain.note
+    });
+    point.addEventListener('pointerenter', event => showTooltip(event, domain));
+    point.addEventListener('pointermove', event => showTooltip(event, domain));
+    point.addEventListener('pointerleave', hideTooltip);
+    point.addEventListener('focus', event => {
+      const rect = event.currentTarget.getBoundingClientRect();
+      showTooltip({clientX:rect.left + rect.width / 2, clientY:rect.top + rect.height / 2}, domain);
+    });
+    point.addEventListener('blur', hideTooltip);
+    plot.appendChild(point);
+
+    const offset = labelOffsets[domain.name] || [8,-10];
+    plot.appendChild(svgEl('text', {
+      class:'point-label',
+      x:x(domain.policy) + offset[0],
+      y:y(domain.search) + offset[1],
+      'text-anchor':offset[0] < 0 ? 'end' : 'start'
+    }, domain.name));
+  });
+
+  container.appendChild(svg);
+}
+
+function renderPlots() {
+  document.querySelectorAll('.plot').forEach(drawPlot);
+}
+
+const table = document.getElementById('domain-table');
+DOMAINS.forEach(domain => {
+  const row = document.createElement('tr');
+  row.innerHTML = '<td>' + domain.name + '</td>' +
+    '<td>' + domain.group + '</td>' +
+    '<td class="num">' + domain.policy + '</td>' +
+    '<td class="num">' + domain.search + '</td>' +
+    '<td class="num">' + domain.distill + '</td>';
+  table.appendChild(row);
 });
 
-// ── Legend ────────────────────────────────────────────────────────────
-
-document.getElementById("legend").innerHTML = Object.values(REGIMES).map(r =>
-  `<span class="legend-item"><span class="legend-swatch" style="background:${r.color}"></span>` +
-  `<b>${r.label}</b>: ${r.note}</span>`
-).join("") +
-  `<span class="legend-item"><span class="legend-swatch" style="background:#e8730f;border-radius:2px"></span>` +
-  `<b>What a harness buys you</b>: movement along the horizontal</span>`;
-
-// ── Table view ────────────────────────────────────────────────────────
-
-document.getElementById("tableBody").innerHTML = DOMAINS.map(d =>
-  `<tr>
-    <td><span class="dot" style="background:${REGIMES[d.r].color}"></span>${d.name}</td>
-    <td>${d.search}</td>
-    <td>${d.verify}</td>
-    <td>${d.feedback}</td>
-    <td>${d.arch}</td>
-  </tr>`
-).join("");
+renderPlots();
+let resizeFrame = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeFrame);
+  resizeFrame = setTimeout(renderPlots, 100);
+});
 </script>
-
 </body>
 </html>
