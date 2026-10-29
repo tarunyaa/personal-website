@@ -131,13 +131,13 @@ module.exports = async function handler(req, res) {
   if (!key) return send(res, 401, { error: 'Sign in to read private briefs.' });
 
   const slug = String(req.query?.slug || 'manifest');
-  if (!/^(manifest|the-backside|threshold-machine|metric-eats-the-map|\d{4}-\d{2}-\d{2}-(morning|midday))$/.test(slug)) {
+  if (!/^(manifest|the-backside|threshold-machine|metric-eats-the-map|crux-compiler|taste-harness|birth-maintenance|three-ways-falling-star|\d{4}-\d{2}-\d{2}-(morning|midday))$/.test(slug)) {
     return send(res, 400, { error: 'Invalid brief identifier.' });
   }
 
   const filePath = slug === 'manifest'
     ? path.join(BRIEFS_ROOT, 'manifest.enc.json')
-    : ['the-backside', 'threshold-machine', 'metric-eats-the-map'].includes(slug)
+    : ['the-backside', 'threshold-machine', 'metric-eats-the-map', 'crux-compiler', 'taste-harness', 'birth-maintenance', 'three-ways-falling-star'].includes(slug)
       ? path.join(ARTIFACTS_ROOT, `${slug}.enc.json`)
       : path.join(BRIEFS_ROOT, `${slug}.enc.json`);
 
