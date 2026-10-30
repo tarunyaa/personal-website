@@ -601,7 +601,7 @@ const DOMAINS = [
   {name:'Fact retrieval', group:'Strong', policy:88, search:28, distill:90, note:'Most recurring structure can be absorbed. Retrieval and checking handle the residue.'},
   {name:'Chess', group:'Strong', policy:72, search:86, distill:88, note:'A strong policy narrows the tree, while exact rules make search outcomes reusable.'},
   {name:'Go', group:'Strong', policy:66, search:93, distill:86, note:'Policy priors and tree search remain complementary even at high capability.'},
-  {name:'Math', group:'Strong', policy:52, search:88, distill:76, note:'Proof checking is strong. Useful proof-search patterns can often be learned.'},
+  {name:'Theorem proving', group:'Strong', policy:52, search:88, distill:76, note:'Proof checking is strong. Useful proof-search patterns can often be learned.'},
   {name:'Competitive coding', group:'Strong', policy:61, search:76, distill:80, note:'Tests provide feedback, though hidden requirements make the evaluator imperfect.'},
   {name:'Software debugging', group:'Mixed', policy:58, search:82, distill:72, note:'Search helps substantially, but tests rarely capture the full intended behavior.'},
   {name:'Chip floorplanning', group:'Mixed', policy:48, search:91, distill:68, note:'Many candidates can be scored, but proxy metrics may diverge from downstream outcomes.'},
@@ -627,7 +627,7 @@ function svgEl(tag, attrs, text) {
 }
 
 const labelOffsets = {
-  'Fact retrieval':[8,-10], 'Chess':[8,17], 'Go':[-8,-11], 'Math':[8,-10], 'Competitive coding':[-8,18],
+  'Fact retrieval':[8,-10], 'Chess':[8,17], 'Go':[-8,-11], 'Theorem proving':[8,-10], 'Competitive coding':[-8,18],
   'Software debugging':[8,-10], 'Chip floorplanning':[8,17], 'Physics problems':[-8,-11], 'Medical diagnosis':[8,17], 'Experimental science':[8,-10],
   'Frontier physics':[8,-10], 'Open research':[8,18], 'Debate':[8,-10], 'Legal strategy':[8,18], 'Essay editing':[-8,-10], 'Product taste':[-8,18]
 };

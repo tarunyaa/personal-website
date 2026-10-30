@@ -605,7 +605,7 @@ const DOMAINS = [
   { name: "SAT / constraint solving", nAnchor: "left", short: "SAT / constraints", x: 96, y: 84, r: "search", anchor: "left",
     search: "Extreme", verify: "Extreme", feedback: "Dense",
     arch: "Search + learned heuristics" },
-  { name: "Formal theorem proving", nAnchor: "left", short: "Theorem proving", x: 84, y: 90, r: "search", anchor: "left",
+  { name: "Math", nAnchor: "left", short: "Math", x: 84, y: 90, r: "search", anchor: "left",
     search: "Extreme", verify: "Extreme", feedback: "Very dense",
     arch: "Policy + proof search + formal verifier" },
   { name: "Chip placement / routing", nAnchor: "below", short: "Chip place / route", x: 66, y: 78, r: "search", anchor: "below",
@@ -615,10 +615,10 @@ const DOMAINS = [
   { name: "Open-ended scientific reasoning", nAnchor: "right", short: "Open-ended science", x: 12, y: 90, r: "hard", anchor: "right",
     search: "Extreme", verify: "Often low", feedback: "Sparse",
     arch: "Hard regime, no known good answer" },
-  { name: "Debate / scalable oversight", nAnchor: "below", short: "Debate / oversight", x: 16, y: 66, r: "hard", anchor: "below",
+  { name: "Debate", nAnchor: "below", short: "Debate", x: 16, y: 66, r: "hard", anchor: "below",
     search: "Extreme", verify: "Direct verifier poor", feedback: "Manufactured verification signal",
     arch: "Multi-agent protocol + judge",
-    target: 50, targetLabel: "Crux (in progress)" },
+    target: 50 },
 ];
 
 // ── Rendering ─────────────────────────────────────────────────────────
@@ -768,10 +768,6 @@ function render() {
         fill: "none", stroke: "#e8730f", "stroke-width": 1.5,
         "stroke-dasharray": "2 2", opacity: 0.6,
       }));
-      svg.appendChild(el("text", {
-        x: (px(d.x) + px(d.target)) / 2, y: py(d.y) - (narrow ? 7 : 15), "text-anchor": "middle",
-        "font-size": L.annot, "font-style": "italic", fill: "#e8730f",
-      }, narrow ? "Crux" : "Crux (in progress)"));
     }
   }
 
