@@ -256,6 +256,32 @@ details.inline-def .def-body li { font-size: var(--t-body); margin-bottom: 6px; 
   color: var(--fg);
   max-width: 720px;
 }
+.map-header a { color: var(--accent); text-decoration: none; }
+.map-header a:hover { text-decoration: underline; }
+
+.map-tabs {
+  display: flex;
+  gap: 6px;
+  margin: 14px 0 12px;
+}
+.map-tab {
+  appearance: none;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg2);
+  padding: 6px 10px;
+  font-family: var(--f-sans);
+  font-size: var(--t-label);
+  font-weight: 600;
+  cursor: pointer;
+}
+.map-tab:hover { border-color: rgba(0,0,0,0.22); color: var(--fg); }
+.map-tab[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(232,115,15,0.05);
+}
 
 .legend {
   display: flex;
@@ -280,6 +306,23 @@ details.inline-def .def-body li { font-size: var(--t-body); margin-bottom: 6px; 
 #chart { display: block; width: 100%; height: auto; }
 #chart text { font-family: var(--f-sans); }
 #chart .dot-group { cursor: pointer; }
+
+.chart-key {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px 14px;
+  margin-top: 10px;
+  font-size: var(--t-label);
+  color: var(--fg2);
+}
+.chart-key[hidden] { display: none; }
+.chart-key-item { display: flex; align-items: baseline; gap: 6px; }
+.chart-key-num {
+  color: var(--fg);
+  font-weight: 600;
+  min-width: 16px;
+}
+@media (min-width: 620px) { .chart-key { display: none; } }
 
 .map-note {
   margin-top: 12px;
@@ -481,7 +524,12 @@ footer.page {
 <div class="map-block">
   <div class="map-header">
     <h3>Where domains sit</h3>
-    <p>Domains placed by how much search the trained policy can&rsquo;t absorb against how cheaply a candidate can be judged. Verification here means <em>as your harness realizes it</em>. Color is the architecture the two terms predict.</p>
+    <p>Domains placed by how much search the trained policy can&rsquo;t absorb against how cheaply a candidate can be judged. Verification here means <em>as your harness realizes it</em>. Color is the architecture the two terms predict. The second view uses the domains covered by <a href="https://newsletter.semianalysis.com/p/gdpx-measuring-frontier-model-capabilities" target="_blank" rel="noopener">GDPx</a>.</p>
+  </div>
+
+  <div class="map-tabs" role="group" aria-label="Choose domain set">
+    <button class="map-tab" type="button" data-domain-set="core" aria-pressed="true">Core examples</button>
+    <button class="map-tab" type="button" data-domain-set="gdpx" aria-pressed="false">GDPx domains</button>
   </div>
 
   <div class="legend" id="legend"></div>
@@ -489,9 +537,10 @@ footer.page {
   <div class="chart-frame">
     <svg id="chart" viewBox="0 0 920 600" role="img" aria-label="Scatter plot of domains by residual search complexity against verification advantage. A table version follows below."></svg>
   </div>
+  <div class="chart-key" id="chartKey" hidden></div>
 
 
-  <p class="map-note">Hover or tap any dot for the detail. Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</p>
+  <p class="map-note" id="mapNote">Hover or tap any dot for the detail. Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</p>
 
   <details class="table-view">
     <summary>Read it as a table</summary>
@@ -514,13 +563,15 @@ footer.page {
 
 <div class="prose">
 
+  <p>The language point needs a qualification. Language has an enormous raw output space. The chart is not measuring that. It is measuring <em>residual</em> search: what a trained policy still benefits from exploring at runtime for a particular objective. Open-ended next-token generation sits low on the vertical axis because the task is only to produce a plausible continuation, which the policy can usually do directly. It sits left because there is no cheap objective that reliably ranks one plausible continuation above another. Put language inside a task with external state and feedback, such as software engineering, research, law, or finance, and the useful search space becomes much larger.</p>
+
   <h2>Why externalize search</h2>
 
   <p>External search is not just more inference-time compute. It turns invisible reasoning into observable decisions: which branch to explore, what evidence to seek, when to abandon a hypothesis, when to stop. Internal reasoning leaves you a final answer. External search leaves state-action-outcome traces, and if humans can evaluate those decisions, the traces can train the next search policy.</p>
 
   <p>A harness cannot manufacture ground truth, but it can break an ungradable final judgment into locally testable ones.</p>
 
-  <p>We couldn&rsquo;t externalize search into the LLM because ordinary language completion is mostly amortized into the model. External search adds little because plausible continuations are easy to generate but difficult to verify against a cheap objective. Search becomes useful only when language generation is embedded in a verifiable task, such as coding, retrieval, or factual question answering.</p>
+  <p>This does not mean language as a whole has low search complexity. Open-ended completion is mostly amortized into the model because plausible continuations are easy to generate and difficult to rank against a cheap objective. Search becomes useful when language generation is embedded in a task with an external objective, such as coding, retrieval, research, or factual question answering.</p>
 
 </div>
 
@@ -583,10 +634,10 @@ const REGIMES = {
 
 // x = verification advantage (0 to 100), y = residual search complexity (0 to 100).
 // `anchor` places the label relative to the dot so nothing collides.
-const DOMAINS = [
-  { name: "Ordinary language completion", nAnchor: "right", short: "Language completion", x: 20, y: 26, r: "amortize", anchor: "right",
-    search: "Low to medium", verify: "Low", feedback: "Low",
-    arch: "Mostly amortized model" },
+const CORE_DOMAINS = [
+  { name: "Open-ended next-token generation", nAnchor: "right", short: "Next-token generation", x: 20, y: 30, r: "amortize", anchor: "right",
+    search: "Raw space huge; residual low to medium", verify: "Low", feedback: "Plausibility, preference, or delayed human judgment",
+    arch: "Mostly amortized model", note: "This point is about unconstrained generation, not language embedded in a verifiable task." },
   { name: "Image recognition", nAnchor: "above", short: "Image recognition", x: 62, y: 10, r: "amortize", anchor: "above",
     search: "Low", verify: "High-ish", feedback: "N/A",
     arch: "Almost entirely amortized" },
@@ -621,6 +672,47 @@ const DOMAINS = [
     target: 50 },
 ];
 
+// GDPx supplies the domain list and realistic task environments. The positions
+// below are this essay's hypotheses, not GDPx measurements or benchmark scores.
+const GDPX_DOMAINS = [
+  { name: "Alignment", nAnchor: "right", short: "Alignment", x: 16, y: 90, r: "hard", anchor: "right",
+    search: "Extreme", verify: "Low", feedback: "Behavioral rules and human judgment",
+    arch: "Search with oversight; weak final oracle" },
+  { name: "Finance", nAnchor: "right", short: "Finance", x: 31, y: 66, r: "hard", anchor: "right",
+    search: "High", verify: "Low to medium", feedback: "Delayed outcomes and expert review",
+    arch: "Agentic search + expert evaluation" },
+  { name: "Legal", nAnchor: "below", short: "Legal", x: 40, y: 59, r: "hard", anchor: "below",
+    search: "High", verify: "Low to medium", feedback: "Precedent, procedure, and expert judgment",
+    arch: "Retrieval/search + human or institutional judge" },
+  { name: "Biology", nAnchor: "left", short: "Biology", x: 48, y: 72, r: "search", anchor: "left",
+    search: "Very high", verify: "Medium", feedback: "Experiments and simulated lab measurements",
+    arch: "Policy + experiment planning + tools" },
+  { name: "Materials science", nAnchor: "below", short: "Materials science", x: 56, y: 82, r: "search", anchor: "below",
+    search: "Extreme", verify: "Medium", feedback: "Simulation and laboratory measurements",
+    arch: "Learned heuristics + experimental search" },
+  { name: "Chip design", nAnchor: "left", short: "Chip design", x: 66, y: 88, r: "search", anchor: "left",
+    search: "Extreme", verify: "High", feedback: "EDA checks, simulators, timing, power, and area",
+    arch: "Learned heuristics + optimization/search" },
+  { name: "Hardware design", nAnchor: "below", short: "Hardware design", x: 72, y: 80, r: "search", anchor: "below",
+    search: "Extreme", verify: "High", feedback: "CAD checks, simulation, synthesis, and FPGA tests",
+    arch: "Agent + design search + execution" },
+  { name: "Quant trading", nAnchor: "below", short: "Quant trading", x: 72, y: 68, r: "search", anchor: "below",
+    search: "Very high", verify: "High in-sample; weaker out-of-sample", feedback: "Backtests and live returns",
+    arch: "Policy + search + adversarial validation" },
+  { name: "Cybersecurity", nAnchor: "left", short: "Cybersecurity", x: 82, y: 88, r: "search", anchor: "left",
+    search: "Extreme", verify: "High for exploits; lower for safe conduct", feedback: "Running services, flags, and behavioral constraints",
+    arch: "Agentic search + execution + policy constraints" },
+  { name: "Software engineering", nAnchor: "left", short: "Software eng.", x: 88, y: 70, r: "search", anchor: "left",
+    search: "High", verify: "High", feedback: "Tests, compilers, runtime behavior, and review",
+    arch: "Agent + repository search + execution" },
+  { name: "Recursive self-improvement", nAnchor: "left", short: "RSI", x: 90, y: 94, r: "search", anchor: "left",
+    search: "Extreme", verify: "High when improvements can be benchmarked", feedback: "Evals, tests, and measured capability change",
+    arch: "Policy + experiment loop + gated self-modification" },
+];
+
+let activeDomainSet = "core";
+const activeDomains = () => activeDomainSet === "gdpx" ? GDPX_DOMAINS : CORE_DOMAINS;
+
 // ── Rendering ─────────────────────────────────────────────────────────
 // The chart re-lays-out to whatever width it is given, so it always fits
 // its container exactly: no clipping, no horizontal scroll. Below ~620px
@@ -652,7 +744,7 @@ function layoutFor(W) {
     region:  narrow ? 9    : 11,
     axis:    narrow ? 10   : 12,
     axisSub: narrow ? 9    : 11,
-    dotR:    narrow ? 5    : 6,
+    dotR:    narrow ? 8    : 6,
     annot:   narrow ? 9.5  : 11,
   };
 }
@@ -668,6 +760,7 @@ function render() {
   const avail = frame.clientWidth || 920;
   const L = layoutFor(Math.max(260, avail));
   const { W, H, M, narrow } = L;
+  const domains = activeDomains();
   const PW = W - M.left - M.right;
   const PH = H - M.top - M.bottom;
   const px = v => M.left + (v / 100) * PW;
@@ -741,7 +834,7 @@ function render() {
   }
 
   // Harness arrows, drawn under the dots.
-  for (const d of DOMAINS) {
+  for (const d of domains) {
     if (d.ghost != null) {
       svg.appendChild(el("circle", {
         cx: px(d.ghost), cy: py(d.y), r: L.dotR,
@@ -772,7 +865,7 @@ function render() {
   }
 
   // Dots, plus their label (wide) or index number (narrow).
-  for (const d of DOMAINS) {
+  domains.forEach((d, index) => {
     const color = REGIMES[d.r].color;
     const cx = px(d.x), cy = py(d.y);
     const g = el("g", { class: "dot-group", tabindex: "0" });
@@ -780,11 +873,19 @@ function render() {
     g.appendChild(el("circle", { cx, cy, r: L.dotR + 2, fill: "#fbfbfc" }));
     g.appendChild(el("circle", { cx, cy, r: L.dotR, fill: color }));
 
-    const pos = ANCHOR_POS[narrow ? (d.nAnchor || d.anchor) : d.anchor](narrow ? 9 : 13);
-    g.appendChild(el("text", {
-      x: cx + pos.dx, y: cy + pos.dy, "text-anchor": pos.a,
-      "font-size": L.label, "font-weight": 500, fill: "#1a1a22",
-    }, narrow ? (d.short || d.name) : d.name));
+    if (narrow) {
+      g.appendChild(el("text", {
+        x: cx, y: cy + 3, "text-anchor": "middle",
+        "font-size": 7.5, "font-weight": 600, fill: "#ffffff",
+        "pointer-events": "none",
+      }, String(index + 1)));
+    } else {
+      const pos = ANCHOR_POS[d.anchor](13);
+      g.appendChild(el("text", {
+        x: cx + pos.dx, y: cy + pos.dy, "text-anchor": pos.a,
+        "font-size": L.label, "font-weight": 500, fill: "#1a1a22",
+      }, d.name));
+    }
 
     const hit = el("circle", { cx, cy, r: 16, fill: "transparent" });
     g.appendChild(hit);
@@ -827,7 +928,13 @@ function render() {
     });
 
     svg.appendChild(g);
-  }
+  });
+
+  const chartKey = document.getElementById("chartKey");
+  chartKey.hidden = !narrow;
+  chartKey.innerHTML = narrow ? domains.map((d, index) =>
+    `<span class="chart-key-item"><span class="chart-key-num">${index + 1}</span>${d.short || d.name}</span>`
+  ).join("") : "";
 
 }
 
@@ -851,15 +958,37 @@ document.getElementById("legend").innerHTML = Object.values(REGIMES).map(r =>
 
 // ── Table view ────────────────────────────────────────────────────────
 
-document.getElementById("tableBody").innerHTML = DOMAINS.map(d =>
-  `<tr>
-    <td><span class="dot" style="background:${REGIMES[d.r].color}"></span>${d.name}</td>
-    <td>${d.search}</td>
-    <td>${d.verify}</td>
-    <td>${d.feedback}</td>
-    <td>${d.arch}</td>
-  </tr>`
-).join("");
+function renderTable() {
+  document.getElementById("tableBody").innerHTML = activeDomains().map(d =>
+    `<tr>
+      <td><span class="dot" style="background:${REGIMES[d.r].color}"></span>${d.name}</td>
+      <td>${d.search}</td>
+      <td>${d.verify}</td>
+      <td>${d.feedback}</td>
+      <td>${d.arch}</td>
+    </tr>`
+  ).join("");
+}
+
+const mapNotes = {
+  core: "Hover or tap any dot for the detail. Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I’m attempting.",
+  gdpx: "GDPx supplies the domain list and realistic task environments. These positions are my judgments, not GDPx measurements or benchmark results. They show how the same economic domains look through the amortization framework."
+};
+
+document.querySelectorAll(".map-tab").forEach(button => {
+  button.addEventListener("click", () => {
+    activeDomainSet = button.dataset.domainSet;
+    document.querySelectorAll(".map-tab").forEach(other => {
+      other.setAttribute("aria-pressed", String(other === button));
+    });
+    document.getElementById("mapNote").textContent = mapNotes[activeDomainSet];
+    tooltip.classList.remove("visible");
+    render();
+    renderTable();
+  });
+});
+
+renderTable();
 </script>
 
 </body>
