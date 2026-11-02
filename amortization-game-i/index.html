@@ -524,12 +524,13 @@ footer.page {
 <div class="map-block">
   <div class="map-header">
     <h3>Where domains sit</h3>
-    <p>Domains placed by how much search the trained policy can&rsquo;t absorb against how cheaply a candidate can be judged. Verification here means <em>as your harness realizes it</em>. Color is the architecture the two terms predict. The second view uses the domains covered by <a href="https://newsletter.semianalysis.com/p/gdpx-measuring-frontier-model-capabilities" target="_blank" rel="noopener">GDPx</a>.</p>
+    <p>Domains placed by how much search the trained policy can&rsquo;t absorb against how cheaply a candidate can be judged. Verification here means <em>as your harness realizes it</em>. Color is the architecture the two terms predict. Additional domains are drawn from <a href="https://newsletter.semianalysis.com/p/gdpx-measuring-frontier-model-capabilities" target="_blank" rel="noopener">GDPx</a>.</p>
   </div>
 
-  <div class="map-tabs" role="group" aria-label="Choose domain set">
-    <button class="map-tab" type="button" data-domain-set="core" aria-pressed="true">Core examples</button>
-    <button class="map-tab" type="button" data-domain-set="gdpx" aria-pressed="false">GDPx domains</button>
+  <div class="map-tabs" role="group" aria-label="Choose verifier type">
+    <button class="map-tab" type="button" data-domain-set="exact" aria-pressed="true">Exact feedback</button>
+    <button class="map-tab" type="button" data-domain-set="proxy" aria-pressed="false">Proxy feedback</button>
+    <button class="map-tab" type="button" data-domain-set="human" aria-pressed="false">Human feedback</button>
   </div>
 
   <div class="legend" id="legend"></div>
@@ -540,7 +541,7 @@ footer.page {
   <div class="chart-key" id="chartKey" hidden></div>
 
 
-  <p class="map-note" id="mapNote">Hover or tap any dot for the detail. Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I&rsquo;m attempting.</p>
+  <p class="map-note" id="mapNote">Exact or executable feedback makes repeated search cheap. These positions are my judgments, not measurements. Hover or tap any dot for the detail.</p>
 
   <details class="table-view">
     <summary>Read it as a table</summary>
@@ -635,38 +636,38 @@ const REGIMES = {
 // x = verification advantage (0 to 100), y = residual search complexity (0 to 100).
 // `anchor` places the label relative to the dot so nothing collides.
 const CORE_DOMAINS = [
-  { name: "Open-ended next-token generation", nAnchor: "right", short: "Next-token generation", x: 20, y: 30, r: "amortize", anchor: "right",
+  { name: "Open-ended next-token generation", segment: "human", nAnchor: "right", short: "Next-token generation", x: 20, y: 30, r: "amortize", anchor: "right",
     search: "Raw space huge; residual low to medium", verify: "Low", feedback: "Plausibility, preference, or delayed human judgment",
     arch: "Mostly amortized model", note: "This point is about unconstrained generation, not language embedded in a verifiable task." },
-  { name: "Image recognition", nAnchor: "above", short: "Image recognition", x: 62, y: 10, r: "amortize", anchor: "above",
+  { name: "Image recognition", segment: "proxy", nAnchor: "above", short: "Image recognition", x: 62, y: 10, r: "amortize", anchor: "above",
     search: "Low", verify: "High-ish", feedback: "N/A",
     arch: "Almost entirely amortized" },
-  { name: "Robotics", nAnchor: "below", short: "Robotics", x: 40, y: 58, r: "search", anchor: "left",
+  { name: "Robotics", segment: "proxy", nAnchor: "below", short: "Robotics", x: 40, y: 58, r: "search", anchor: "left",
     search: "High", verify: "Medium/low", feedback: "Rich but expensive",
     arch: "Learned policy + model/planning" },
-  { name: "Web agent tasks", nAnchor: "below", short: "Web agents", x: 56, y: 53, r: "search", anchor: "below",
+  { name: "Web agent tasks", segment: "proxy", nAnchor: "below", short: "Web agents", x: 56, y: 53, r: "search", anchor: "below",
     search: "High", verify: "Medium", feedback: "Environment feedback",
     arch: "Harnessed sequential agent" },
-  { name: "Competitive programming", nAnchor: "left", short: "Competitive prog.", x: 78, y: 60, r: "search", anchor: "below",
+  { name: "Competitive programming", segment: "exact", nAnchor: "left", short: "Competitive prog.", x: 68, y: 50, r: "search", anchor: "below",
     search: "High", verify: "High", feedback: "Tests / compiler",
     arch: "Agent + sampling/search + execution" },
-  { name: "Chess / Go", nAnchor: "left", short: "Chess / Go", x: 93, y: 70, r: "search", anchor: "left",
+  { name: "Chess / Go", segment: "exact", nAnchor: "left", short: "Chess / Go", x: 92, y: 68, r: "search", anchor: "left",
     search: "Very high", verify: "Extremely high", feedback: "Dense",
     arch: "Policy/value network + search" },
-  { name: "SAT / constraint solving", nAnchor: "left", short: "SAT / constraints", x: 96, y: 84, r: "search", anchor: "left",
+  { name: "SAT / constraint solving", segment: "exact", nAnchor: "left", short: "SAT / constraints", x: 95, y: 82, r: "search", anchor: "left",
     search: "Extreme", verify: "Extreme", feedback: "Dense",
     arch: "Search + learned heuristics" },
-  { name: "Math", nAnchor: "left", short: "Math", x: 84, y: 90, r: "search", anchor: "left",
+  { name: "Math", segment: "exact", nAnchor: "left", short: "Math", x: 70, y: 92, r: "search", anchor: "left",
     search: "Extreme", verify: "Extreme", feedback: "Very dense",
     arch: "Policy + proof search + formal verifier" },
-  { name: "Chip placement / routing", nAnchor: "below", short: "Chip place / route", x: 66, y: 78, r: "search", anchor: "below",
+  { name: "Chip placement / routing", segment: "proxy", nAnchor: "below", short: "Chip place / route", x: 66, y: 78, r: "search", anchor: "below",
     search: "Extreme", verify: "High", feedback: "Dense simulators / objectives",
     arch: "Learned heuristics + optimization/search",
     ghost: 24, ghostLabel: "before the ontology" },
-  { name: "Open-ended scientific reasoning", nAnchor: "right", short: "Open-ended science", x: 12, y: 90, r: "hard", anchor: "right",
+  { name: "Open-ended scientific reasoning", segment: "human", nAnchor: "right", short: "Open-ended science", x: 28, y: 84, r: "hard", anchor: "right",
     search: "Extreme", verify: "Often low", feedback: "Sparse",
     arch: "Hard regime, no known good answer" },
-  { name: "Debate", nAnchor: "below", short: "Debate", x: 16, y: 66, r: "hard", anchor: "below",
+  { name: "Debate", segment: "human", nAnchor: "below", short: "Debate", x: 16, y: 66, r: "hard", anchor: "below",
     search: "Extreme", verify: "Direct verifier poor", feedback: "Manufactured verification signal",
     arch: "Multi-agent protocol + judge",
     target: 50 },
@@ -675,43 +676,41 @@ const CORE_DOMAINS = [
 // GDPx supplies the domain list and realistic task environments. The positions
 // below are this essay's hypotheses, not GDPx measurements or benchmark scores.
 const GDPX_DOMAINS = [
-  { name: "Alignment", nAnchor: "right", short: "Alignment", x: 16, y: 90, r: "hard", anchor: "right",
+  { name: "Alignment", segment: "human", nAnchor: "right", short: "Alignment", x: 12, y: 94, r: "hard", anchor: "right",
     search: "Extreme", verify: "Low", feedback: "Behavioral rules and human judgment",
     arch: "Search with oversight; weak final oracle" },
-  { name: "Finance", nAnchor: "right", short: "Finance", x: 31, y: 66, r: "hard", anchor: "right",
+  { name: "Finance", segment: "human", nAnchor: "right", short: "Finance", x: 35, y: 56, r: "hard", anchor: "right",
     search: "High", verify: "Low to medium", feedback: "Delayed outcomes and expert review",
     arch: "Agentic search + expert evaluation" },
-  { name: "Legal", nAnchor: "below", short: "Legal", x: 40, y: 59, r: "hard", anchor: "below",
+  { name: "Legal", segment: "human", nAnchor: "below", short: "Legal", x: 45, y: 46, r: "hard", anchor: "below",
     search: "High", verify: "Low to medium", feedback: "Precedent, procedure, and expert judgment",
     arch: "Retrieval/search + human or institutional judge" },
-  { name: "Biology", nAnchor: "left", short: "Biology", x: 48, y: 72, r: "search", anchor: "left",
+  { name: "Biology", segment: "proxy", nAnchor: "left", short: "Biology", x: 44, y: 70, r: "search", anchor: "left",
     search: "Very high", verify: "Medium", feedback: "Experiments and simulated lab measurements",
     arch: "Policy + experiment planning + tools" },
-  { name: "Materials science", nAnchor: "below", short: "Materials science", x: 56, y: 82, r: "search", anchor: "below",
+  { name: "Materials science", segment: "proxy", nAnchor: "below", short: "Materials science", x: 52, y: 90, r: "search", anchor: "left",
     search: "Extreme", verify: "Medium", feedback: "Simulation and laboratory measurements",
     arch: "Learned heuristics + experimental search" },
-  { name: "Chip design", nAnchor: "left", short: "Chip design", x: 66, y: 88, r: "search", anchor: "left",
-    search: "Extreme", verify: "High", feedback: "EDA checks, simulators, timing, power, and area",
-    arch: "Learned heuristics + optimization/search" },
-  { name: "Hardware design", nAnchor: "below", short: "Hardware design", x: 72, y: 80, r: "search", anchor: "below",
+  { name: "Hardware design", segment: "proxy", nAnchor: "below", short: "Hardware design", x: 78, y: 84, r: "search", anchor: "below",
     search: "Extreme", verify: "High", feedback: "CAD checks, simulation, synthesis, and FPGA tests",
     arch: "Agent + design search + execution" },
-  { name: "Quant trading", nAnchor: "below", short: "Quant trading", x: 72, y: 68, r: "search", anchor: "below",
+  { name: "Quant trading", segment: "proxy", nAnchor: "below", short: "Quant trading", x: 72, y: 62, r: "search", anchor: "below",
     search: "Very high", verify: "High in-sample; weaker out-of-sample", feedback: "Backtests and live returns",
     arch: "Policy + search + adversarial validation" },
-  { name: "Cybersecurity", nAnchor: "left", short: "Cybersecurity", x: 82, y: 88, r: "search", anchor: "left",
+  { name: "Cybersecurity", segment: "exact", nAnchor: "left", short: "Cybersecurity", x: 80, y: 84, r: "search", anchor: "left",
     search: "Extreme", verify: "High for exploits; lower for safe conduct", feedback: "Running services, flags, and behavioral constraints",
     arch: "Agentic search + execution + policy constraints" },
-  { name: "Software engineering", nAnchor: "left", short: "Software eng.", x: 88, y: 70, r: "search", anchor: "left",
+  { name: "Software engineering", segment: "exact", nAnchor: "left", short: "Software eng.", x: 78, y: 62, r: "search", anchor: "left",
     search: "High", verify: "High", feedback: "Tests, compilers, runtime behavior, and review",
     arch: "Agent + repository search + execution" },
-  { name: "Recursive self-improvement", nAnchor: "left", short: "RSI", x: 90, y: 94, r: "search", anchor: "left",
+  { name: "Recursive self-improvement", segment: "exact", nAnchor: "left", short: "RSI", x: 94, y: 96, r: "search", anchor: "left",
     search: "Extreme", verify: "High when improvements can be benchmarked", feedback: "Evals, tests, and measured capability change",
     arch: "Policy + experiment loop + gated self-modification" },
 ];
 
-let activeDomainSet = "core";
-const activeDomains = () => activeDomainSet === "gdpx" ? GDPX_DOMAINS : CORE_DOMAINS;
+const ALL_DOMAINS = [...CORE_DOMAINS, ...GDPX_DOMAINS];
+let activeDomainSet = "exact";
+const activeDomains = () => ALL_DOMAINS.filter(domain => domain.segment === activeDomainSet);
 
 // ── Rendering ─────────────────────────────────────────────────────────
 // The chart re-lays-out to whatever width it is given, so it always fits
@@ -971,8 +970,9 @@ function renderTable() {
 }
 
 const mapNotes = {
-  core: "Hover or tap any dot for the detail. Positions are my judgments, not measurements. The point is the geometry, not the coordinates. The orange arrows are the claim: a harness moves a domain sideways. Chip design already made that move. Debate is the one I’m attempting.",
-  gdpx: "GDPx supplies the domain list and realistic task environments. These positions are my judgments, not GDPx measurements or benchmark results. They show how the same economic domains look through the amortization framework."
+  exact: "Exact or executable feedback makes repeated search cheap. These positions are my judgments, not measurements. Hover or tap any dot for the detail.",
+  proxy: "Simulators, backtests, experiments, and environment feedback make search possible, but they are imperfect or expensive proxies for the final objective. The chip-design arrow shows how a harness can increase verification advantage.",
+  human: "Human, institutional, or delayed feedback leaves the verifier weak. These are the domains where productive search is hardest to distinguish from persuasive or locally optimized behavior."
 };
 
 document.querySelectorAll(".map-tab").forEach(button => {
